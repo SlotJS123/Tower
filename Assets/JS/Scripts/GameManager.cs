@@ -26,15 +26,17 @@ public class GameManager : MonoBehaviour
         mapManager.MapMaking();
 
         monsterManager.SetMonsterObject(testMonstor);
+
+        mapManager.startButton.onClick.AddListener(OnTouchStartButton);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.W))
-        {
-            OnTouchStartButton();
-        }
+        //if(Input.GetKeyDown(KeyCode.W))
+        //{
+        //    OnTouchStartButton();
+        //}
     }
 
 

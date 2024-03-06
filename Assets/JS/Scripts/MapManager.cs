@@ -4,8 +4,7 @@ using UnityEngine;
 using System;
 using System.IO;
 using UnityEditor.Experimental.GraphView;
-
-
+using UnityEngine.UI;
 
 public class MapManager : MonoBehaviour
 {
@@ -28,6 +27,8 @@ public class MapManager : MonoBehaviour
     [Range(0, 10)]
     [Header("타일 오브젝트 프리팹")]
     public GameObject tile;
+
+    public Button startButton;
 
     public Action OnButtonTouchEventHander;
 
@@ -52,6 +53,8 @@ public class MapManager : MonoBehaviour
         topRight = new Vector2Int(9, 9);
         startPos = new Vector2Int(0, 0);
         targetPos = new Vector2Int(9,9);
+
+        
     }
 
     // Update is called once per frame
@@ -136,6 +139,7 @@ public class MapManager : MonoBehaviour
 
 
                 towerSetState = true;
+                startButton.interactable = true;    
 
                 //맵 세팅이 다 끝났기 때문에 데이터를 SetMapData 함수에 전달을 해줍니다 
                 GameManager.Instance.SetMapData(FinalNodeList);
