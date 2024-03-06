@@ -1,0 +1,7 @@
+# Ignore all folders and files
+/*
+
+# Except for specific folders or files you want to include
+!/[Aa]ssets/
+!/[Pp]ackages/
+!/[Pp]rojectSettings/
