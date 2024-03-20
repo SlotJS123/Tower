@@ -1265,7 +1265,7 @@ MonoBehaviour:
   interval_X: 0.5
   interval_Y: 0.5
   start_X: -2.25
-  start_Y: -4.25
+  start_Y: -2.25
   tileList: []
   wayTileList: []
   tile: {fileID: 0}
