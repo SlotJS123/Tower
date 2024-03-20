@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
 
     public MapManager mapManager;
     public TowerSpawn towerSpawn;
-    public MonsterManager monsterManager = new MonsterManager();
+    public MonsterManager monsterManager;
     private List<Tile> route;
 
     public GameObject testMonstor;
@@ -43,13 +43,13 @@ public class GameManager : MonoBehaviour
 
 
 
-    //  ½ÃÀÛÀü ÀÌµ¿ °æ·Î ³Ö¾îÁÖ´Â ÇÔ¼ö
+    //  ì‹œì‘ì „ ì´ë™ ê²½ë¡œ ë„£ì–´ì£¼ëŠ” í•¨ìˆ˜
     public void SetMapData(List<Tile> _route)
     {
         route = _route;
     }
 
-    //  ½ÃÀÛ¹öÆ° Å¬¸¯½Ã ½ÇÇà, ÇöÀç´Â ¼öµ¿À¸·Î ¿ÀºêÁ§Æ®¿¡ ¿¬°áÇÑ »óÅÂ
+    //  ì‹œì‘ë²„íŠ¼ í´ë¦­ì‹œ ì‹¤í–‰, í˜„ì¬ëŠ” ìˆ˜ë™ìœ¼ë¡œ ì˜¤ë¸Œì íŠ¸ì— ì—°ê²°í•œ ìƒíƒœ
     public void OnTouchStartButton()
     {
         if (route == null)
