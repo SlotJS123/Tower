@@ -104,25 +104,14 @@ public class UIManager : MonoBehaviour
     public void OnClickEmptyZone()
     {
         setTowerBoard.SetActive(true);
-        foreach (Button btn in setTowerBoardButtons)
-            btn.onClick.RemoveAllListeners();
-
-        setTowerBoardButtons[0].onClick.AddListener(() => 
-        { 
-            GameManager.Instance.MakeTower();
-            DisableTowerBoard();
-        } );
-        setTowerBoardButtons[1].onClick.AddListener(() => DisableTowerBoard());
-
-        setTowerBoardText.text = "타워를 설치하시겠습니까?";
-        setTowerBoardButtonTexts[0].text = "설치하기";
-        setTowerBoardButtonTexts[1].text = "취소하기";
+        CheckClickObject(true);
     }
 
     // 타워 터치시 실행 함수
-    public void OnClickTower()
+    public void OnClickTower(int _towerCost)
     {
-        // TODO
+        setTowerBoard.SetActive(true);
+        CheckClickObject(false, _towerCost);
     }
 
     public void SetEnergyText(int _energy)
@@ -169,6 +158,38 @@ public class UIManager : MonoBehaviour
 
         GameManager.Instance.selectTile = null;
         setTowerBoard.SetActive(false);
+    }
+
+    private void CheckClickObject(bool _isTile, int _towerCost = 0)
+    {
+        foreach (Button btn in setTowerBoardButtons)
+            btn.onClick.RemoveAllListeners();
+
+        setTowerBoardButtons[1].onClick.AddListener(() => DisableTowerBoard());
+
+        if (_isTile)
+        {
+            setTowerBoardButtons[0].onClick.AddListener(() =>
+            {
+                GameManager.Instance.MakeTower();
+                DisableTowerBoard();
+            });
+
+            setTowerBoardText.text = "타워를 설치하시겠습니까?";
+            setTowerBoardButtonTexts[0].text = "설치하기";
+            setTowerBoardButtonTexts[1].text = "취소하기";
+        }
+        else
+        {
+            setTowerBoardButtons[0].onClick.AddListener(() =>
+            {
+                DisableTowerBoard();
+            });
+
+            setTowerBoardText.text = "타워를 제거하시겠습니까?";
+            setTowerBoardButtonTexts[0].text = $"제거하기{"\n"}(+{_towerCost} G)";
+            setTowerBoardButtonTexts[1].text = "취소하기";
+        }
     }
 
 }
