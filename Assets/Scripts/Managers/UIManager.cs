@@ -14,13 +14,22 @@ public enum GameSpeedState
 
 public class UIManager : MonoBehaviour
 {
+    private static UIManager instance;
+
     [SerializeField]
     private Button speedButton;
-    private Text speedButtonText;
     [SerializeField]
     private Button optionButton;
+    [SerializeField]
+    private GameObject setTowerBoard;
 
+    private Button[] setTowerBoardButtons;
+    private Text[] setTowerBoardButtonTexts = new Text[2];
+    private Text setTowerBoardText;
+    private Text speedButtonText;
     private GameSpeedState gameSpeed;
+
+    public static UIManager Instance => instance;
 
     // 게임 속도 관리 프로퍼티
     public GameSpeedState GameSpeed
@@ -54,9 +63,28 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            return;
+        }
+
+        Destroy(this.gameObject);
+    }
+
     private void Start()
     {
+        // 차후 Init 함수로 정리할것
         speedButtonText = speedButton.GetComponentInChildren<Text>();
+        setTowerBoardButtons = setTowerBoard.GetComponentsInChildren<Button>();
+        setTowerBoardText = setTowerBoard.GetComponentInChildren<Text>();
+
+        for (int i = 0; i < setTowerBoardButtonTexts.Length; i++)
+        {
+            setTowerBoardButtonTexts[i] = setTowerBoardButtons[i].GetComponentInChildren<Text>();
+        }
 
         speedButton.onClick.RemoveAllListeners();
         optionButton.onClick.RemoveAllListeners();
@@ -75,7 +103,20 @@ public class UIManager : MonoBehaviour
     // 타워 설치할 자리 터치시 실행 함수
     public void OnClickEmptyZone()
     {
-        // TODO
+        setTowerBoard.SetActive(true);
+        foreach (Button btn in setTowerBoardButtons)
+            btn.onClick.RemoveAllListeners();
+
+        setTowerBoardButtons[0].onClick.AddListener(() => 
+        { 
+            GameManager.Instance.MakeTower();
+            DisableTowerBoard();
+        } );
+        setTowerBoardButtons[1].onClick.AddListener(() => DisableTowerBoard());
+
+        setTowerBoardText.text = "타워를 설치하시겠습니까?";
+        setTowerBoardButtonTexts[0].text = "설치하기";
+        setTowerBoardButtonTexts[1].text = "취소하기";
     }
 
     // 타워 터치시 실행 함수
@@ -119,6 +160,15 @@ public class UIManager : MonoBehaviour
     {
         print("Click Option Button");
         // TODO
+    }
+
+    private void DisableTowerBoard()
+    {
+        foreach (Button btn in setTowerBoardButtons)
+            btn.onClick.RemoveAllListeners();
+
+        GameManager.Instance.selectTile = null;
+        setTowerBoard.SetActive(false);
     }
 
 }

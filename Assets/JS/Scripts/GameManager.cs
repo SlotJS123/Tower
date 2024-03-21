@@ -9,9 +9,13 @@ public class GameManager : MonoBehaviour
     public MapManager mapManager;
     public TowerSpawn towerSpawn;
     public MonsterManager monsterManager;
+    public Tile selectTile = null;
+
     private List<Tile> route;
 
+    // 차후 삭제 예정 변수
     public GameObject testMonstor;
+
     private void Awake()
     {
         if(Instance == null)
@@ -40,7 +44,10 @@ public class GameManager : MonoBehaviour
     }
 
 
-
+    public void MakeTower()
+    {
+        towerSpawn.JS_TowerInstallation(selectTile);
+    }
 
 
     //  시작전 이동 경로 넣어주는 함수

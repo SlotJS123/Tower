@@ -243,6 +243,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speedButton: {fileID: 28525914}
   optionButton: {fileID: 798415082}
+  setTowerBoard: {fileID: 1933513739}
 --- !u!1 &14522521
 GameObject:
   m_ObjectHideFlags: 0
@@ -2377,6 +2378,7 @@ MonoBehaviour:
   mapManager: {fileID: 1573157767}
   towerSpawn: {fileID: 1879972993}
   monsterManager: {fileID: 1044030336}
+  selectTile: {fileID: 0}
   testMonstor: {fileID: 9103724983551237950, guid: e0d9279be95235741b51b511fc25edc2, type: 3}
 --- !u!4 &1217295541
 Transform:
