@@ -27,9 +27,11 @@ public class Tile : MonoBehaviour
     // G : 시작으로부터 이동했던 거리, H : |가로|+|세로| 장애물 무시하여 목표까지의 거리, F : G + H
     public int x, y, G, H;
     public int F { get { return G + H; } }
-    TileState state;
+    public TileState state;
 
-    public Action<Tile> OnTileClick;    
+    public Action<Tile> OnTileClick;
+
+    // public TileState TileState => state;
 
     // Start is called before the first frame update
     void Start()
@@ -81,6 +83,9 @@ public class Tile : MonoBehaviour
         else
         {
             if (GameManager.Instance.selectTile != null)
+                return;
+
+            if (state == TileState.Off)
                 return;
 
             Debug.Log("여기서 이제 타워를 생성해주는 로직을 생성해서 적용을 시켜야합니다 ");
