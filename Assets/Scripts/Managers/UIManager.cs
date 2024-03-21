@@ -16,12 +16,13 @@ public class UIManager : MonoBehaviour
 {
     [SerializeField]
     private Button speedButton;
+    private Text speedButtonText;
     [SerializeField]
     private Button optionButton;
 
-    private GameSpeedState gameSpeed = GameSpeedState.Default;
+    private GameSpeedState gameSpeed;
 
-    // 게임 속도 관리 변수
+    // 게임 속도 관리 프로퍼티
     public GameSpeedState GameSpeed
     {
         get { return gameSpeed; }
@@ -32,14 +33,17 @@ public class UIManager : MonoBehaviour
             switch (gameSpeed)
             {
                 case GameSpeedState.Default:
+                    speedButtonText.text = $"Speed{"\n"}X1";
                     Time.timeScale = 1;
                     break;
 
                 case GameSpeedState.X2:
+                    speedButtonText.text = $"Speed{"\n"}X2";
                     Time.timeScale = 2;
                     break;
 
                 case GameSpeedState.X4:
+                    speedButtonText.text = $"Speed{"\n"}X4";
                     Time.timeScale = 4;
                     break;
 
@@ -50,13 +54,54 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    void Start()
+    private void Start()
     {
+        speedButtonText = speedButton.GetComponentInChildren<Text>();
+
         speedButton.onClick.RemoveAllListeners();
         optionButton.onClick.RemoveAllListeners();
 
         speedButton.onClick.AddListener(() => { OnClickSpeedButton(); });
         optionButton.onClick.AddListener(() => { OnClickOptionButton(); });
+
+        GameSpeed = GameSpeedState.Default;
+    }
+
+    private void Update()
+    {
+        // ChangeTimerText();
+    }
+
+    // 타워 설치할 자리 터치시 실행 함수
+    public void OnClickEmptyZone()
+    {
+        // TODO
+    }
+
+    // 타워 터치시 실행 함수
+    public void OnClickTower()
+    {
+        // TODO
+    }
+
+    public void SetEnergyText(int _energy)
+    {
+
+    }
+
+    public void SetHeartText(int _heart)
+    {
+
+    }
+
+    public void SetWaveText(int _wave)
+    {
+
+    }
+
+    private void ChangeTimerText()
+    {
+
     }
 
     private void OnClickSpeedButton()
