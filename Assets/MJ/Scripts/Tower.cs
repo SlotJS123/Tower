@@ -39,7 +39,7 @@ public class Tower : MonoBehaviour
         EventTrigger.Entry entry = new EventTrigger.Entry();
         entry.eventID = EventTriggerType.PointerClick;
         // 아래 DestroyTower부분 차후 ObjectPull 구현시 반환하게 수정할 예정
-        entry.callback.AddListener((eventData) => { UIManager.Instance.OnClickTower(towerCost); DestroyTower(); });
+        entry.callback.AddListener((eventData) => { UIManager.Instance.OnClickTower(this, towerCost); });
         clickTrigger.triggers.Add(entry);
     }
 
@@ -54,6 +54,14 @@ public class Tower : MonoBehaviour
     public void SetSpawnTile(Tile _tile)
     {
         spawnTile = _tile;
+    }
+
+    // 타워 제거 함수
+    // 차후 ObjectPull 구현시 반환하게 수정할 예정
+    public void DestroyTower()
+    {
+        spawnTile.state = TileState.On;
+        Destroy(this.gameObject);
     }
 
     //원본 코드 
@@ -142,12 +150,7 @@ public class Tower : MonoBehaviour
         clone.GetComponent<Ball>().SetUp(attTarget, attDamage);
     }
 
-    // 타워 제거 함수
-    private void DestroyTower()
-    {
-        spawnTile.state = TileState.On;
-        Destroy(this.gameObject);
-    }
+    
 
     Color indicatorColor = Color.red;
 

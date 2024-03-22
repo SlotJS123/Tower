@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -108,10 +109,10 @@ public class UIManager : MonoBehaviour
     }
 
     // 타워 터치시 실행 함수
-    public void OnClickTower(int _towerCost)
+    public void OnClickTower(Tower _tower, int _towerCost)
     {
         setTowerBoard.SetActive(true);
-        CheckClickObject(false, _towerCost);
+        CheckClickObject(false, _tower, _towerCost);
     }
 
     public void SetEnergyText(int _energy)
@@ -160,7 +161,7 @@ public class UIManager : MonoBehaviour
         setTowerBoard.SetActive(false);
     }
 
-    private void CheckClickObject(bool _isTile, int _towerCost = 0)
+    private void CheckClickObject(bool _isTile, Tower _tower = null, int _towerCost = 0)
     {
         foreach (Button btn in setTowerBoardButtons)
             btn.onClick.RemoveAllListeners();
@@ -181,8 +182,10 @@ public class UIManager : MonoBehaviour
         }
         else
         {
+            // towerControll += 
             setTowerBoardButtons[0].onClick.AddListener(() =>
             {
+                _tower.DestroyTower();
                 DisableTowerBoard();
             });
 
