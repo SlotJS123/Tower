@@ -9,7 +9,7 @@ public enum WeaponState { SearchTarget = 0, AttToTarget }
 public class Tower : MonoBehaviour
 {
     [SerializeField]
-    private string name; // 타워이름
+    private string towerName; // 타워이름
     public GameObject prefab; // 타워 프리팹
     [SerializeField]
     private GameObject  projectileObj; // 발사체 프리팹
