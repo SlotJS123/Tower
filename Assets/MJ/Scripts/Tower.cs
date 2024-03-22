@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public enum WeaponState { SearchTarget = 0, AttToTarget }
 
@@ -20,12 +21,27 @@ public class Tower : MonoBehaviour
     private float attRange; // 공격 범위
     [SerializeField]
     private float attDamage; // 공격력
+
+    private int towerCost; // 타워 가격
     private Transform   attTarget = null; // 공격 대상
 
     private MonsterManager enemySpawn; // 존재하는 적 정보 획득용
 
     private WeaponState weapon = WeaponState.SearchTarget; // 타워 무기의 상태
 
+    private EventTrigger clickTrigger;
+    private Tile spawnTile; // 타워가 스폰된 타일 기억 (일단 임시)
+
+    private void Start()
+    {
+        clickTrigger = GetComponent<EventTrigger>();
+
+        EventTrigger.Entry entry = new EventTrigger.Entry();
+        entry.eventID = EventTriggerType.PointerClick;
+        // 아래 DestroyTower부분 차후 ObjectPull 구현시 반환하게 수정할 예정
+        entry.callback.AddListener((eventData) => { UIManager.Instance.OnClickTower(towerCost); DestroyTower(); });
+        clickTrigger.triggers.Add(entry);
+    }
 
     public void Setup(MonsterManager enemySpawn)
     {
@@ -33,6 +49,11 @@ public class Tower : MonoBehaviour
 
         // 최초 상태를 WeaponState.SearchTarget으로 설정
         ChangeState(WeaponState.SearchTarget);
+    }
+
+    public void SetSpawnTile(Tile _tile)
+    {
+        spawnTile = _tile;
     }
 
     //원본 코드 
@@ -121,6 +142,13 @@ public class Tower : MonoBehaviour
         clone.GetComponent<Ball>().SetUp(attTarget, attDamage);
     }
 
+    // 타워 제거 함수
+    private void DestroyTower()
+    {
+        spawnTile.state = TileState.On;
+        Destroy(this.gameObject);
+    }
+
     Color indicatorColor = Color.red;
 
     private void OnDrawGizmosSelected()
@@ -130,4 +158,5 @@ public class Tower : MonoBehaviour
         // 공격 사거리를 그리기 위해 현재 오브젝트의 위치를 중심으로 하는 원을 그림
         Gizmos.DrawWireSphere(transform.position, attRange);
     }
+
 }

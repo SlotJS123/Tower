@@ -90,7 +90,9 @@ public class TowerSpawn : MonoBehaviour
             Tower selectedTower = towers[selectedIndex];
             GameObject clone = Instantiate(selectedTower.prefab, target, Quaternion.identity);
 
-            clone.GetComponent<Tower>().Setup(GameManager.Instance.monsterManager);
+            Tower tower = clone.GetComponent<Tower>();
+            tower.Setup(GameManager.Instance.monsterManager);
+            tower.SetSpawnTile(_tile);
         }
 
         _tile.state = TileState.Off;
