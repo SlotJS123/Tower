@@ -5,19 +5,19 @@ using UnityEngine;
 public class TowerSpawn : MonoBehaviour
 {
     [SerializeField]
-    private List<Tower> towers; // Å¸¿ö ¸ñ·Ï
+    private List<Tower> towers; // íƒ€ì›Œ ëª©ë¡
     [SerializeField]
-    private float[] probabilities; // °¢ Å¸¿öÀÇ »Ì±â È®·ü
+    private float[] probabilities; // ê° íƒ€ì›Œì˜ ë½‘ê¸° í™•ë¥ 
     [SerializeField]
-    private EnemySpawn enemySpawn; // ÇöÀç ¸Ê¿¡ Á¸ÀçÇÏ´Â Àû ¸®½ºÆ® Á¤º¸
+    private EnemySpawn enemySpawn; // í˜„ì¬ ë§µì— ì¡´ì¬í•˜ëŠ” ì  ë¦¬ìŠ¤íŠ¸ ì •ë³´
 
 
-    // ¿øº» ÄÚµåÀÔ´Ï´Ù 
-    public void TowerInstallation() // Å¸¿ö¼³Ä¡
+    // ì›ë³¸ ì½”ë“œì…ë‹ˆë‹¤ 
+    public void TowerInstallation() // íƒ€ì›Œì„¤ì¹˜
     {
         if(Input.GetMouseButtonDown(0)) 
         {
-            // È®·ü ´©Àû °è»ê
+            // í™•ë¥  ëˆ„ì  ê³„ì‚°
             float totalProbability = 0;
             float[] accumulatedProbabilities = new float[probabilities.Length];
             for (int i = 0; i < probabilities.Length; i++)
@@ -26,10 +26,10 @@ public class TowerSpawn : MonoBehaviour
                 accumulatedProbabilities[i] = totalProbability;
             }
 
-            // ·£´ı °ª »ı¼º
+            // ëœë¤ ê°’ ìƒì„±
             float randomValue = Random.Range(0, totalProbability);
 
-            // »ÌÈù Å¸¿ö ÀÎµ¦½º Ã£±â
+            // ë½‘íŒ íƒ€ì›Œ ì¸ë±ìŠ¤ ì°¾ê¸°
             int selectedIndex = -1;
             for (int i = 0; i < accumulatedProbabilities.Length; i++)
             {
@@ -40,7 +40,7 @@ public class TowerSpawn : MonoBehaviour
                 }
             }
 
-            // »ÌÈù Å¸¿ö »ı¼º
+            // ë½‘íŒ íƒ€ì›Œ ìƒì„±
             if(selectedIndex != -1)
             {
                 Vector2 mPos = Input.mousePosition;
@@ -56,10 +56,10 @@ public class TowerSpawn : MonoBehaviour
 
 
 
-    //JS ¸Ê¿¡¼­ »ç¿ë ÇÒ ¼ö ÀÖ°Ô ¼öÁ¤ÇÑ ÄÚµåÀÔ´Ï´Ù 
-    public void JS_TowerInstallation(Tile _tile) // Å¸¿ö¼³Ä¡
+    //JS ë§µì—ì„œ ì‚¬ìš© í•  ìˆ˜ ìˆê²Œ ìˆ˜ì •í•œ ì½”ë“œì…ë‹ˆë‹¤ 
+    public void JS_TowerInstallation(Tile _tile) // íƒ€ì›Œì„¤ì¹˜
     {
-        // È®·ü ´©Àû °è»ê
+        // í™•ë¥  ëˆ„ì  ê³„ì‚°
         float totalProbability = 0;
         float[] accumulatedProbabilities = new float[probabilities.Length];
         for (int i = 0; i < probabilities.Length; i++)
@@ -68,10 +68,10 @@ public class TowerSpawn : MonoBehaviour
             accumulatedProbabilities[i] = totalProbability;
         }
 
-        // ·£´ı °ª »ı¼º
+        // ëœë¤ ê°’ ìƒì„±
         float randomValue = Random.Range(0, totalProbability);
 
-        // »ÌÈù Å¸¿ö ÀÎµ¦½º Ã£±â
+        // ë½‘íŒ íƒ€ì›Œ ì¸ë±ìŠ¤ ì°¾ê¸°
         int selectedIndex = -1;
         for (int i = 0; i < accumulatedProbabilities.Length; i++)
         {
@@ -82,7 +82,7 @@ public class TowerSpawn : MonoBehaviour
             }
         }
 
-        // »ÌÈù Å¸¿ö »ı¼º
+        // ë½‘íŒ íƒ€ì›Œ ìƒì„±
         if (selectedIndex != -1)
         {
             Vector2 mPos = Input.mousePosition;
@@ -90,9 +90,12 @@ public class TowerSpawn : MonoBehaviour
             Tower selectedTower = towers[selectedIndex];
             GameObject clone = Instantiate(selectedTower.prefab, target, Quaternion.identity);
 
-            clone.GetComponent<Tower>().Setup(GameManager.Instance.monsterManager);
+            Tower tower = clone.GetComponent<Tower>();
+            tower.Setup(GameManager.Instance.monsterManager);
+            tower.SetSpawnTile(_tile);
         }
 
+        _tile.state = TileState.Off;
     }
 
     private void Update()

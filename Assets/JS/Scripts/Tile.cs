@@ -8,8 +8,8 @@ using UnityEngine.UIElements;
 
 public enum TileState
 {
-    On,  //Å¸¿ö ¼³Ä¡°¡ °¡´ÉÇÑ »óÅÂ
-    Off  //Å¸¿ö ¼³Ä¡°¡ ºÒ°¡´ÉÇÑ »óÅÂ 
+    On,  //íƒ€ì›Œ ì„¤ì¹˜ê°€ ê°€ëŠ¥í•œ ìƒíƒœ
+    Off  //íƒ€ì›Œ ì„¤ì¹˜ê°€ ë¶ˆê°€ëŠ¥í•œ ìƒíƒœ 
 }
 public class Tile : MonoBehaviour
 {
@@ -24,12 +24,14 @@ public class Tile : MonoBehaviour
     public GameObject tile_2;
 
 
-    // G : ½ÃÀÛÀ¸·ÎºÎÅÍ ÀÌµ¿Çß´ø °Å¸®, H : |°¡·Î|+|¼¼·Î| Àå¾Ö¹° ¹«½ÃÇÏ¿© ¸ñÇ¥±îÁöÀÇ °Å¸®, F : G + H
+    // G : ì‹œì‘ìœ¼ë¡œë¶€í„° ì´ë™í–ˆë˜ ê±°ë¦¬, H : |ê°€ë¡œ|+|ì„¸ë¡œ| ì¥ì• ë¬¼ ë¬´ì‹œí•˜ì—¬ ëª©í‘œê¹Œì§€ì˜ ê±°ë¦¬, F : G + H
     public int x, y, G, H;
     public int F { get { return G + H; } }
-    TileState state;
+    public TileState state;
 
-    public Action<Tile> OnTileClick;    
+    public Action<Tile> OnTileClick;
+
+    // public TileState TileState => state;
 
     // Start is called before the first frame update
     void Start()
@@ -45,16 +47,16 @@ public class Tile : MonoBehaviour
     }
 
     /// <summary>
-    ///  Map Manager¿¡¼­ mapÀ» ¸¸µé ¶§ tile ÇÁ¸®ÆÕÀ» »ı¼ºÇÏ¸ç °¡Àå ¸ÕÀú ½ÇÇàÇÏ±â µÉ ÇÔ¼öÀÔ´Ï´Ù 
+    ///  Map Managerì—ì„œ mapì„ ë§Œë“¤ ë•Œ tile í”„ë¦¬íŒ¹ì„ ìƒì„±í•˜ë©° ê°€ì¥ ë¨¼ì € ì‹¤í–‰í•˜ê¸° ë  í•¨ìˆ˜ì…ë‹ˆë‹¤ 
     /// </summary>
-    /// <param name="_x">x ÁÂÇ¥°ªÀ» ÇÒ´ç ¹ŞÀ»Áö ¸ô¶ó¼­ ÁØºñ </param>
-    /// <param name="_y">y ÁÂÇ¥°ªÀ» ÇÒ´ç ¹ŞÀ»Áö ¸ô¶ó¼­ ÁØºñ </param>
+    /// <param name="_x">x ì¢Œí‘œê°’ì„ í• ë‹¹ ë°›ì„ì§€ ëª°ë¼ì„œ ì¤€ë¹„ </param>
+    /// <param name="_y">y ì¢Œí‘œê°’ì„ í• ë‹¹ ë°›ì„ì§€ ëª°ë¼ì„œ ì¤€ë¹„ </param>
     public void Info(int _x, int _y)
     {
         x = _x; y = _y; 
-        //ÀÏ´Ü Å×½ºÆ®¿ëµµ·Î On/Off·Î¸¸ Á¸ÀçÇÕ´Ï´Ù 
-        // OnÀÎ°æ¿ì ¸ó½ºÅÍÀÇ ÀÌµ¿°æ·Î°¡ µÇ¸ç
-        // OffÀÎ °æ¿ì Å¸¿ö¼³Ä¡ °æ·Î°¡ µË´Ï´Ù 
+        //ì¼ë‹¨ í…ŒìŠ¤íŠ¸ìš©ë„ë¡œ On/Offë¡œë§Œ ì¡´ì¬í•©ë‹ˆë‹¤ 
+        // Onì¸ê²½ìš° ëª¬ìŠ¤í„°ì˜ ì´ë™ê²½ë¡œê°€ ë˜ë©°
+        // Offì¸ ê²½ìš° íƒ€ì›Œì„¤ì¹˜ ê²½ë¡œê°€ ë©ë‹ˆë‹¤ 
         state = TileState.On;
         H = 190;
         G = 10;
@@ -63,7 +65,7 @@ public class Tile : MonoBehaviour
     }
 
     /// <summary>
-    /// ¹öÆ°À» Å¬¸¯ÇßÀ» °æ¿ì ½ÇÇàµÇ´Â ÀÌº¥Æ® ÇÔ¼öÀÔ´Ï´Ù 
+    /// ë²„íŠ¼ì„ í´ë¦­í–ˆì„ ê²½ìš° ì‹¤í–‰ë˜ëŠ” ì´ë²¤íŠ¸ í•¨ìˆ˜ì…ë‹ˆë‹¤ 
     /// </summary>
     public void TouchTile()
     {
@@ -80,9 +82,15 @@ public class Tile : MonoBehaviour
         }
         else
         {
-            Debug.Log("¿©±â¼­ ÀÌÁ¦ Å¸¿ö¸¦ »ı¼ºÇØÁÖ´Â ·ÎÁ÷À» »ı¼ºÇØ¼­ Àû¿ëÀ» ½ÃÄÑ¾ßÇÕ´Ï´Ù ");
+            if (GameManager.Instance.selectTile != null)
+                return;
 
-            GameManager.Instance.towerSpawn.JS_TowerInstallation(this);
+            if (state == TileState.Off)
+                return;
+
+            Debug.Log("ì—¬ê¸°ì„œ ì´ì œ íƒ€ì›Œë¥¼ ìƒì„±í•´ì£¼ëŠ” ë¡œì§ì„ ìƒì„±í•´ì„œ ì ìš©ì„ ì‹œì¼œì•¼í•©ë‹ˆë‹¤ ");
+            GameManager.Instance.selectTile = this;
+            UIManager.Instance.OnClickEmptyZone();
         }
 
 

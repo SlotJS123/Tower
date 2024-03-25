@@ -2,79 +2,108 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public enum WeaponState { SearchTarget = 0, AttToTarget }
 
 public class Tower : MonoBehaviour
 {
     [SerializeField]
-    private string name; // Å¸¿öÀÌ¸§
-    public GameObject prefab; // Å¸¿ö ÇÁ¸®ÆÕ
+    private string towerName; // íƒ€ì›Œì´ë¦„
+    public GameObject prefab; // íƒ€ì›Œ í”„ë¦¬íŒ¹
     [SerializeField]
-    private GameObject  projectileObj; // ¹ß»çÃ¼ ÇÁ¸®ÆÕ
+    private GameObject  projectileObj; // ë°œì‚¬ì²´ í”„ë¦¬íŒ¹
     [SerializeField]
-    private Transform   point; // ¹ß»çÃ¼ »ı¼ºÀ§Ä¡
+    private Transform   point; // ë°œì‚¬ì²´ ìƒì„±ìœ„ì¹˜
     [SerializeField]
-    private float attRate; // °ø°İ ¼Óµµ
+    private float attRate; // ê³µê²© ì†ë„
     [SerializeField]
-    private float attRange; // °ø°İ ¹üÀ§
+    private float attRange; // ê³µê²© ë²”ìœ„
     [SerializeField]
-    private float attDamage; // °ø°İ·Â
-    private Transform   attTarget = null; // °ø°İ ´ë»ó
+    private float attDamage; // ê³µê²©ë ¥
 
-    private MonsterManager enemySpawn; // Á¸ÀçÇÏ´Â Àû Á¤º¸ È¹µæ¿ë
+    private int towerCost; // íƒ€ì›Œ ê°€ê²©
+    private Transform   attTarget = null; // ê³µê²© ëŒ€ìƒ
 
-    private WeaponState weapon = WeaponState.SearchTarget; // Å¸¿ö ¹«±âÀÇ »óÅÂ
+    private MonsterManager enemySpawn; // ì¡´ì¬í•˜ëŠ” ì  ì •ë³´ íšë“ìš©
 
+    private WeaponState weapon = WeaponState.SearchTarget; // íƒ€ì›Œ ë¬´ê¸°ì˜ ìƒíƒœ
+
+    private EventTrigger clickTrigger;
+    private Tile spawnTile; // íƒ€ì›Œê°€ ìŠ¤í°ëœ íƒ€ì¼ ê¸°ì–µ (ì¼ë‹¨ ì„ì‹œ)
+
+    private void Start()
+    {
+        clickTrigger = GetComponent<EventTrigger>();
+
+        EventTrigger.Entry entry = new EventTrigger.Entry();
+        entry.eventID = EventTriggerType.PointerClick;
+        // ì•„ë˜ DestroyTowerë¶€ë¶„ ì°¨í›„ ObjectPull êµ¬í˜„ì‹œ ë°˜í™˜í•˜ê²Œ ìˆ˜ì •í•  ì˜ˆì •
+        entry.callback.AddListener((eventData) => { UIManager.Instance.OnClickTower(this, towerCost); });
+        clickTrigger.triggers.Add(entry);
+    }
 
     public void Setup(MonsterManager enemySpawn)
     {
         this.enemySpawn = enemySpawn;
 
-        // ÃÖÃÊ »óÅÂ¸¦ WeaponState.SearchTargetÀ¸·Î ¼³Á¤
+        // ìµœì´ˆ ìƒíƒœë¥¼ WeaponState.SearchTargetìœ¼ë¡œ ì„¤ì •
         ChangeState(WeaponState.SearchTarget);
     }
 
-    //¿øº» ÄÚµå 
+    public void SetSpawnTile(Tile _tile)
+    {
+        spawnTile = _tile;
+    }
+
+    // íƒ€ì›Œ ì œê±° í•¨ìˆ˜
+    // ì°¨í›„ ObjectPull êµ¬í˜„ì‹œ ë°˜í™˜í•˜ê²Œ ìˆ˜ì •í•  ì˜ˆì •
+    public void DestroyTower()
+    {
+        spawnTile.state = TileState.On;
+        Destroy(this.gameObject);
+    }
+
+    //ì›ë³¸ ì½”ë“œ 
     //public void ChangeState(WeaponState state)
     //{
-    //    // ÀÌÀü¿¡ Àç»ıÁßÀÌ´ø »óÅÂ Á¾·á
+    //    // ì´ì „ì— ì¬ìƒì¤‘ì´ë˜ ìƒíƒœ ì¢…ë£Œ
     //    StopCoroutine(weapon.ToString());
-    //    // »óÅÂ º¯°æ
+    //    // ìƒíƒœ ë³€ê²½
     //    weapon = state;
 
-    //    Debug.Log("Áö±İ µ¿ÀÛÇÏ´Â°Ô ¹«¾ùÀÎÁö È®ÀÎÀ» ÇÏ±â À§ÇÑ ·Î±×ÀÔ´Ï´Ù " + weapon.ToString());
-    //    // »õ·Î¿î »óÅÂ Àç»ı
+    //    Debug.Log("ì§€ê¸ˆ ë™ì‘í•˜ëŠ”ê²Œ ë¬´ì—‡ì¸ì§€ í™•ì¸ì„ í•˜ê¸° ìœ„í•œ ë¡œê·¸ì…ë‹ˆë‹¤ " + weapon.ToString());
+    //    // ìƒˆë¡œìš´ ìƒíƒœ ì¬ìƒ
     //    StartCoroutine(weapon.ToString());
     //}
 
 
     public void ChangeState(WeaponState state)
     {
-        // ÀÌÀü¿¡ Àç»ıÁßÀÌ´ø »óÅÂ Á¾·á
+        // ì´ì „ì— ì¬ìƒì¤‘ì´ë˜ ìƒíƒœ ì¢…ë£Œ
         StopCoroutine(weapon.ToString());
-        // »óÅÂ º¯°æ
+        // ìƒíƒœ ë³€ê²½
         weapon = state;
 
-        Debug.Log("Áö±İ µ¿ÀÛÇÏ´Â°Ô ¹«¾ùÀÎÁö È®ÀÎÀ» ÇÏ±â À§ÇÑ ·Î±×ÀÔ´Ï´Ù " + weapon.ToString());
-        // »õ·Î¿î »óÅÂ Àç»ı
+        Debug.Log("ì§€ê¸ˆ ë™ì‘í•˜ëŠ”ê²Œ ë¬´ì—‡ì¸ì§€ í™•ì¸ì„ í•˜ê¸° ìœ„í•œ ë¡œê·¸ì…ë‹ˆë‹¤ " + weapon.ToString());
+        // ìƒˆë¡œìš´ ìƒíƒœ ì¬ìƒ
         StartCoroutine(weapon.ToString());
     }
     IEnumerator SearchTarget()
     {
         while (true)
         {
-            // Á¦ÀÏ °¡±îÀÌ ÀÖ´Â ÀûÀ» Ã£±â À§ÇØ ÃÖÃÊ °Å¸®¸¦ ÃÖ´ëÇÑ Å©°Ô ¼³Á¤
+            // ì œì¼ ê°€ê¹Œì´ ìˆëŠ” ì ì„ ì°¾ê¸° ìœ„í•´ ìµœì´ˆ ê±°ë¦¬ë¥¼ ìµœëŒ€í•œ í¬ê²Œ ì„¤ì •
             float minDistance = Mathf.Infinity;
-            // EnemySpawnÀÇ EnemyList¿¡ ÀÖ´Â ÇöÀç ¸Ê¿¡ Á¸ÀçÇÏ´Â ¸ğµç Àû °Ë»ç
-            for(int i = 0; i < enemySpawn.RetunnMonsterList().Count; i++)
+            // EnemySpawnì˜ EnemyListì— ìˆëŠ” í˜„ì¬ ë§µì— ì¡´ì¬í•˜ëŠ” ëª¨ë“  ì  ê²€ì‚¬
+            for(int i = 0; i < enemySpawn.ReturnMonsterList().Count; i++)
             {
-                float distance = Vector3.Distance(enemySpawn.RetunnMonsterList()[i].transform.position, transform.position);
-                // ÇöÀç °Ë»çÁßÀÎ Àû°úÀÇ °Å¸®°¡ °ø°İ ¹üÀ§³»¿¡ ÀÖ°í, ÇöÀç±îÁö °Ë»çÇÑ Àûº¸´Ù °Å¸®°¡ °¡±î¿ì¸é
+                float distance = Vector3.Distance(enemySpawn.ReturnMonsterList()[i].transform.position, transform.position);
+                // í˜„ì¬ ê²€ì‚¬ì¤‘ì¸ ì ê³¼ì˜ ê±°ë¦¬ê°€ ê³µê²© ë²”ìœ„ë‚´ì— ìˆê³ , í˜„ì¬ê¹Œì§€ ê²€ì‚¬í•œ ì ë³´ë‹¤ ê±°ë¦¬ê°€ ê°€ê¹Œìš°ë©´
                 if( distance <= attRange && distance <= minDistance)
                 {
                     minDistance = distance;
-                    attTarget = enemySpawn.RetunnMonsterList()[i].transform;
+                    attTarget = enemySpawn.ReturnMonsterList()[i].transform;
                 }
                 yield return null;
             }
@@ -92,13 +121,13 @@ public class Tower : MonoBehaviour
     {
         while(true) 
         {
-            // targetÀÌ ÀÖ´ÂÁö °Ë»ç
+            // targetì´ ìˆëŠ”ì§€ ê²€ì‚¬
             if( attTarget == null)
             {
                 ChangeState(WeaponState.SearchTarget);
                 break;
             }
-            // targetÀÌ °ø°İ ¹üÀ§ ¾È¿¡ ÀÖ´ÂÁö °Ë»ç
+            // targetì´ ê³µê²© ë²”ìœ„ ì•ˆì— ìˆëŠ”ì§€ ê²€ì‚¬
             float distance = Vector3.Distance(attTarget.position, transform.position);
             if(distance > attRange)
             {
@@ -106,10 +135,10 @@ public class Tower : MonoBehaviour
                 ChangeState(WeaponState.SearchTarget);
                 break;
             }
-            // attRate ½Ã°£¸¸Å­ ´ë±â
+            // attRate ì‹œê°„ë§Œí¼ ëŒ€ê¸°
             yield return new WaitForSeconds(attRate);
 
-            // ¹ß»çÃ¼ »ı¼º
+            // ë°œì‚¬ì²´ ìƒì„±
             SpawnProjectileObj();
         }
     }
@@ -121,13 +150,16 @@ public class Tower : MonoBehaviour
         clone.GetComponent<Ball>().SetUp(attTarget, attDamage);
     }
 
+    
+
     Color indicatorColor = Color.red;
 
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = indicatorColor;
 
-        // °ø°İ »ç°Å¸®¸¦ ±×¸®±â À§ÇØ ÇöÀç ¿ÀºêÁ§Æ®ÀÇ À§Ä¡¸¦ Áß½ÉÀ¸·Î ÇÏ´Â ¿øÀ» ±×¸²
+        // ê³µê²© ì‚¬ê±°ë¦¬ë¥¼ ê·¸ë¦¬ê¸° ìœ„í•´ í˜„ì¬ ì˜¤ë¸Œì íŠ¸ì˜ ìœ„ì¹˜ë¥¼ ì¤‘ì‹¬ìœ¼ë¡œ í•˜ëŠ” ì›ì„ ê·¸ë¦¼
         Gizmos.DrawWireSphere(transform.position, attRange);
     }
+
 }
