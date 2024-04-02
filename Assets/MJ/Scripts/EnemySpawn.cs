@@ -5,33 +5,60 @@ using UnityEngine;
 public class EnemySpawn : MonoBehaviour
 {
     [SerializeField]
-    private GameObject enemyObj; // Àû ÇÁ¸®ÆÕ
-
-    private List<Enemy> enemyList; // ÇöÀç ¸Ê¿¡ Á¸ÀçÇÏ´Â ¸ğµç ÀûÀÇ Á¤º¸
+    private Transform[] wayPoints; // í˜„ì¬ ìŠ¤í…Œì´ì§€ì˜ ì´ë™ ê²½ë¡œ
+    private Wave currentwave;
+    private List<Enemy> enemyList; // í˜„ì¬ ë§µì— ì¡´ì¬í•˜ëŠ” ëª¨ë“  ì ì˜ ì •ë³´
 
     public List<Enemy> EnemyList => enemyList;
 
     private void Awake()
     {
-        // Àû ¸®½ºÆ® ¸Ş¸ğ¸® ÇÒ´ç
+        // ì  ë¦¬ìŠ¤íŠ¸ ë©”ëª¨ë¦¬ í• ë‹¹
         enemyList = new List<Enemy>();
-        // Àû »ı¼º ÄÚ·çÆ¾ ÇÔ¼ö È£Ãâ
+        // ì  ìƒì„± ì½”ë£¨í‹´ í•¨ìˆ˜ í˜¸ì¶œ
         //StartCoroutine("Spawn");
+    }
+
+    public void StartWave(Wave wave)
+    {
+        currentwave= wave;
+        StartCoroutine(Spawn());
     }
 
     IEnumerator Spawn() 
     {
-        while (true)
-        {
-            float spawnTime = 10.0f;
-            // Àû ¿ÀºêÁ§Æ® »ı¼º
-            GameObject clone = Instantiate(enemyObj, transform);
-            // ¹æ±İ »ı¼ºµÈ ÀûÀÇ enemy ÄÄÆ÷³ÍÆ®
-            Enemy enemy = clone.GetComponent<Enemy>();
-            // ¸®½ºÆ®¿¡ ¹æ±İ »ı¼ºµÈ Àû Á¤º¸ ÀúÀå
-            enemyList.Add(enemy);
+        // í˜„ì¬ ì›¨ì´ë¸Œì—ì„œ ìƒì„±í•œ ì  ìˆ˜
+        int enemyCount = 0;
 
-            yield return new WaitForSeconds(spawnTime);
+        int k = 0;
+        // í˜„ì¬ ì›¨ì´ë¸Œì—ì„œ ìƒì„±ë˜ì–´ì•¼ í•˜ëŠ” ì ì˜ ìˆ˜ë§Œí¼ ì ì„ ìƒì„±
+        while (k < currentwave.enemyPrefabCount.Length)
+        {
+            for(int i = 0; enemyCount < currentwave.enemyPrefabCount[k]; i++)
+            {               
+                // ì  ì˜¤ë¸Œì íŠ¸ ìƒì„±
+                GameObject clone = Instantiate(currentwave.enemyPrefabs[k]);
+                // ë°©ê¸ˆ ìƒì„±ëœ ì ì˜ enemy ì»´í¬ë„ŒíŠ¸
+                Enemy enemy = clone.GetComponent<Enemy>();
+                // ë¦¬ìŠ¤íŠ¸ì— ë°©ê¸ˆ ìƒì„±ëœ ì  ì •ë³´ ì €ì¥
+                enemyList.Add(enemy);
+                // wayPoint ì •ë³´ë¥¼ ë§¤ê°œë³€ìˆ˜ë¡œ Setupë¥¼ í˜¸ì¶œ
+                enemy.Setup(this,wayPoints);
+                // í˜„ì¬ ì›¨ì´ë¸Œ ì—ì„œ ìƒì„±í•œ ì ì˜ ìˆ«ì +1
+                enemyCount++;
+                // spawnTime ì‹œê°„ ë™ì•ˆ ëŒ€ê¸°
+                yield return new WaitForSeconds(currentwave.spawnTime);
+            }
+            k++;
+            if(currentwave.enemyPrefabCount.Length > k)
+            {
+                enemyCount = 0;
+            }
+            else
+            {
+                // í˜„ì¬ ì›¨ì´ë¸Œ ì¢…ë£Œ
+                break;
+            }
         }
     }
 }
