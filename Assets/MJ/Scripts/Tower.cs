@@ -60,7 +60,7 @@ public class Tower : MonoBehaviour
     // 차후 ObjectPull 구현시 반환하게 수정할 예정
     public void DestroyTower()
     {
-        spawnTile.state = TileState.On;
+        // spawnTile.SetTileState(true);
         Destroy(this.gameObject);
     }
 
