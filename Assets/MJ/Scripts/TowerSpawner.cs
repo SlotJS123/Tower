@@ -14,14 +14,22 @@ public class TowerSpawner
                 break;
         }
 
-        if (string.IsNullOrEmpty(towerName))
-            return;
+        InstantiateTower(towerName);
+    }
 
+    public void CreateTower(string towerName)
+    {
         InstantiateTower(towerName);
     }
 
     private void InstantiateTower(string towerName)
     {
+        if (string.IsNullOrEmpty(towerName))
+        {
+            Debug.Log($"{towerName} is null");
+            return;
+        }
+
         string towerPass = $"Prefabs/Towers/{towerName}";
         Object tower = Resources.Load(towerPass);
 
