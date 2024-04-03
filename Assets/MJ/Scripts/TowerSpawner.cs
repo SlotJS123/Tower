@@ -17,26 +17,31 @@ public class TowerSpawner
         InstantiateTower(towerName);
     }
 
-    public void CreateTower(string towerName)
+    public GameObject CreateTower(string towerName)
     {
-        InstantiateTower(towerName);
+        return InstantiateTower(towerName);
     }
 
-    private void InstantiateTower(string towerName)
+    private GameObject InstantiateTower(string towerName)
     {
         if (string.IsNullOrEmpty(towerName))
         {
             Debug.Log($"{towerName} is null");
-            return;
+            return null;
         }
 
         string towerPass = $"Prefabs/Towers/{towerName}";
         Object tower = Resources.Load(towerPass);
 
         if (tower != null)
-            Object.Instantiate(tower);
+        {
+            return (GameObject)Object.Instantiate(tower);
+        }
         else
+        {
             Debug.Log($"{towerPass} 는 잘못된 경로입니다");
+            return null;
+        }
     }
 
 }
