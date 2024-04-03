@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 
 public class SpriteSelection : MonoBehaviour
 {
+    /*
     private Camera mainCamera;
 
     void Start()
@@ -51,4 +52,5 @@ public class SpriteSelection : MonoBehaviour
             }
         }
     }
+    */
 }
