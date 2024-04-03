@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
 
         waveManager = GetComponentInChildren<WaveManager>();
         // mapManager.MapMaking();
-        towerSpawn.GetStartJsonData();
+        // towerSpawn.GetStartJsonData();
         // monsterManager.SetMonsterObject(testMonstor);
     }
 
