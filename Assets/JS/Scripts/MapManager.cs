@@ -141,7 +141,7 @@ public class MapManager : MonoBehaviour
                 towerSetState = true;
 
                 //맵 세팅이 다 끝났기 때문에 데이터를 SetMapData 함수에 전달을 해줍니다 
-                GameManager.Instance.SetMapData(FinalNodeList);
+                // GameManager.Instance.SetMapData(FinalNodeList);
 
                 for (int i = 0; i < FinalNodeList.Count; i++)
                     print(i + "번째는 " + FinalNodeList[i].x + ", " + FinalNodeList[i].y);
@@ -236,7 +236,7 @@ public class MapManager : MonoBehaviour
     /// </summary>
     public void MapMaking()
     {
-
+        /*
         if(canvas == null)
         {
             Debug.LogError("지정해준 오브젝트가 없기 때문에 제대로 동작을 안하여 중지합니다");
@@ -281,6 +281,7 @@ public class MapManager : MonoBehaviour
                 //}
             }
         }
+        */
     }
 
     void AddTileWayData(Tile _tile)
@@ -305,7 +306,7 @@ public class MapManager : MonoBehaviour
 
 
         Tile tile = wayTileList[0];
-        tile.ResetData();
+        // tile.ResetData();
         List<Tile> tiles = new List<Tile>();
 
         wayTileList.Remove(tile);

@@ -60,20 +60,18 @@ public class SelectionPopup : MonoBehaviour
             {
                 case SelcetionButtonType.TOWER:
 
-                    int towerIndxe = Random.Range(0, GameManager.Instance.towerSpawn.GetTowerList().Count);
-                    List<Tower> towers = GameManager.Instance.towerSpawn.GetTowerList();
-                    var towerData= towers[towerIndxe];
+                    // int towerIndxe = Random.Range(0, GameManager.Instance.towerSpawn.GetTowerList().Count);
+                    // List<Tower> towers = GameManager.Instance.towerSpawn.GetTowerList();
+                    // var towerData= towers[towerIndxe];
 
-                    _popupUseButton.SetupTowerButtonData(towerData);
+                    // _popupUseButton.SetupTowerButtonData(towerData);
                     break;
                 case SelcetionButtonType.TOWERLEVELUP:
-                    _popupUseButton.SetupTowerLevelUpButtonData();
+                    // _popupUseButton.SetupTowerLevelUpButtonData();
                     break;
                 case SelcetionButtonType.TRAP:
-                    //int trapIndxe = Random.Range(0, GameManager.Instance.towerSpawn.towerJson.items.Count);
-                    //var tarpData = GameManager.Instance.towerSpawn.towerJson.items[trapIndxe];
-                    //_popupUseButton.SetupTrapButtonData(tarpData);
-                    _popupUseButton.SetupTrapButtonData();
+                    
+                    //_popupUseButton.SetupTrapButtonData();
 
                     break;
             }

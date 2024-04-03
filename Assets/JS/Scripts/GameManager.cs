@@ -18,7 +18,6 @@ public class GameManager : MonoBehaviour
     public PlayerStatManager PlayerStatus => playerStatus;
     public WaveManager WaveManager => waveManager;
 
-    public TowerSpawn towerSpawn;
     public MonsterManager monsterManager = new MonsterManager();
     private List<Tile> route;
 
@@ -40,7 +39,7 @@ public class GameManager : MonoBehaviour
 
         waveManager = GetComponentInChildren<WaveManager>();
         mapManager.MapMaking();
-        towerSpawn.GetStartJsonData();
+        // towerSpawner.GetStartJsonData();
         monsterManager.SetMonsterObject(testMonstor);
     }
 

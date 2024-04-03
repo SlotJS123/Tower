@@ -41,18 +41,18 @@ public class PopupUseButton : MonoBehaviour
         title.text = "Tower";
         buttonInfo.towerData = _towerData;  
     }
-    public void SetupTrapButtonData(TrapData _trapData = null)
-    {
-        title.text = "Trap";
-        buttonInfo.trapData = _trapData;    
-    }
+    // public void SetupTrapButtonData(TrapData _trapData = null)
+    // {
+    //     title.text = "Trap";
+    //     buttonInfo.trapData = _trapData;    
+    // }
 
-    public void SetupTowerLevelUpButtonData(TrapData _trapData = null)
-    {
-        title.text = "TowerLevelUp";
-        //buttonInfo.trapData = _trapData;
-    }
-    
+    // public void SetupTowerLevelUpButtonData(TrapData _trapData = null)
+    // {
+    //     title.text = "TowerLevelUp";
+    //     //buttonInfo.trapData = _trapData;
+    // }
+    // 
     //버튼이 클릭된다면 실행을 하게될 함수입니다 
     public void ClickEvent()
     {
@@ -62,7 +62,7 @@ public class PopupUseButton : MonoBehaviour
         switch (selcetionButtonType)
         {
             case SelcetionButtonType.TOWER:
-                GameManager.Instance.towerSpawn.SetUpTower(buttonInfo.towerData);
+                // GameManager.Instance.towerSpawn.SetUpTower(buttonInfo.towerData);
                 break;
             case SelcetionButtonType.TOWERLEVELUP:
                 break;
@@ -94,7 +94,7 @@ public class SelcetionButtonInfo
     //이 아래에서는 이제 함정에 대한 클래스 
     public Tower towerData;
     //타워에 대한 클래스 
-    public TrapData trapData;
+    // public TrapData trapData;
     //가장 큰 문제는 타워를 강화하기 위한 클래스를 어떻게 만들어야 하냐인데 
     //이거는 좀 생각을 해봐야 할거 같습니다 
 
