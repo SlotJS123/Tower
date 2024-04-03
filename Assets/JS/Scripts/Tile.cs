@@ -29,9 +29,7 @@ public class Tile : MonoBehaviour
     public int F { get { return G + H; } }
     public TileState state;
 
-    public Action<Tile> OnTileClick;
-
-    // public TileState TileState => state;
+    public Action<Tile> OnTileClick;    
 
     // Start is called before the first frame update
     void Start()
@@ -82,15 +80,9 @@ public class Tile : MonoBehaviour
         }
         else
         {
-            if (GameManager.Instance.selectTile != null)
-                return;
-
-            if (state == TileState.Off)
-                return;
-
             Debug.Log("여기서 이제 타워를 생성해주는 로직을 생성해서 적용을 시켜야합니다 ");
-            GameManager.Instance.selectTile = this;
-            UIManager.Instance.OnClickEmptyZone();
+
+            GameManager.Instance.towerSpawn.JS_TowerInstallation(this, GameManager.Instance.towerSpawn.GetUpTowerData());
         }
 
 

@@ -157,7 +157,7 @@ public class UIManager : MonoBehaviour
         foreach (Button btn in setTowerBoardButtons)
             btn.onClick.RemoveAllListeners();
 
-        GameManager.Instance.selectTile = null;
+        //GameManager.Instance.selectTile = null;
         setTowerBoard.SetActive(false);
     }
 
@@ -172,7 +172,7 @@ public class UIManager : MonoBehaviour
         {
             setTowerBoardButtons[0].onClick.AddListener(() =>
             {
-                GameManager.Instance.MakeTower();
+                //GameManager.Instance.MakeTower();
                 DisableTowerBoard();
             });
 

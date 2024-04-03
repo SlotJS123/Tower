@@ -4,31 +4,30 @@ using UnityEngine;
 using System;
 using System.IO;
 using UnityEditor.Experimental.GraphView;
-using UnityEngine.UI;
+
+
 
 public class MapManager : MonoBehaviour
 {
     public Tile prefab_Tile;
 
     public GameObject canvas;
-    [Header("¸Ê Á¦ÀÛÀÇ x, y ÃàÀÇ °ª")]
+    [Header("ë§µ ì œì‘ì˜ x, y ì¶•ì˜ ê°’")]
     public int map_X;
     public int map_Y;
     public int map_H;
 
-    [Header("Å¸ÀÏÀÇ »ı¼º ±âº» À§Ä¡°ªÀÌ¶û °¢ÃàÀÇ ¼­·Î °£°İ")]
+    [Header("íƒ€ì¼ì˜ ìƒì„± ê¸°ë³¸ ìœ„ì¹˜ê°’ì´ë‘ ê°ì¶•ì˜ ì„œë¡œ ê°„ê²©")]
     public float interval_X;
     public float interval_Y;
     public float start_X;
     public float start_Y;
 
     public List<Tile> tileList = new List<Tile>();  
-    public List<Tile> wayTileList = new List<Tile>(); // ±»ÀÌ °ø°³¸¦ ÇÒ ÇÊ¿ä°¡ ÀÖ³ª?
+    public List<Tile> wayTileList = new List<Tile>(); // êµ³ì´ ê³µê°œë¥¼ í•  í•„ìš”ê°€ ìˆë‚˜?
     [Range(0, 10)]
-    [Header("Å¸ÀÏ ¿ÀºêÁ§Æ® ÇÁ¸®ÆÕ")]
+    [Header("íƒ€ì¼ ì˜¤ë¸Œì íŠ¸ í”„ë¦¬íŒ¹")]
     public GameObject tile;
-
-    public Button startButton;
 
     public Action OnButtonTouchEventHander;
 
@@ -43,7 +42,7 @@ public class MapManager : MonoBehaviour
     public List<Tile> OpenList;
     List<Tile> ClosedList = new List<Tile>();
 
-    //Å¸¿ö ¼³Ä¡ ÁØºñ°¡ µÇ¾ú´Ù´Â ½ÅÈ£¸¦ º¸³»±â À§ÇÑ bool°ªÀÔ´Ï´Ù 
+    //íƒ€ì›Œ ì„¤ì¹˜ ì¤€ë¹„ê°€ ë˜ì—ˆë‹¤ëŠ” ì‹ í˜¸ë¥¼ ë³´ë‚´ê¸° ìœ„í•œ boolê°’ì…ë‹ˆë‹¤ 
     public bool towerSetState;
 
     // Start is called before the first frame update
@@ -53,8 +52,6 @@ public class MapManager : MonoBehaviour
         topRight = new Vector2Int(9, 9);
         startPos = new Vector2Int(0, 0);
         targetPos = new Vector2Int(9,9);
-
-        
     }
 
     // Update is called once per frame
@@ -68,7 +65,7 @@ public class MapManager : MonoBehaviour
 
     public void PathFinding()
     {
-        // NodeArrayÀÇ Å©±â Á¤ÇØÁÖ°í, isWall, x, y ´ëÀÔ
+        // NodeArrayì˜ í¬ê¸° ì •í•´ì£¼ê³ , isWall, x, y ëŒ€ì…
     
 
         //for (int i = 0; i < sizeX; i++)
@@ -84,7 +81,7 @@ public class MapManager : MonoBehaviour
         //}
 
 
-        // ½ÃÀÛ°ú ³¡ ³ëµå, ¿­¸°¸®½ºÆ®¿Í ´İÈù¸®½ºÆ®, ¸¶Áö¸·¸®½ºÆ® ÃÊ±âÈ­
+        // ì‹œì‘ê³¼ ë ë…¸ë“œ, ì—´ë¦°ë¦¬ìŠ¤íŠ¸ì™€ ë‹«íŒë¦¬ìŠ¤íŠ¸, ë§ˆì§€ë§‰ë¦¬ìŠ¤íŠ¸ ì´ˆê¸°í™”
         StartNode = NodeArray[startPos.x - bottomLeft.x, startPos.y - bottomLeft.y];
         TargetNode = NodeArray[targetPos.x - bottomLeft.x, targetPos.y - bottomLeft.y];
 
@@ -108,7 +105,7 @@ public class MapManager : MonoBehaviour
         //OpenList = wayTileList;
         while (OpenList.Count > 0)
         {
-            // ¿­¸°¸®½ºÆ® Áß °¡Àå F°¡ ÀÛ°í F°¡ °°´Ù¸é H°¡ ÀÛÀº °É ÇöÀç³ëµå·Î ÇÏ°í ¿­¸°¸®½ºÆ®¿¡¼­ ´İÈù¸®½ºÆ®·Î ¿Å±â±â
+            // ì—´ë¦°ë¦¬ìŠ¤íŠ¸ ì¤‘ ê°€ì¥ Fê°€ ì‘ê³  Fê°€ ê°™ë‹¤ë©´ Hê°€ ì‘ì€ ê±¸ í˜„ì¬ë…¸ë“œë¡œ í•˜ê³  ì—´ë¦°ë¦¬ìŠ¤íŠ¸ì—ì„œ ë‹«íŒë¦¬ìŠ¤íŠ¸ë¡œ ì˜®ê¸°ê¸°
             CurNode = OpenList[0];
             for (int i = 1; i < OpenList.Count; i++)
             {
@@ -125,7 +122,7 @@ public class MapManager : MonoBehaviour
             ClosedList.Add(CurNode);
 
 
-            // ¸¶Áö¸·
+            // ë§ˆì§€ë§‰
             if (CurNode == TargetNode)
             {
                 Tile TargetCurNode = TargetNode;
@@ -139,18 +136,17 @@ public class MapManager : MonoBehaviour
 
 
                 towerSetState = true;
-                startButton.interactable = true;    
 
-                //¸Ê ¼¼ÆÃÀÌ ´Ù ³¡³µ±â ¶§¹®¿¡ µ¥ÀÌÅÍ¸¦ SetMapData ÇÔ¼ö¿¡ Àü´ŞÀ» ÇØÁİ´Ï´Ù 
+                //ë§µ ì„¸íŒ…ì´ ë‹¤ ëë‚¬ê¸° ë•Œë¬¸ì— ë°ì´í„°ë¥¼ SetMapData í•¨ìˆ˜ì— ì „ë‹¬ì„ í•´ì¤ë‹ˆë‹¤ 
                 GameManager.Instance.SetMapData(FinalNodeList);
 
                 for (int i = 0; i < FinalNodeList.Count; i++)
-                    print(i + "¹øÂ°´Â " + FinalNodeList[i].x + ", " + FinalNodeList[i].y);
+                    print(i + "ë²ˆì§¸ëŠ” " + FinalNodeList[i].x + ", " + FinalNodeList[i].y);
                 return;
             }
 
 
-            // ¢Ö¢Ø¢×¢Ù
+            // â†—â†–â†™â†˜
             if (allowDiagonal)
             {
                 OpenListAdd(CurNode.x + 1, CurNode.y + 1);
@@ -159,7 +155,7 @@ public class MapManager : MonoBehaviour
                 OpenListAdd(CurNode.x + 1, CurNode.y - 1);
             }
 
-            // ¡è ¡æ ¡é ¡ç
+            // â†‘ â†’ â†“ â†
             OpenListAdd(CurNode.x, CurNode.y + 1);
             OpenListAdd(CurNode.x + 1, CurNode.y);
             OpenListAdd(CurNode.x, CurNode.y - 1);
@@ -171,22 +167,22 @@ public class MapManager : MonoBehaviour
 
     void OpenListAdd(int checkX, int checkY)
     {
-        // »óÇÏÁÂ¿ì ¹üÀ§¸¦ ¹ş¾î³ªÁö ¾Ê°í, º®ÀÌ ¾Æ´Ï¸é¼­, ´İÈù¸®½ºÆ®¿¡ ¾ø´Ù¸é
+        // ìƒí•˜ì¢Œìš° ë²”ìœ„ë¥¼ ë²—ì–´ë‚˜ì§€ ì•Šê³ , ë²½ì´ ì•„ë‹ˆë©´ì„œ, ë‹«íŒë¦¬ìŠ¤íŠ¸ì— ì—†ë‹¤ë©´
         if (checkX >= bottomLeft.x && checkX < topRight.x + 1 && checkY >= bottomLeft.y && checkY < topRight.y + 1 && !NodeArray[checkX - bottomLeft.x, checkY - bottomLeft.y].isWall && !ClosedList.Contains(NodeArray[checkX - bottomLeft.x, checkY - bottomLeft.y]))
         {
-            // ´ë°¢¼± Çã¿ë½Ã, º® »çÀÌ·Î Åë°ú ¾ÈµÊ
+            // ëŒ€ê°ì„  í—ˆìš©ì‹œ, ë²½ ì‚¬ì´ë¡œ í†µê³¼ ì•ˆë¨
             if (allowDiagonal) if (NodeArray[CurNode.x - bottomLeft.x, checkY - bottomLeft.y].isWall && NodeArray[checkX - bottomLeft.x, CurNode.y - bottomLeft.y].isWall) return;
 
-            // ÄÚ³Ê¸¦ °¡·ÎÁú·¯ °¡Áö ¾ÊÀ»½Ã, ÀÌµ¿ Áß¿¡ ¼öÁ÷¼öÆò Àå¾Ö¹°ÀÌ ÀÖÀ¸¸é ¾ÈµÊ
+            // ì½”ë„ˆë¥¼ ê°€ë¡œì§ˆëŸ¬ ê°€ì§€ ì•Šì„ì‹œ, ì´ë™ ì¤‘ì— ìˆ˜ì§ìˆ˜í‰ ì¥ì• ë¬¼ì´ ìˆìœ¼ë©´ ì•ˆë¨
             if (dontCrossCorner) if (NodeArray[CurNode.x - bottomLeft.x, checkY - bottomLeft.y].isWall || NodeArray[checkX - bottomLeft.x, CurNode.y - bottomLeft.y].isWall) return;
 
 
-            // ÀÌ¿ô³ëµå¿¡ ³Ö°í, Á÷¼±Àº 10, ´ë°¢¼±Àº 14ºñ¿ë
+            // ì´ì›ƒë…¸ë“œì— ë„£ê³ , ì§ì„ ì€ 10, ëŒ€ê°ì„ ì€ 14ë¹„ìš©
             Tile NeighborNode = NodeArray[checkX - bottomLeft.x, checkY - bottomLeft.y];
             int MoveCost = CurNode.G + (CurNode.x - checkX == 0 || CurNode.y - checkY == 0 ? 10 : 14);
 
 
-            // ÀÌµ¿ºñ¿ëÀÌ ÀÌ¿ô³ëµåGº¸´Ù ÀÛ°Å³ª ¶Ç´Â ¿­¸°¸®½ºÆ®¿¡ ÀÌ¿ô³ëµå°¡ ¾ø´Ù¸é G, H, ParentNode¸¦ ¼³Á¤ ÈÄ ¿­¸°¸®½ºÆ®¿¡ Ãß°¡
+            // ì´ë™ë¹„ìš©ì´ ì´ì›ƒë…¸ë“œGë³´ë‹¤ ì‘ê±°ë‚˜ ë˜ëŠ” ì—´ë¦°ë¦¬ìŠ¤íŠ¸ì— ì´ì›ƒë…¸ë“œê°€ ì—†ë‹¤ë©´ G, H, ParentNodeë¥¼ ì„¤ì • í›„ ì—´ë¦°ë¦¬ìŠ¤íŠ¸ì— ì¶”ê°€
             if (MoveCost < NeighborNode.G || !OpenList.Contains(NeighborNode))
             {
                 NeighborNode.G = MoveCost;
@@ -233,10 +229,17 @@ public class MapManager : MonoBehaviour
   
 
     /// <summary>
-    /// GameManager¿¡¼­ Map Manager¿¡ ¸Ê Á¦ÀÛÀ» ¿äÃ»ÇÒ ¶§ »ç¿ëÇÏ±â À§ÇÑ ÇÔ¼ö
+    /// GameManagerì—ì„œ Map Managerì— ë§µ ì œì‘ì„ ìš”ì²­í•  ë•Œ ì‚¬ìš©í•˜ê¸° ìœ„í•œ í•¨ìˆ˜
     /// </summary>
     public void MapMaking()
     {
+
+        if(canvas == null)
+        {
+            Debug.LogError("ì§€ì •í•´ì¤€ ì˜¤ë¸Œì íŠ¸ê°€ ì—†ê¸° ë•Œë¬¸ì— ì œëŒ€ë¡œ ë™ì‘ì„ ì•ˆí•˜ì—¬ ì¤‘ì§€í•©ë‹ˆë‹¤");
+            return;
+        }
+
         //sizeX = topRight.x - bottomLeft.x + 1;
         //sizeY = topRight.y - bottomLeft.y + 1;
         NodeArray = new Tile[map_X, map_Y];
@@ -289,10 +292,10 @@ public class MapManager : MonoBehaviour
     }
 
 
-    //±æ·Î ¸¸µé¾îµĞ Å¸ÀÏÀ» ÀÌÀü µ¥ÀÌÅÍ·Î ¸®¼Â ½ÃÅ°±â À§ÇÑ ±â´ÉÀÔ´Ï´Ù 
+    //ê¸¸ë¡œ ë§Œë“¤ì–´ë‘” íƒ€ì¼ì„ ì´ì „ ë°ì´í„°ë¡œ ë¦¬ì…‹ ì‹œí‚¤ê¸° ìœ„í•œ ê¸°ëŠ¥ì…ë‹ˆë‹¤ 
     public void ReSetWayTile()
     {
-        //¸¸¾à¿¡ Ä«¿îÅÍ°¡ 0ÀÌ¶ó¸é ÁßÁö ½ÃÅµ´Ï´Ù 
+        //ë§Œì•½ì— ì¹´ìš´í„°ê°€ 0ì´ë¼ë©´ ì¤‘ì§€ ì‹œí‚µë‹ˆë‹¤ 
         if (wayTileList.Count == 0)
         {
             return;
