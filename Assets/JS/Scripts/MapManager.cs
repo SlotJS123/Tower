@@ -4,32 +4,34 @@ using UnityEngine;
 using System;
 using System.IO;
 using UnityEditor.Experimental.GraphView;
-using UnityEngine.UI;
+
+
 
 public class MapManager : MonoBehaviour
 {
-    /*
     public Tile prefab_Tile;
 
     public GameObject canvas;
-    [Header("�� ������ x, y ���� ��")]
+
+    [Header("맵 제작의 x, y 축의 값")]
     public int map_X;
     public int map_Y;
     public int map_H;
 
-    [Header("Ÿ���� ���� �⺻ ��ġ���̶� ������ ���� ����")]
+
+    [Header("타일의 생성 기본 위치값이랑 각축의 서로 간격")]
     public float interval_X;
     public float interval_Y;
     public float start_X;
     public float start_Y;
 
     public List<Tile> tileList = new List<Tile>();  
-    public List<Tile> wayTileList = new List<Tile>(); // ���� ������ �� �ʿ䰡 �ֳ�?
-    [Range(0, 10)]
-    [Header("Ÿ�� ������Ʈ ������")]
-    public GameObject tile;
 
-    public Button startButton;
+    public List<Tile> wayTileList = new List<Tile>(); // 굳이 공개를 할 필요가 있나?
+    [Range(0, 10)]
+    [Header("타일 오브젝트 프리팹")]
+
+    public GameObject tile;
 
     public Action OnButtonTouchEventHander;
 
@@ -44,7 +46,8 @@ public class MapManager : MonoBehaviour
     public List<Tile> OpenList;
     List<Tile> ClosedList = new List<Tile>();
 
-    //Ÿ�� ��ġ �غ� �Ǿ��ٴ� ��ȣ�� ������ ���� bool���Դϴ� 
+
+    //타워 설치 준비가 되었다는 신호를 보내기 위한 bool값입니다 
     public bool towerSetState;
 
     // Start is called before the first frame update
@@ -54,8 +57,6 @@ public class MapManager : MonoBehaviour
         topRight = new Vector2Int(9, 9);
         startPos = new Vector2Int(0, 0);
         targetPos = new Vector2Int(9,9);
-
-        
     }
 
     // Update is called once per frame
@@ -69,8 +70,7 @@ public class MapManager : MonoBehaviour
 
     public void PathFinding()
     {
-        // NodeArray�� ũ�� �����ְ�, isWall, x, y ����
-    
+        // NodeArray의 크기 정해주고, isWall, x, y 대입   
 
         //for (int i = 0; i < sizeX; i++)
         //{
@@ -84,8 +84,7 @@ public class MapManager : MonoBehaviour
         //    }
         //}
 
-
-        // ���۰� �� ���, ��������Ʈ�� ��������Ʈ, ����������Ʈ �ʱ�ȭ
+        // 시작과 끝 노드, 열린리스트와 닫힌리스트, 마지막리스트 초기화
         StartNode = NodeArray[startPos.x - bottomLeft.x, startPos.y - bottomLeft.y];
         TargetNode = NodeArray[targetPos.x - bottomLeft.x, targetPos.y - bottomLeft.y];
 
@@ -109,7 +108,7 @@ public class MapManager : MonoBehaviour
         //OpenList = wayTileList;
         while (OpenList.Count > 0)
         {
-            // ��������Ʈ �� ���� F�� �۰� F�� ���ٸ� H�� ���� �� ������� �ϰ� ��������Ʈ���� ��������Ʈ�� �ű��
+            // 열린리스트 중 가장 F가 작고 F가 같다면 H가 작은 걸 현재노드로 하고 열린리스트에서 닫힌리스트로 옮기기
             CurNode = OpenList[0];
             for (int i = 1; i < OpenList.Count; i++)
             {
@@ -126,7 +125,7 @@ public class MapManager : MonoBehaviour
             ClosedList.Add(CurNode);
 
 
-            // ������
+            // 마지막
             if (CurNode == TargetNode)
             {
                 Tile TargetCurNode = TargetNode;
@@ -140,18 +139,17 @@ public class MapManager : MonoBehaviour
 
 
                 towerSetState = true;
-                startButton.interactable = true;    
 
-                //�� ������ �� ������ ������ �����͸� SetMapData �Լ��� ������ ���ݴϴ� 
+                //맵 세팅이 다 끝났기 때문에 데이터를 SetMapData 함수에 전달을 해줍니다 
                 GameManager.Instance.SetMapData(FinalNodeList);
 
                 for (int i = 0; i < FinalNodeList.Count; i++)
-                    print(i + "��°�� " + FinalNodeList[i].x + ", " + FinalNodeList[i].y);
+                    print(i + "번째는 " + FinalNodeList[i].x + ", " + FinalNodeList[i].y);
                 return;
             }
 
 
-            // �֢آע�
+            // ↗↖↙↘
             if (allowDiagonal)
             {
                 OpenListAdd(CurNode.x + 1, CurNode.y + 1);
@@ -160,7 +158,7 @@ public class MapManager : MonoBehaviour
                 OpenListAdd(CurNode.x + 1, CurNode.y - 1);
             }
 
-            // �� �� �� ��
+            // ↑ → ↓ ←
             OpenListAdd(CurNode.x, CurNode.y + 1);
             OpenListAdd(CurNode.x + 1, CurNode.y);
             OpenListAdd(CurNode.x, CurNode.y - 1);
@@ -172,22 +170,22 @@ public class MapManager : MonoBehaviour
 
     void OpenListAdd(int checkX, int checkY)
     {
-        // �����¿� ������ ����� �ʰ�, ���� �ƴϸ鼭, ��������Ʈ�� ���ٸ�
+        // 상하좌우 범위를 벗어나지 않고, 벽이 아니면서, 닫힌리스트에 없다면
         if (checkX >= bottomLeft.x && checkX < topRight.x + 1 && checkY >= bottomLeft.y && checkY < topRight.y + 1 && !NodeArray[checkX - bottomLeft.x, checkY - bottomLeft.y].isWall && !ClosedList.Contains(NodeArray[checkX - bottomLeft.x, checkY - bottomLeft.y]))
         {
-            // �밢�� ����, �� ���̷� ��� �ȵ�
+            // 대각선 허용시, 벽 사이로 통과 안됨
             if (allowDiagonal) if (NodeArray[CurNode.x - bottomLeft.x, checkY - bottomLeft.y].isWall && NodeArray[checkX - bottomLeft.x, CurNode.y - bottomLeft.y].isWall) return;
 
-            // �ڳʸ� �������� ���� ������, �̵� �߿� �������� ��ֹ��� ������ �ȵ�
+            // 코너를 가로질러 가지 않을시, 이동 중에 수직수평 장애물이 있으면 안됨
             if (dontCrossCorner) if (NodeArray[CurNode.x - bottomLeft.x, checkY - bottomLeft.y].isWall || NodeArray[checkX - bottomLeft.x, CurNode.y - bottomLeft.y].isWall) return;
 
 
-            // �̿��忡 �ְ�, ������ 10, �밢���� 14���
+            // 이웃노드에 넣고, 직선은 10, 대각선은 14비용
             Tile NeighborNode = NodeArray[checkX - bottomLeft.x, checkY - bottomLeft.y];
             int MoveCost = CurNode.G + (CurNode.x - checkX == 0 || CurNode.y - checkY == 0 ? 10 : 14);
 
 
-            // �̵������ �̿���G���� �۰ų� �Ǵ� ��������Ʈ�� �̿��尡 ���ٸ� G, H, ParentNode�� ���� �� ��������Ʈ�� �߰�
+            // 이동비용이 이웃노드G보다 작거나 또는 열린리스트에 이웃노드가 없다면 G, H, ParentNode를 설정 후 열린리스트에 추가
             if (MoveCost < NeighborNode.G || !OpenList.Contains(NeighborNode))
             {
                 NeighborNode.G = MoveCost;
@@ -234,10 +232,17 @@ public class MapManager : MonoBehaviour
   
 
     /// <summary>
-    /// GameManager���� Map Manager�� �� ������ ��û�� �� ����ϱ� ���� �Լ�
+    /// GameManager에서 Map Manager에 맵 제작을 요청할 때 사용하기 위한 함수
     /// </summary>
     public void MapMaking()
     {
+
+        if(canvas == null)
+        {
+            Debug.LogError("지정해준 오브젝트가 없기 때문에 제대로 동작을 안하여 중지합니다");
+            return;
+        }
+
         //sizeX = topRight.x - bottomLeft.x + 1;
         //sizeY = topRight.y - bottomLeft.y + 1;
         NodeArray = new Tile[map_X, map_Y];
@@ -289,11 +294,10 @@ public class MapManager : MonoBehaviour
         PathFinding();
     }
 
-
-    //��� ������ Ÿ���� ���� �����ͷ� ���� ��Ű�� ���� ����Դϴ� 
+    //길로 만들어둔 타일을 이전 데이터로 리셋 시키기 위한 기능입니다 
     public void ReSetWayTile()
     {
-        //���࿡ ī���Ͱ� 0�̶�� ���� ��ŵ�ϴ� 
+        //만약에 카운터가 0이라면 중지 시킵니다 
         if (wayTileList.Count == 0)
         {
             return;
@@ -307,5 +311,4 @@ public class MapManager : MonoBehaviour
         wayTileList.Remove(tile);
         OpenList.Remove(tile);
     }
-    */
 }

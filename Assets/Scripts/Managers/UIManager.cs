@@ -157,14 +157,14 @@ public class UIManager : MonoBehaviour
         // TODO
     }
 
-    //private void DisableTowerBoard()
-    //{
-    //    foreach (Button btn in setTowerBoardButtons)
-    //        btn.onClick.RemoveAllListeners();
-    //
-    //    GameManager.Instance.selectTile = null;
-    //    setTowerBoard.SetActive(false);
-    //}
+    private void DisableTowerBoard()
+    {
+        foreach (Button btn in setTowerBoardButtons)
+            btn.onClick.RemoveAllListeners();
+
+        //GameManager.Instance.selectTile = null;
+        setTowerBoard.SetActive(false);
+    }
 
     private void CheckClickObject(bool _isTile, Tower _tower = null, int _towerCost = 0)
     {
@@ -178,7 +178,7 @@ public class UIManager : MonoBehaviour
         {
             setTowerBoardButtons[0].onClick.AddListener(() =>
             {
-                GameManager.Instance.MakeTower();
+                //GameManager.Instance.MakeTower();
                 DisableTowerBoard();
             });
 

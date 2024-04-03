@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
+
+
 
 public class SpriteSelection : MonoBehaviour
 {
@@ -15,38 +16,33 @@ public class SpriteSelection : MonoBehaviour
 
     void Update()
     {
-        // ë§ˆìš°ìŠ¤ ì™¼ìª½ ë²„íŠ¼ì„ í´ë¦­í•˜ë©´ ë ˆì´ìºìŠ¤íŠ¸ ë°œì‚¬
+        // ¸¶¿ì½º ¿ŞÂÊ ¹öÆ°À» Å¬¸¯ÇÏ¸é ·¹ÀÌÄ³½ºÆ® ¹ß»ç
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
-            // ë ˆì´ìºìŠ¤íŠ¸ë¡œ ì˜¤ë¸Œì íŠ¸ ì¶©ëŒ í™•ì¸
+            // ·¹ÀÌÄ³½ºÆ®·Î ¿ÀºêÁ§Æ® Ãæµ¹ È®ÀÎ
             if (Physics.Raycast(ray, out hit))
             {
-                // ì¶©ëŒí•œ ì˜¤ë¸Œì íŠ¸ê°€ ìŠ¤í”„ë¼ì´íŠ¸ì¸ì§€ í™•ì¸
+                // Ãæµ¹ÇÑ ¿ÀºêÁ§Æ®°¡ ½ºÇÁ¶óÀÌÆ®ÀÎÁö È®ÀÎ
                 Tile spriteRenderer = hit.collider.GetComponent<Tile>();
 
-                if (EventSystem.current.IsPointerOverGameObject() == true)
-                {
-                    return;
-                }
-
-                if (spriteRenderer.isWall == false && GameManager.Instance.mapManager.towerSetState == true)
+                if(spriteRenderer.isWall == false && GameManager.Instance.mapManager.towerSetState == true)
                 {
                     return;
                 }
 
                 if (spriteRenderer != null)
                 {
-                    // ìŠ¤í”„ë¼ì´íŠ¸ ì˜¤ë¸Œì íŠ¸ë¥¼ í´ë¦­í•œ ê²½ìš°
+                    // ½ºÇÁ¶óÀÌÆ® ¿ÀºêÁ§Æ®¸¦ Å¬¸¯ÇÑ °æ¿ì
                     Debug.Log("Sprite Object Selected: " + hit.collider.gameObject.name);
 
                     spriteRenderer.TouchTile();
                 }
                 else
                 {
-                    // ìŠ¤í”„ë¼ì´íŠ¸ê°€ ì•„ë‹Œ ë‹¤ë¥¸ ì˜¤ë¸Œì íŠ¸ë¥¼ í´ë¦­í•œ ê²½ìš°
+                    // ½ºÇÁ¶óÀÌÆ®°¡ ¾Æ´Ñ ´Ù¸¥ ¿ÀºêÁ§Æ®¸¦ Å¬¸¯ÇÑ °æ¿ì
                     Debug.Log("Other Object Selected: " + hit.collider.gameObject.name);
                 }
             }
