@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class EndPoint : MonoBehaviour
 {
-    private void OnTriggerEnter(Collider other)
+    public EnemySpawn enemySpawn;
+
+    public void GoalEnemy(Enemy enemy)
     {
-        
+        enemySpawn.EnemyList.Remove(enemy);
+        Destroy(enemy.gameObject);
+
+        GameManager.Instance.PlayerStatus.DecreaseHP();
     }
 }

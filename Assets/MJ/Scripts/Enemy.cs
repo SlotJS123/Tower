@@ -64,9 +64,8 @@ public class Enemy : MonoBehaviour
         // 현재 위치가 마지막 wayPoint이면
         else
         {
-            enemySpawn.EnemyList.Remove(this);
-            //오브젝트 삭제
-            Destroy(gameObject);
+            EndPoint endPoint = wayPoints[currentIndex].GetComponent<EndPoint>();
+            endPoint.GoalEnemy(this);
         }
     }
 
