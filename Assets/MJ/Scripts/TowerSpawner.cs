@@ -10,6 +10,7 @@ public class TowerSpawner
         switch (towerID)
         {
             case 1:
+                // 타워 이름 이곳에 추가, 변경해주세요
                 towerName = "1";
                 break;
         }
