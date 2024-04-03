@@ -163,6 +163,7 @@ public class UIManager : MonoBehaviour
 
     private void CheckClickObject(bool _isTile, Tower _tower = null, int _towerCost = 0)
     {
+        /*
         foreach (Button btn in setTowerBoardButtons)
             btn.onClick.RemoveAllListeners();
 
@@ -193,6 +194,7 @@ public class UIManager : MonoBehaviour
             setTowerBoardButtonTexts[0].text = $"제거하기{"\n"}(+{_towerCost} G)";
             setTowerBoardButtonTexts[1].text = "취소하기";
         }
+        */
     }
 
 }
