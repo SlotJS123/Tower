@@ -155,9 +155,6 @@ public class TowerSpawn : MonoBehaviour
         if(_tower == null)
         {
             Debug.LogError("현재 할당 받은 타워 데이터가 없습니다!!!");
-
-
-
             return;
         }
 
