@@ -6,6 +6,6 @@ public class GroundTile : Tile
 {
     private GroundTile()
     {
-        this.canBuildTower = true;
+        this.tileType = TileType.GroundTile;
     }
 }

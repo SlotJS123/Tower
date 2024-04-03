@@ -6,6 +6,6 @@ public class WayTile : Tile
 {
     private WayTile()
     {
-        this.canBuildTower = false;
+        this.tileType = TileType.WayTile;
     }
 }
