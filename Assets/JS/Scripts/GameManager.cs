@@ -7,6 +7,17 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     public MapManager mapManager;
+
+    private Tower selectTower = null;
+
+    private TowerSpawner towerSpawner = new TowerSpawner();
+    private PlayerStatManager playerStatus = new PlayerStatManager();
+    private WaveManager waveManager;
+
+    public TowerSpawner TowerSpawner => towerSpawner;
+    public PlayerStatManager PlayerStatus => playerStatus;
+    public WaveManager WaveManager => waveManager;
+
     public TowerSpawn towerSpawn;
     public MonsterManager monsterManager = new MonsterManager();
     private List<Tile> route;
@@ -22,43 +33,33 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
+        // 임시로 플레이어 초기 스탯값 하드코딩 
+        playerStatus.SetPlayerStatus(3, 0);
+
+        waveManager = GetComponentInChildren<WaveManager>();
         mapManager.MapMaking();
         towerSpawn.GetStartJsonData();
         monsterManager.SetMonsterObject(testMonstor);
     }
 
-    // Update is called once per frame
-    void Update()
+    // 웨이브 끝나고 타워 선택 시 아래의 함수로 Tower Type을 넣어 주세요
+    public void SetSelectTower(Tower tower)
     {
-        if(Input.GetKeyDown(KeyCode.W))
-        {
-            OnTouchStartButton();
-        }
+        selectTower = tower;
     }
 
-
-
-
-
-    //  시작전 이동 경로 넣어주는 함수
-    public void SetMapData(List<Tile> _route)
+    public GameObject InstantiateTower()
     {
-        route = _route;
+        return towerSpawner.CreateTower(selectTower.name);
     }
 
-    //  시작버튼 클릭시 실행, 현재는 수동으로 오브젝트에 연결한 상태
-    public void OnTouchStartButton()
+    public bool IsCreateTower()
     {
-        if (route == null)
-        {
-            Debug.Log("Route is null");
-            return;
-        }
+        if (selectTower == null)
+            return false;
 
-        monsterManager.SetRoute(route);
-        StartCoroutine(monsterManager.MonsterSpawnCoroutine(20));
+        return true;
     }
 }

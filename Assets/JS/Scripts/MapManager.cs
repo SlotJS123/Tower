@@ -12,10 +12,12 @@ public class MapManager : MonoBehaviour
     public Tile prefab_Tile;
 
     public GameObject canvas;
+
     [Header("맵 제작의 x, y 축의 값")]
     public int map_X;
     public int map_Y;
     public int map_H;
+
 
     [Header("타일의 생성 기본 위치값이랑 각축의 서로 간격")]
     public float interval_X;
@@ -24,9 +26,11 @@ public class MapManager : MonoBehaviour
     public float start_Y;
 
     public List<Tile> tileList = new List<Tile>();  
+
     public List<Tile> wayTileList = new List<Tile>(); // 굳이 공개를 할 필요가 있나?
     [Range(0, 10)]
     [Header("타일 오브젝트 프리팹")]
+
     public GameObject tile;
 
     public Action OnButtonTouchEventHander;
@@ -41,6 +45,7 @@ public class MapManager : MonoBehaviour
     public Tile StartNode, TargetNode, CurNode;
     public List<Tile> OpenList;
     List<Tile> ClosedList = new List<Tile>();
+
 
     //타워 설치 준비가 되었다는 신호를 보내기 위한 bool값입니다 
     public bool towerSetState;
@@ -65,8 +70,7 @@ public class MapManager : MonoBehaviour
 
     public void PathFinding()
     {
-        // NodeArray의 크기 정해주고, isWall, x, y 대입
-    
+        // NodeArray의 크기 정해주고, isWall, x, y 대입   
 
         //for (int i = 0; i < sizeX; i++)
         //{
@@ -79,7 +83,6 @@ public class MapManager : MonoBehaviour
         //        NodeArray[i, j] = new Node(isWall, i + bottomLeft.x, j + bottomLeft.y);
         //    }
         //}
-
 
         // 시작과 끝 노드, 열린리스트와 닫힌리스트, 마지막리스트 초기화
         StartNode = NodeArray[startPos.x - bottomLeft.x, startPos.y - bottomLeft.y];
@@ -291,7 +294,6 @@ public class MapManager : MonoBehaviour
         PathFinding();
     }
 
-
     //길로 만들어둔 타일을 이전 데이터로 리셋 시키기 위한 기능입니다 
     public void ReSetWayTile()
     {
@@ -309,5 +311,4 @@ public class MapManager : MonoBehaviour
         wayTileList.Remove(tile);
         OpenList.Remove(tile);
     }
-
 }

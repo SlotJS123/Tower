@@ -27,13 +27,29 @@ public class WaveManager : MonoBehaviour
     // Start is called before the first frame update
     public void StartWave()
     {
-        // 현재 맵에 적이 없고, wave가 남아있으면
-        if( enemySpawn.EnemyList.Count == 0 && currentWaveIndex < waves.Length-1 ) 
+        StartCoroutine(WaveCoroutine());
+    }
+
+    public IEnumerator WaveCoroutine()
+    {
+        for (int i = 0; i < waves.Length; i++)
         {
-            // 인덱스의 시작이 -1이기 때문에 웨이브 인덱스 증가를 제일 먼저함
-            currentWaveIndex++;
-            // EnemySpawn의 StartWave 함수 호출, 현재 웨이브 정보 제공
-            enemySpawn.StartWave(waves[currentWaveIndex]);
+            if (enemySpawn.EnemyList.Count == 0 && currentWaveIndex < waves.Length - 1)
+            {
+                // 인덱스의 시작이 -1이기 때문에 웨이브 인덱스 증가를 제일 먼저함
+                currentWaveIndex++;
+                // EnemySpawn의 StartWave 함수 호출, 현재 웨이브 정보 제공
+                enemySpawn.StartWave(waves[currentWaveIndex]);
+            }
+
+            yield return new WaitUntil(() => enemySpawn.EnemyList.Count == 0);
+
+            // Wave 끝, 랜덤 보상 고르는 UI 함수 등장시키고 게임 일시정지
+
+            UIManager.Instance.GameSpeed = GameSpeedState.Pause;
+
+            // UI 쪽에서 보상 선택하면 일시정지 해제
+            yield return new WaitForSeconds(3.0f);
         }
     }
 }
