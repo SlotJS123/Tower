@@ -58,6 +58,7 @@ public class UIManager : MonoBehaviour
                     break;
 
                 case GameSpeedState.Pause:
+                    speedButtonText.text = "Pause";
                     Time.timeScale = 0;
                     break;
             }
@@ -77,21 +78,7 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        // 차후 Init 함수로 정리할것
-        speedButtonText = speedButton.GetComponentInChildren<Text>();
-        setTowerBoardButtons = setTowerBoard.GetComponentsInChildren<Button>();
-        setTowerBoardText = setTowerBoard.GetComponentInChildren<Text>();
-
-        for (int i = 0; i < setTowerBoardButtonTexts.Length; i++)
-        {
-            setTowerBoardButtonTexts[i] = setTowerBoardButtons[i].GetComponentInChildren<Text>();
-        }
-
-        speedButton.onClick.RemoveAllListeners();
-        optionButton.onClick.RemoveAllListeners();
-
-        speedButton.onClick.AddListener(() => { OnClickSpeedButton(); });
-        optionButton.onClick.AddListener(() => { OnClickOptionButton(); });
+        Init();
 
         GameSpeed = GameSpeedState.Default;
     }
@@ -135,6 +122,24 @@ public class UIManager : MonoBehaviour
 
     }
 
+    private void Init()
+    {
+        speedButtonText = speedButton.GetComponentInChildren<Text>();
+        // setTowerBoardButtons = setTowerBoard.GetComponentsInChildren<Button>();
+        // setTowerBoardText = setTowerBoard.GetComponentInChildren<Text>();
+
+        // for (int i = 0; i < setTowerBoardButtonTexts.Length; i++)
+        // {
+        //     setTowerBoardButtonTexts[i] = setTowerBoardButtons[i].GetComponentInChildren<Text>();
+        // }
+
+        speedButton.onClick.RemoveAllListeners();
+        // optionButton.onClick.RemoveAllListeners();
+
+        speedButton.onClick.AddListener(() => { OnClickSpeedButton(); });
+        // optionButton.onClick.AddListener(() => { OnClickOptionButton(); });
+    }
+
     private void OnClickSpeedButton()
     {
         int nowState = (int)GameSpeed;
@@ -152,14 +157,14 @@ public class UIManager : MonoBehaviour
         // TODO
     }
 
-    private void DisableTowerBoard()
-    {
-        foreach (Button btn in setTowerBoardButtons)
-            btn.onClick.RemoveAllListeners();
-
-        GameManager.Instance.selectTile = null;
-        setTowerBoard.SetActive(false);
-    }
+    //private void DisableTowerBoard()
+    //{
+    //    foreach (Button btn in setTowerBoardButtons)
+    //        btn.onClick.RemoveAllListeners();
+    //
+    //    GameManager.Instance.selectTile = null;
+    //    setTowerBoard.SetActive(false);
+    //}
 
     private void CheckClickObject(bool _isTile, Tower _tower = null, int _towerCost = 0)
     {
