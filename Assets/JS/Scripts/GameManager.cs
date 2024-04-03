@@ -7,14 +7,16 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     public MapManager mapManager;
-    public TowerSpawn towerSpawn;
-    public MonsterManager monsterManager;
-    public Tile selectTile = null;
 
-    private List<Tile> route;
+    private Tower selectTower = null;
 
-    // 차후 삭제 예정 변수
-    public GameObject testMonstor;
+    private TowerSpawner towerSpawner = new TowerSpawner();
+    private PlayerStatManager playerStatus = new PlayerStatManager();
+    private WaveManager waveManager;
+
+    public TowerSpawner TowerSpawner => towerSpawner;
+    public PlayerStatManager PlayerStatus => playerStatus;
+    public WaveManager WaveManager => waveManager;
 
     private void Awake()
     {
@@ -24,48 +26,30 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        mapManager.MapMaking();
+        // 임시로 플레이어 초기 스탯값 하드코딩 
+        playerStatus.SetPlayerStatus(3, 0);
 
-        monsterManager.SetMonsterObject(testMonstor);
-
-        mapManager.startButton.onClick.AddListener(OnTouchStartButton);
+        waveManager = GetComponentInChildren<WaveManager>();
     }
 
-    // Update is called once per frame
-    void Update()
+    // 웨이브 끝나고 타워 선택 시 아래의 함수로 Tower Type을 넣어 주세요
+    public void SetSelectTower(Tower tower)
     {
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            OnTouchStartButton();
-        }
+        selectTower = tower;
     }
 
-
-    public void MakeTower()
+    public GameObject InstantiateTower()
     {
-        towerSpawn.JS_TowerInstallation(selectTile);
+        return towerSpawner.CreateTower(selectTower.name);
     }
 
-
-    //  시작전 이동 경로 넣어주는 함수
-    public void SetMapData(List<Tile> _route)
+    public bool IsCreateTower()
     {
-        route = _route;
-    }
+        if (selectTower == null)
+            return false;
 
-    //  시작버튼 클릭시 실행, 현재는 수동으로 오브젝트에 연결한 상태
-    public void OnTouchStartButton()
-    {
-        if (route == null)
-        {
-            Debug.Log("Route is null");
-            return;
-        }
-
-        monsterManager.SetRoute(route);
-        StartCoroutine(monsterManager.MonsterSpawnCoroutine(20));
+        return true;
     }
 }
