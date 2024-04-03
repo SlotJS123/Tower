@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     public MapManager mapManager;
+    public TowerSpawn towerSpawn;
 
     private Tower selectTower = null;
 
@@ -19,7 +20,6 @@ public class GameManager : MonoBehaviour
     public WaveManager WaveManager => waveManager;
 
     public MonsterManager monsterManager = new MonsterManager();
-    private List<Tile> route;
 
     public GameObject testMonstor;
 
@@ -38,9 +38,9 @@ public class GameManager : MonoBehaviour
         playerStatus.SetPlayerStatus(3, 0);
 
         waveManager = GetComponentInChildren<WaveManager>();
-        mapManager.MapMaking();
-        // towerSpawner.GetStartJsonData();
-        monsterManager.SetMonsterObject(testMonstor);
+        // mapManager.MapMaking();
+        towerSpawn.GetStartJsonData();
+        // monsterManager.SetMonsterObject(testMonstor);
     }
 
     // 웨이브 끝나고 타워 선택 시 아래의 함수로 Tower Type을 넣어 주세요
