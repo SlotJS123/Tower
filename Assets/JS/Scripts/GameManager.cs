@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     public MapManager mapManager;
-    public TowerSpawn towerSpawn;
+    public TowerManager towerManager;
     public MonsterManager monsterManager = new MonsterManager();
     private List<Tile> route;
 
@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         mapManager.MapMaking();
-        towerSpawn.GetStartJsonData();
+        towerManager.GetStartJsonData();
         monsterManager.SetMonsterObject(testMonstor);
     }
 

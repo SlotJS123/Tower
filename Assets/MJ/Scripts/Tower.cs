@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public enum WeaponState { SearchTarget = 0, AttToTarget }
 
@@ -12,9 +13,9 @@ public class Tower : MonoBehaviour
     private string towerName; // 타워이름
     public GameObject prefab; // 타워 프리팹
     [SerializeField]
-    private GameObject  projectileObj; // 발사체 프리팹
+    private GameObject projectileObj; // 발사체 프리팹
     [SerializeField]
-    private Transform   point; // 발사체 생성위치
+    private Transform point; // 발사체 생성위치
     [SerializeField]
     private float attRate; // 공격 속도
     [SerializeField]
@@ -23,7 +24,9 @@ public class Tower : MonoBehaviour
     private float attDamage; // 공격력
 
     private int towerCost; // 타워 가격
-    private Transform   attTarget = null; // 공격 대상
+
+    public int towerCount;
+    private Transform attTarget = null; // 공격 대상
 
     private MonsterManager enemySpawn; // 존재하는 적 정보 획득용
 
@@ -31,6 +34,9 @@ public class Tower : MonoBehaviour
 
     private EventTrigger clickTrigger;
     private Tile spawnTile; // 타워가 스폰된 타일 기억 (일단 임시)
+
+    //public Image thumbnail;
+    public SpriteRenderer thumbnail;
 
     private void Start()
     {
@@ -51,6 +57,25 @@ public class Tower : MonoBehaviour
         ChangeState(WeaponState.SearchTarget);
     }
 
+    //이 함수는 단순하게 타워 카운트를 증가 시키기 위한 함수입니다 
+    public void TowerAddCount()
+    {
+        
+        Debug.Log("타워 카운터를 증가시킵니다");
+
+
+
+        towerCount++;
+    }
+
+    //이 함수는 현재 값을 전달 받은 타워가 몇개가 설치되어 있는지 확인을 하기 위한 함수입니다 
+    public int GetTowerCount()
+    {
+        return towerCount;
+    }
+
+
+
     public void SetSpawnTile(Tile _tile)
     {
         spawnTile = _tile;
@@ -60,7 +85,7 @@ public class Tower : MonoBehaviour
     // 차후 ObjectPull 구현시 반환하게 수정할 예정
     public void DestroyTower()
     {
-        spawnTile.state = TileState.On;
+        // spawnTile.SetTileState(true);
         Destroy(this.gameObject);
     }
 
@@ -96,11 +121,11 @@ public class Tower : MonoBehaviour
             // 제일 가까이 있는 적을 찾기 위해 최초 거리를 최대한 크게 설정
             float minDistance = Mathf.Infinity;
             // EnemySpawn의 EnemyList에 있는 현재 맵에 존재하는 모든 적 검사
-            for(int i = 0; i < enemySpawn.ReturnMonsterList().Count; i++)
+            for (int i = 0; i < enemySpawn.ReturnMonsterList().Count; i++)
             {
                 float distance = Vector3.Distance(enemySpawn.ReturnMonsterList()[i].transform.position, transform.position);
                 // 현재 검사중인 적과의 거리가 공격 범위내에 있고, 현재까지 검사한 적보다 거리가 가까우면
-                if( distance <= attRange && distance <= minDistance)
+                if (distance <= attRange && distance <= minDistance)
                 {
                     minDistance = distance;
                     attTarget = enemySpawn.ReturnMonsterList()[i].transform;
@@ -108,7 +133,7 @@ public class Tower : MonoBehaviour
                 yield return null;
             }
 
-            if( attTarget!= null ) 
+            if (attTarget != null)
             {
                 ChangeState(WeaponState.AttToTarget);
             }
@@ -119,17 +144,17 @@ public class Tower : MonoBehaviour
 
     IEnumerator AttToTarget()
     {
-        while(true) 
+        while (true)
         {
             // target이 있는지 검사
-            if( attTarget == null)
+            if (attTarget == null)
             {
                 ChangeState(WeaponState.SearchTarget);
                 break;
             }
             // target이 공격 범위 안에 있는지 검사
             float distance = Vector3.Distance(attTarget.position, transform.position);
-            if(distance > attRange)
+            if (distance > attRange)
             {
                 attTarget = null;
                 ChangeState(WeaponState.SearchTarget);
@@ -150,7 +175,7 @@ public class Tower : MonoBehaviour
         clone.GetComponent<Ball>().SetUp(attTarget, attDamage);
     }
 
-    
+
 
     Color indicatorColor = Color.red;
 

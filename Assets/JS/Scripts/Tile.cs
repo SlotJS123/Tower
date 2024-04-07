@@ -82,7 +82,7 @@ public class Tile : MonoBehaviour
         {
             Debug.Log("여기서 이제 타워를 생성해주는 로직을 생성해서 적용을 시켜야합니다 ");
 
-            GameManager.Instance.towerSpawn.JS_TowerInstallation(this, GameManager.Instance.towerSpawn.GetUpTowerData());
+            GameManager.Instance.towerManager.JS_TowerInstallation(this, GameManager.Instance.towerManager.GetUpTowerData());
         }
 
 

@@ -100,13 +100,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d08ca6484bfb2074cbf1f4062334a855, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: "\uC6D0\uAC70\uB9AC \uD0C0\uC6CC"
+  towerName: 
   prefab: {fileID: 722077002190665234}
   projectileObj: {fileID: 791335038826861917, guid: f5899a6acd8364a4f885c8da92affad1, type: 3}
   point: {fileID: 8443851609144256652}
   attRate: 2
   attRange: 2
   attDamage: 0
+  thumbnail: {fileID: 5753191785882448828}
 --- !u!61 &5252904915247734270
 BoxCollider2D:
   m_ObjectHideFlags: 0

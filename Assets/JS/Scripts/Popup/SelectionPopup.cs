@@ -60,11 +60,38 @@ public class SelectionPopup : MonoBehaviour
             {
                 case SelcetionButtonType.TOWER:
 
-                    int towerIndxe = Random.Range(0, GameManager.Instance.towerSpawn.GetTowerList().Count);
-                    List<Tower> towers = GameManager.Instance.towerSpawn.GetTowerList();
-                    var towerData= towers[towerIndxe];
+                    bool state = true;
+                    while(state)
+                    {
+                        int towerIndxe = Random.Range(0, GameManager.Instance.towerManager.GetTowerList().Count);
+                        List<Tower> towers = GameManager.Instance.towerManager.GetTowerList();
+                        var tower = towers.Find(x => x.GetTowerCount() < 1);
 
-                    _popupUseButton.SetupTowerButtonData(towerData);
+                        if(tower != null)
+                        {
+                            Tower towerData = towers[towerIndxe];
+
+                            if (towerData.GetTowerCount() == 1)
+                            {
+                                Debug.LogError("기능 테스트를 위한 로그입니다");
+                            }
+                            else
+                            {
+
+                                _popupUseButton.SetupTowerButtonData(towerData);
+                                state = false;
+
+                            }
+                        }
+                        else
+                        {
+                            state = false;
+                            Debug.LogError("모든 타워가 설치가 되었다는 조건을 고려하기 위한 임시 예외처리입니다");
+                        }
+                      
+
+                    }
+                 
                     break;
                 case SelcetionButtonType.TOWERLEVELUP:
                     _popupUseButton.SetupTowerLevelUpButtonData();
