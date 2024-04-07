@@ -53,7 +53,9 @@ public class TowerManager : MonoBehaviour
     public void SetUpTower(Tower _towerData)
     {
         setUpAddTowerData = _towerData;
-        _towerData.TowerAddCount();
+        GameManager.Instance.towerManager.TowerCountUp(_towerData);
+
+        //_towerData.TowerAddCount();
 
     }
 

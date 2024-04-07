@@ -40,7 +40,6 @@ public class PopupUseButton : MonoBehaviour
     public void SetupTowerButtonData(Tower _towerData)
     {
         //_towerData.TowerAddCount();
-        GameManager.Instance.towerManager.TowerCountUp(_towerData);
         title.text = "Tower";
         buttonInfo.towerData = _towerData;
         thumbnail.sprite = _towerData.thumbnail.sprite;
