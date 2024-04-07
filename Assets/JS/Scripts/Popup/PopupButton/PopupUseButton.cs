@@ -20,7 +20,7 @@ public class PopupUseButton : MonoBehaviour
     public TextMeshProUGUI title;
     public Action OnClickEventHander;
 
-    SelcetionButtonInfo buttonInfo= new SelcetionButtonInfo();
+    SelcetionButtonInfo buttonInfo = new SelcetionButtonInfo();
 
 
     // Start is called before the first frame update
