@@ -52,8 +52,10 @@ public class TowerManager : MonoBehaviour
     }
     public void SetUpTower(Tower _towerData)
     {
+
+        Debug.Log("선택이 되어는지 확인을 합니다");
+
         setUpAddTowerData = _towerData;
-        GameManager.Instance.towerManager.TowerCountUp(_towerData);
 
         //_towerData.TowerAddCount();
 
@@ -175,6 +177,8 @@ public class TowerManager : MonoBehaviour
         Vector2 mPos = Input.mousePosition;
         Vector2 target = _tile.transform.position;
         Tower selectedTower = _tower;
+        GameManager.Instance.towerManager.TowerCountUp(selectedTower);
+
         GameObject clone = Instantiate(selectedTower.prefab, target, Quaternion.identity);
         clone.GetComponent<Tower>().Setup(GameManager.Instance.monsterManager);
         GameManager.Instance.towerManager.RemoveAddTowerData();

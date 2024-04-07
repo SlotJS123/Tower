@@ -25,7 +25,7 @@ public class Tower : MonoBehaviour
 
     private int towerCost; // 타워 가격
 
-    public int towerCount;
+    public int towerCount = 0;
     private Transform attTarget = null; // 공격 대상
 
     private MonsterManager enemySpawn; // 존재하는 적 정보 획득용

@@ -65,13 +65,13 @@ public class SelectionPopup : MonoBehaviour
                     {
                         int towerIndxe = Random.Range(0, GameManager.Instance.towerManager.GetTowerList().Count);
                         List<Tower> towers = GameManager.Instance.towerManager.GetTowerList();
-                        var tower = towers.Find(x => x.GetTowerCount() < 1);
+                        var tower = towers.Find(x => x.GetTowerCount() < 2);
 
                         if(tower != null)
                         {
                             Tower towerData = towers[towerIndxe];
 
-                            if (towerData.GetTowerCount() == 1)
+                            if (towerData.GetTowerCount() == 2)
                             {
                                 Debug.LogError("기능 테스트를 위한 로그입니다");
                             }
