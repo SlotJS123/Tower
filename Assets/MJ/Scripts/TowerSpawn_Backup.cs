@@ -5,7 +5,7 @@ using UnityEngine;
 using Newtonsoft.Json;
 using System;
 
-public class TowerSpawn : MonoBehaviour
+public class TowerSpawn_Backup : MonoBehaviour
 {
     [SerializeField]
     private List<Tower> towers; // 타워 목록
@@ -107,7 +107,7 @@ public class TowerSpawn : MonoBehaviour
                 Tower selectedTower = towers[selectedIndex];
                 GameObject clone = Instantiate(selectedTower.prefab, target, Quaternion.identity);
 
-                clone.GetComponent<Tower>().Setup(GameManager.Instance.monsterManager);
+                clone.GetComponent<Tower>().Setup(GameManager.Instance.enemySpawn);
             }
         }
 
@@ -162,8 +162,8 @@ public class TowerSpawn : MonoBehaviour
         Vector2 target = _tile.transform.position;
         Tower selectedTower = _tower;
         GameObject clone = Instantiate(selectedTower.prefab, target, Quaternion.identity);
-        clone.GetComponent<Tower>().Setup(GameManager.Instance.monsterManager);
-        GameManager.Instance.towerSpawn.RemoveAddTowerData();
+        clone.GetComponent<Tower>().Setup(GameManager.Instance.enemySpawn);
+        GameManager.Instance.towerManager.RemoveAddTowerData();
 
     }
 
@@ -180,123 +180,3 @@ public class TowerSpawn : MonoBehaviour
     }
 }
 
-
-
-
-//json에 사용 될 클래스 정의입니다 
-[Serializable]
-public class TowerData
-{
-    [JsonProperty("a1")]
-    public int towerId;
-    //[JsonProperty("a2")]
-    //public int a2;
-    //[JsonProperty("a3")]
-    //public TowerNameData towerNameList;
-    //[JsonProperty("a4")]
-    //public int a4;
-    //[JsonProperty("a5")]
-    //public TowerNameData a5;
-    //[JsonProperty("a6")]
-    //public int a6;
-    //[JsonProperty("a7")]
-    //public int a7;
-    //[JsonProperty("a8")]
-    //public int a8;
-    //[JsonProperty("a9")]
-    //public int a9;
-    //[JsonProperty("a10")]
-    //public int a10;
-    //[JsonProperty("a11")]
-    //public int a11;
-    //[JsonProperty("a1")]
-    //public int a12;
-    //public int a13;
-
-    //[JsonProperty("a2")]
-    public int a2;
-    //[JsonProperty("a3")]
-    public TowerNameData towerNameList;
-    //[JsonProperty("a4")]
-    public int a4;
-    //[JsonProperty("a5")]
-    public TowerNameData a5;
-    //[JsonProperty("a6")]
-    public int a6;
-    //[JsonProperty("a7")]
-    public int a7;
-    //[JsonProperty("a8")]
-    public int a8;
-    //[JsonProperty("a9")]
-    public int a9;
-    //[JsonProperty("a10")]
-    public int a10;
-    //[JsonProperty("a11")]
-    public int a11;
-    //[JsonProperty("a1")]
-    public int a12;
-    //public int a13;
-}
-[Serializable]
-
-public class TowerNameData
-{
-    public string kr;
-    public string en;
-    public string jp;
-}
-[Serializable]
-public class RootTower
-{
-    public int version;
-    public List<TowerData> items;
-}
-
-
-
-
-
-//json에 사용 될 클래스 정의입니다 
-[Serializable]
-public class TrapData
-{
-    [JsonProperty("a1")]
-    public int towerId;
-    [JsonProperty("a2")]
-    public int a2;
-    [JsonProperty("a3")]
-    public TowerNameData towerNameList;
-    [JsonProperty("a4")]
-    public int a4;
-    [JsonProperty("a5")]
-    public TowerNameData a5;
-    [JsonProperty("a6")]
-    public int a6;
-    [JsonProperty("a7")]
-    public int a7;
-    [JsonProperty("a8")]
-    public int a8;
-    [JsonProperty("a9")]
-    public int a9;
-    [JsonProperty("a10")]
-    public int a10;
-    [JsonProperty("a11")]
-    public int a11;
-    [JsonProperty("a1")]
-    public int a12;
-    //public int a13;
-}
-[Serializable]
-
-public class TraprNameData
-{
-    public string kr;
-    public string en;
-    public string jp;
-}
-[Serializable]
-public class RootTrap
-{
-    public int version;
-    public List<TrapData> items;
-}

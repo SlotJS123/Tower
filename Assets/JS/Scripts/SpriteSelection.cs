@@ -16,33 +16,55 @@ public class SpriteSelection : MonoBehaviour
 
     void Update()
     {
-        // ¸¶¿ì½º ¿ŞÂÊ ¹öÆ°À» Å¬¸¯ÇÏ¸é ·¹ÀÌÄ³½ºÆ® ¹ß»ç
+        // ë§ˆìš°ìŠ¤ ì™¼ìª½ ë²„íŠ¼ì„ í´ë¦­í•˜ë©´ ë ˆì´ìºìŠ¤íŠ¸ ë°œì‚¬
         if (Input.GetMouseButtonDown(0))
         {
-            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
 
-            // ·¹ÀÌÄ³½ºÆ®·Î ¿ÀºêÁ§Æ® Ãæµ¹ È®ÀÎ
+            // ì¹´ë©”ë¼ì˜ ìœ„ì¹˜ì™€ ë°©í–¥ ì„¤ì •
+            Vector3 cameraPosition = mainCamera.transform.position;
+            Vector3 targetPosition = new Vector3(0f, 0f, 0f); // ì›í•˜ëŠ” ê¸°ì¤€ì ìœ¼ë¡œ ìˆ˜ì •í•  ê²ƒ
+            Vector3 cameraDirection = targetPosition - cameraPosition;
+
+            // ë§ˆìš°ìŠ¤ í´ë¦­ ì§€ì ì—ì„œì˜ ìŠ¤í¬ë¦° ì¢Œí‘œ
+            Vector3 mousePosition = Input.mousePosition;
+
+            // ë§ˆìš°ìŠ¤ í´ë¦­ ì§€ì ì—ì„œì˜ ìŠ¤í¬ë¦° ì¢Œí‘œë¥¼ ì›”ë“œ ì¢Œí‘œë¡œ ë³€í™˜
+            Vector3 mousePositionInWorld = Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, Camera.main.nearClipPlane));
+
+            // ì¹´ë©”ë¼ì—ì„œ ë§ˆìš°ìŠ¤ í´ë¦­ ì§€ì ì„ í–¥í•˜ëŠ” ë ˆì´ ìƒì„±
+            Ray ray = new Ray(cameraPosition, mousePositionInWorld - cameraPosition);
+            RaycastHit hit;
+            //Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+            //RaycastHit hit;
+
+            // ë ˆì´ìºìŠ¤íŠ¸ë¡œ ì˜¤ë¸Œì íŠ¸ ì¶©ëŒ í™•ì¸
             if (Physics.Raycast(ray, out hit))
             {
-                // Ãæµ¹ÇÑ ¿ÀºêÁ§Æ®°¡ ½ºÇÁ¶óÀÌÆ®ÀÎÁö È®ÀÎ
+                // ì¶©ëŒí•œ ì˜¤ë¸Œì íŠ¸ê°€ ìŠ¤í”„ë¼ì´íŠ¸ì¸ì§€ í™•ì¸
                 Tile spriteRenderer = hit.collider.GetComponent<Tile>();
 
-                if(spriteRenderer.isWall == false && GameManager.Instance.mapManager.towerSetState == true)
+                if(spriteRenderer == null)
+                {
+                    return;
+
+                }
+
+
+                if (spriteRenderer.isWall == false && GameManager.Instance.mapManager.towerSetState == true)
                 {
                     return;
                 }
 
                 if (spriteRenderer != null)
                 {
-                    // ½ºÇÁ¶óÀÌÆ® ¿ÀºêÁ§Æ®¸¦ Å¬¸¯ÇÑ °æ¿ì
+                    // ìŠ¤í”„ë¼ì´íŠ¸ ì˜¤ë¸Œì íŠ¸ë¥¼ í´ë¦­í•œ ê²½ìš°
                     Debug.Log("Sprite Object Selected: " + hit.collider.gameObject.name);
 
                     spriteRenderer.TouchTile();
                 }
                 else
                 {
-                    // ½ºÇÁ¶óÀÌÆ®°¡ ¾Æ´Ñ ´Ù¸¥ ¿ÀºêÁ§Æ®¸¦ Å¬¸¯ÇÑ °æ¿ì
+                    // ìŠ¤í”„ë¼ì´íŠ¸ê°€ ì•„ë‹Œ ë‹¤ë¥¸ ì˜¤ë¸Œì íŠ¸ë¥¼ í´ë¦­í•œ ê²½ìš°
                     Debug.Log("Other Object Selected: " + hit.collider.gameObject.name);
                 }
             }

@@ -5,7 +5,11 @@ using UnityEngine;
 using Newtonsoft.Json;
 using System;
 
+<<<<<<<< HEAD:Assets/Scripts/TowerSpawn.cs
 public class TowerSpawn_Backup : MonoBehaviour
+========
+public class TowerManager : MonoBehaviour
+>>>>>>>> JS_0407:Assets/MJ/Scripts/TowerManager.cs
 {
     [SerializeField]
     private List<Tower> towers; // 타워 목록
@@ -52,7 +56,17 @@ public class TowerSpawn_Backup : MonoBehaviour
     }
     public void SetUpTower(Tower _towerData)
     {
+<<<<<<<< HEAD:Assets/Scripts/TowerSpawn.cs
         setUpAddTowerData = _towerData;
+========
+
+        Debug.Log("선택이 되어는지 확인을 합니다");
+
+        setUpAddTowerData = _towerData;
+
+        //_towerData.TowerAddCount();
+
+>>>>>>>> JS_0407:Assets/MJ/Scripts/TowerManager.cs
     }
 
     public Tower GetUpTowerData()
@@ -68,6 +82,13 @@ public class TowerSpawn_Backup : MonoBehaviour
     public List<Tower> GetTowerList()
     {
         return towers;
+    }
+
+
+    public void TowerCountUp(Tower _tower)
+    {
+        Tower towerData = towers.Find(x => x == _tower);
+        towerData.TowerAddCount();
     }
 
 
@@ -107,7 +128,7 @@ public class TowerSpawn_Backup : MonoBehaviour
                 Tower selectedTower = towers[selectedIndex];
                 GameObject clone = Instantiate(selectedTower.prefab, target, Quaternion.identity);
 
-                clone.GetComponent<Tower>().Setup(GameManager.Instance.monsterManager);
+                clone.GetComponent<Tower>().Setup(GameManager.Instance.enemySpawn);
             }
         }
 
@@ -164,9 +185,11 @@ public class TowerSpawn_Backup : MonoBehaviour
         Vector2 mPos = Input.mousePosition;
         Vector2 target = _tile.transform.position;
         Tower selectedTower = _tower;
+        GameManager.Instance.towerManager.TowerCountUp(selectedTower);
+
         GameObject clone = Instantiate(selectedTower.prefab, target, Quaternion.identity);
-        clone.GetComponent<Tower>().Setup(GameManager.Instance.monsterManager);
-        GameManager.Instance.towerSpawn.RemoveAddTowerData();
+        clone.GetComponent<Tower>().Setup(GameManager.Instance.enemySpawn);
+        GameManager.Instance.towerManager.RemoveAddTowerData();
 
     }
 

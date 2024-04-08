@@ -7,19 +7,12 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     public MapManager mapManager;
-    public TowerSpawn towerSpawn;
-
-    private Tower selectTower = null;
-
-    private TowerSpawner towerSpawner = new TowerSpawner();
-    private PlayerStatManager playerStatus = new PlayerStatManager();
-    private WaveManager waveManager;
-
-    public TowerSpawner TowerSpawner => towerSpawner;
-    public PlayerStatManager PlayerStatus => playerStatus;
-    public WaveManager WaveManager => waveManager;
-
+    public TowerManager towerManager;
     public MonsterManager monsterManager = new MonsterManager();
+    public SelectionPopupManager selectionPopupManager;
+    public EnemySpawn enemySpawn;
+
+    private List<Tile> route;
 
     public GameObject testMonstor;
 
@@ -32,33 +25,46 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void Start()
+    // Start is called before the first frame update
+    void Start()
     {
-        // 임시로 플레이어 초기 스탯값 하드코딩 
-        playerStatus.SetPlayerStatus(3, 0);
+        //2D라면 사용을 하지만 현재 컨셉이 3D로 변경 되어 스크라이트를 만들 필요가 없습니다 
+        //mapManager.MapMaking();
+        towerManager.GetStartJsonData();
+        monsterManager.SetMonsterObject(testMonstor);
 
-        waveManager = GetComponentInChildren<WaveManager>();
-        // mapManager.MapMaking();
-        // towerSpawn.GetStartJsonData();
-        // monsterManager.SetMonsterObject(testMonstor);
+        selectionPopupManager.selectionPopup.StartInfo();
     }
 
-    // 웨이브 끝나고 타워 선택 시 아래의 함수로 Tower Type을 넣어 주세요
-    public void SetSelectTower(Tower tower)
+    // Update is called once per frame
+    void Update()
     {
-        selectTower = tower;
+        if(Input.GetKeyDown(KeyCode.W))
+        {
+            OnTouchStartButton();
+        }
     }
 
-    public GameObject InstantiateTower()
+
+
+
+
+    //  시작전 이동 경로 넣어주는 함수
+    public void SetMapData(List<Tile> _route)
     {
-        return towerSpawner.CreateTower(selectTower.name);
+        route = _route;
     }
 
-    public bool IsCreateTower()
+    //  시작버튼 클릭시 실행, 현재는 수동으로 오브젝트에 연결한 상태
+    public void OnTouchStartButton()
     {
-        if (selectTower == null)
-            return false;
+        if (route == null)
+        {
+            Debug.Log("Route is null");
+            return;
+        }
 
-        return true;
+        monsterManager.SetRoute(route);
+        StartCoroutine(monsterManager.MonsterSpawnCoroutine(20));
     }
 }

@@ -18,6 +18,7 @@ public class PopupUseButton : MonoBehaviour
     public SelcetionButtonType selcetionButtonType;
     public Button popupUseButtonUI;
     public TextMeshProUGUI title;
+    public Image thumbnail;
     public Action OnClickEventHander;
 
     SelcetionButtonInfo buttonInfo = new SelcetionButtonInfo();
@@ -38,8 +39,10 @@ public class PopupUseButton : MonoBehaviour
     
     public void SetupTowerButtonData(Tower _towerData)
     {
+        //_towerData.TowerAddCount();
         title.text = "Tower";
-        buttonInfo.towerData = _towerData;  
+        buttonInfo.towerData = _towerData;
+        thumbnail.sprite = _towerData.thumbnail.sprite;
     }
     public void SetupTrapButtonData(TrapData _trapData = null)
     {
@@ -62,7 +65,7 @@ public class PopupUseButton : MonoBehaviour
         switch (selcetionButtonType)
         {
             case SelcetionButtonType.TOWER:
-                GameManager.Instance.towerSpawn.SetUpTower(buttonInfo.towerData);
+                GameManager.Instance.towerManager.SetUpTower(buttonInfo.towerData);
                 break;
             case SelcetionButtonType.TOWERLEVELUP:
                 break;

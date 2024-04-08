@@ -8,7 +8,7 @@ public class SelectionPopup : MonoBehaviour
     //버튼 프리팹입니다 
     //재활용하기 위해서 미리 할당해줍니다 
     public PopupUseButton popupUseButton;
-
+ 
     public GameObject canvas;
     int count = 3;
     //웨이브가 끝났을 때 호출하는 방식으로 해야합니다 
@@ -28,14 +28,14 @@ public class SelectionPopup : MonoBehaviour
     //선택지를 세팅하기 위한 함수인데 뭐라고 해야할지 잘 모르겠네 
     void Setect()
     {
-        if (canvas.transform.childCount > 0)
+        if(canvas.transform.childCount > 0)
         {
             for (int i = 0; i < canvas.transform.childCount; i++)
             {
                 //이부분은 나중에 재활용으로 쓸 수 있게 수정해야합니다 
                 Destroy(canvas.transform.GetChild(i).gameObject);
             }
-
+            
         }
 
         //여기서 타워매니저랑 함정 매니저한테 데이터를 받아 오고 랜덤으로 돌릴 때 마다 데이터를 참조하여 사용하는 방식으로 쓰면 될거 같습니다 
@@ -53,18 +53,45 @@ public class SelectionPopup : MonoBehaviour
             PopupUseButton _popupUseButton = Instantiate(popupUseButton);
 
             //버튼이 클릭되었다면 윈도우창도 닫아주는 기능을 이벤트로 연결시켜줍니다 
-            _popupUseButton.OnClickEventHander += CLose;
+            _popupUseButton.OnClickEventHander += Close;
             SelcetionButtonType selcetionButtonType = (SelcetionButtonType)Random.Range(0, 3);
 
             switch (selcetionButtonType)
             {
                 case SelcetionButtonType.TOWER:
 
-                    int towerIndxe = Random.Range(0, GameManager.Instance.towerSpawn.GetTowerList().Count);
-                    List<Tower> towers = GameManager.Instance.towerSpawn.GetTowerList();
-                    var towerData = towers[towerIndxe];
+                    bool state = true;
+                    while(state)
+                    {
+                        int towerIndxe = Random.Range(0, GameManager.Instance.towerManager.GetTowerList().Count);
+                        List<Tower> towers = GameManager.Instance.towerManager.GetTowerList();
+                        var tower = towers.Find(x => x.GetTowerCount() < 2);
 
-                    _popupUseButton.SetupTowerButtonData(towerData);
+                        if(tower != null)
+                        {
+                            Tower towerData = towers[towerIndxe];
+
+                            if (towerData.GetTowerCount() == 2)
+                            {
+                                Debug.LogError("기능 테스트를 위한 로그입니다");
+                            }
+                            else
+                            {
+
+                                _popupUseButton.SetupTowerButtonData(towerData);
+                                state = false;
+
+                            }
+                        }
+                        else
+                        {
+                            state = false;
+                            Debug.LogError("모든 타워가 설치가 되었다는 조건을 고려하기 위한 임시 예외처리입니다");
+                        }
+                      
+
+                    }
+                 
                     break;
                 case SelcetionButtonType.TOWERLEVELUP:
                     _popupUseButton.SetupTowerLevelUpButtonData();
@@ -77,7 +104,7 @@ public class SelectionPopup : MonoBehaviour
 
                     break;
             }
-            _popupUseButton.transform.SetParent(canvas.transform, false);
+            _popupUseButton.transform.SetParent(canvas.transform, false); 
         }
 
 
@@ -85,13 +112,30 @@ public class SelectionPopup : MonoBehaviour
 
     }
 
+    public void StartInfo()
+    {
+        Open();
+        for (int i = 0; i < 3; i++)
+        {
+            PopupUseButton _popupUseButton = Instantiate(popupUseButton);
+            _popupUseButton.OnClickEventHander += Close;
+            int towerIndxe = Random.Range(0, GameManager.Instance.towerManager.GetTowerList().Count);
+            List<Tower> towers = GameManager.Instance.towerManager.GetTowerList();
+            var tower = towers.Find(x => x.GetTowerCount() < 2);
+            Tower towerData = towers[towerIndxe];
+            _popupUseButton.SetupTowerButtonData(towerData);
+            _popupUseButton.transform.SetParent(canvas.transform, false);
+        }
+    }
+
 
     public void Open()
     {
         this.gameObject.SetActive(true);
     }
-    public void CLose()
+    public void Close()
     {
+        GameManager.Instance.mapManager.towerSetState = false;
         this.gameObject.SetActive(false);
 
     }
