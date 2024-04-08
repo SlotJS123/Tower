@@ -120,7 +120,7 @@ public class TowerManager : MonoBehaviour
                 Tower selectedTower = towers[selectedIndex];
                 GameObject clone = Instantiate(selectedTower.prefab, target, Quaternion.identity);
 
-                clone.GetComponent<Tower>().Setup(GameManager.Instance.monsterManager);
+                clone.GetComponent<Tower>().Setup(GameManager.Instance.enemySpawn);
             }
         }
 
@@ -180,7 +180,7 @@ public class TowerManager : MonoBehaviour
         GameManager.Instance.towerManager.TowerCountUp(selectedTower);
 
         GameObject clone = Instantiate(selectedTower.prefab, target, Quaternion.identity);
-        clone.GetComponent<Tower>().Setup(GameManager.Instance.monsterManager);
+        clone.GetComponent<Tower>().Setup(GameManager.Instance.enemySpawn);
         GameManager.Instance.towerManager.RemoveAddTowerData();
 
     }

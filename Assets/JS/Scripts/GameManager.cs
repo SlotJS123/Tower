@@ -9,6 +9,9 @@ public class GameManager : MonoBehaviour
     public MapManager mapManager;
     public TowerManager towerManager;
     public MonsterManager monsterManager = new MonsterManager();
+    public SelectionPopupManager selectionPopupManager;
+    public EnemySpawn enemySpawn;
+
     private List<Tile> route;
 
     public GameObject testMonstor;
@@ -25,9 +28,12 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        mapManager.MapMaking();
+        //2D라면 사용을 하지만 현재 컨셉이 3D로 변경 되어 스크라이트를 만들 필요가 없습니다 
+        //mapManager.MapMaking();
         towerManager.GetStartJsonData();
         monsterManager.SetMonsterObject(testMonstor);
+
+        selectionPopupManager.selectionPopup.StartInfo();
     }
 
     // Update is called once per frame

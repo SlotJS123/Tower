@@ -107,7 +107,7 @@ public class TowerSpawn_Backup : MonoBehaviour
                 Tower selectedTower = towers[selectedIndex];
                 GameObject clone = Instantiate(selectedTower.prefab, target, Quaternion.identity);
 
-                clone.GetComponent<Tower>().Setup(GameManager.Instance.monsterManager);
+                clone.GetComponent<Tower>().Setup(GameManager.Instance.enemySpawn);
             }
         }
 
@@ -162,7 +162,7 @@ public class TowerSpawn_Backup : MonoBehaviour
         Vector2 target = _tile.transform.position;
         Tower selectedTower = _tower;
         GameObject clone = Instantiate(selectedTower.prefab, target, Quaternion.identity);
-        clone.GetComponent<Tower>().Setup(GameManager.Instance.monsterManager);
+        clone.GetComponent<Tower>().Setup(GameManager.Instance.enemySpawn);
         GameManager.Instance.towerManager.RemoveAddTowerData();
 
     }

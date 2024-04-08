@@ -53,7 +53,7 @@ public class SelectionPopup : MonoBehaviour
             PopupUseButton _popupUseButton = Instantiate(popupUseButton);
 
             //버튼이 클릭되었다면 윈도우창도 닫아주는 기능을 이벤트로 연결시켜줍니다 
-            _popupUseButton.OnClickEventHander += CLose;
+            _popupUseButton.OnClickEventHander += Close;
             SelcetionButtonType selcetionButtonType = (SelcetionButtonType)Random.Range(0, 3);
 
             switch (selcetionButtonType)
@@ -112,13 +112,30 @@ public class SelectionPopup : MonoBehaviour
 
     }
 
+    public void StartInfo()
+    {
+        Open();
+        for (int i = 0; i < 3; i++)
+        {
+            PopupUseButton _popupUseButton = Instantiate(popupUseButton);
+            _popupUseButton.OnClickEventHander += Close;
+            int towerIndxe = Random.Range(0, GameManager.Instance.towerManager.GetTowerList().Count);
+            List<Tower> towers = GameManager.Instance.towerManager.GetTowerList();
+            var tower = towers.Find(x => x.GetTowerCount() < 2);
+            Tower towerData = towers[towerIndxe];
+            _popupUseButton.SetupTowerButtonData(towerData);
+            _popupUseButton.transform.SetParent(canvas.transform, false);
+        }
+    }
+
 
     public void Open()
     {
         this.gameObject.SetActive(true);
     }
-    public void CLose()
+    public void Close()
     {
+        GameManager.Instance.mapManager.towerSetState = false;
         this.gameObject.SetActive(false);
 
     }

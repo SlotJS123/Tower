@@ -28,11 +28,14 @@ public class Tower : MonoBehaviour
     public int towerCount = 0;
     private Transform attTarget = null; // 공격 대상
 
-    private MonsterManager enemySpawn; // 존재하는 적 정보 획득용
+    //private MonsterManager enemySpawn; // 존재하는 적 정보 획득용
 
+    private EnemySpawn enemySpawn; // 존재하는 적 정보 획득용
+
+    
     private WeaponState weapon = WeaponState.SearchTarget; // 타워 무기의 상태
 
-    private EventTrigger clickTrigger;
+    public EventTrigger clickTrigger;
     private Tile spawnTile; // 타워가 스폰된 타일 기억 (일단 임시)
 
     //public Image thumbnail;
@@ -40,19 +43,28 @@ public class Tower : MonoBehaviour
 
     private void Start()
     {
+       
+
+
         clickTrigger = GetComponent<EventTrigger>();
 
         EventTrigger.Entry entry = new EventTrigger.Entry();
         entry.eventID = EventTriggerType.PointerClick;
         // 아래 DestroyTower부분 차후 ObjectPull 구현시 반환하게 수정할 예정
         entry.callback.AddListener((eventData) => { UIManager.Instance.OnClickTower(this, towerCost); });
-        clickTrigger.triggers.Add(entry);
+        //clickTrigger.triggers.Add(entry);
     }
 
-    public void Setup(MonsterManager enemySpawn)
+    //public void Setup(MonsterManager enemySpawn)
+    //{
+    //    this.enemySpawn = enemySpawn;
+    //    // 최초 상태를 WeaponState.SearchTarget으로 설정
+    //    ChangeState(WeaponState.SearchTarget);
+    //}
+
+    public void Setup(EnemySpawn enemySpawn)
     {
         this.enemySpawn = enemySpawn;
-
         // 최초 상태를 WeaponState.SearchTarget으로 설정
         ChangeState(WeaponState.SearchTarget);
     }
@@ -113,6 +125,9 @@ public class Tower : MonoBehaviour
         Debug.Log("지금 동작하는게 무엇인지 확인을 하기 위한 로그입니다 " + weapon.ToString());
         // 새로운 상태 재생
         StartCoroutine(weapon.ToString());
+
+        //StartCoroutine(SearchTarget());
+
     }
     IEnumerator SearchTarget()
     {
@@ -121,14 +136,14 @@ public class Tower : MonoBehaviour
             // 제일 가까이 있는 적을 찾기 위해 최초 거리를 최대한 크게 설정
             float minDistance = Mathf.Infinity;
             // EnemySpawn의 EnemyList에 있는 현재 맵에 존재하는 모든 적 검사
-            for (int i = 0; i < enemySpawn.ReturnMonsterList().Count; i++)
+            for (int i = 0; i < enemySpawn.EnemyList.Count; i++)
             {
-                float distance = Vector3.Distance(enemySpawn.ReturnMonsterList()[i].transform.position, transform.position);
+                float distance = Vector3.Distance(enemySpawn.EnemyList[i].transform.position, transform.position);
                 // 현재 검사중인 적과의 거리가 공격 범위내에 있고, 현재까지 검사한 적보다 거리가 가까우면
                 if (distance <= attRange && distance <= minDistance)
                 {
                     minDistance = distance;
-                    attTarget = enemySpawn.ReturnMonsterList()[i].transform;
+                    attTarget = enemySpawn.EnemyList[i].transform;
                 }
                 yield return null;
             }
@@ -139,6 +154,7 @@ public class Tower : MonoBehaviour
             }
 
             yield return null;
+
         }
     }
 

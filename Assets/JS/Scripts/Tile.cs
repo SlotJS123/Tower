@@ -67,16 +67,16 @@ public class Tile : MonoBehaviour
     /// </summary>
     public void TouchTile()
     {
-        if (GameManager.Instance.mapManager.towerSetState == false)
+        if (GameManager.Instance.mapManager.towerSetState ==true)
         {
+          
+            //state = TileState.Off;
+            //isWall = false;
 
-            state = TileState.Off;
-            isWall = false;
+            //tile_1.gameObject.SetActive(false);
+            //tile_2.gameObject.SetActive(true);
 
-            tile_1.gameObject.SetActive(false);
-            tile_2.gameObject.SetActive(true);
-
-            OnTileClick?.Invoke(this);
+            //OnTileClick?.Invoke(this);
         }
         else
         {
