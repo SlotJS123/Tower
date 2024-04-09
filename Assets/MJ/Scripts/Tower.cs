@@ -131,6 +131,8 @@ public class Tower : MonoBehaviour
     }
     IEnumerator SearchTarget()
     {
+
+        // 이 아래 for문으로 동작되는 부분을 수정해야합니다 수정이 필요한 부분입니다 
         while (true)
         {
             // 제일 가까이 있는 적을 찾기 위해 최초 거리를 최대한 크게 설정

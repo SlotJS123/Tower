@@ -198,6 +198,7 @@ public class TowerSpawn : MonoBehaviour
 }
         
 //json에 사용 될 클래스 정의입니다 
+//나중에 대한 데이터 수정이 필요합니다 
 [Serializable]
 public class TowerData
 {
