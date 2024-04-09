@@ -11,11 +11,19 @@ public enum TileState
     On,  //타워 설치가 가능한 상태
     Off  //타워 설치가 불가능한 상태 
 }
+
+public enum TileType
+{
+    WayTile,
+    GroundTile
+
+}
+
 public class Tile : MonoBehaviour
 {
     public UnityEngine.UI.Button touchButton;
 
-    public Tile(bool _isWall, int _x, int _y) { isWall = _isWall; x = _x; y = _y; }
+    //public Tile(bool _isWall, int _x, int _y) { isWall = _isWall; x = _x; y = _y; }
 
     public bool isWall;
     public Tile ParentNode;
@@ -28,7 +36,7 @@ public class Tile : MonoBehaviour
     public int x, y, G, H;
     public int F { get { return G + H; } }
     public TileState state;
-
+    public TileType tileType;
     public Action<Tile> OnTileClick;    
 
     // Start is called before the first frame update

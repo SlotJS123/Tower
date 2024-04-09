@@ -7,10 +7,11 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     public MapManager mapManager;
-    public TowerManager towerManager;
+    public TowerSpawn towerManager;
     public MonsterManager monsterManager = new MonsterManager();
     public SelectionPopupManager selectionPopupManager;
     public EnemySpawn enemySpawn;
+    public PlayerStatManager PlayerStatus;
 
     private List<Tile> route;
 
