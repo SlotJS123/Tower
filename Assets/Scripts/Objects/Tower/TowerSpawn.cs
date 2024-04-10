@@ -119,7 +119,7 @@ public class TowerSpawn : MonoBehaviour
                 Tower selectedTower = towers[selectedIndex];
                 GameObject clone = Instantiate(selectedTower.prefab, target, Quaternion.identity);
 
-                clone.GetComponent<Tower>().Setup(GameManager.Instance.enemySpawn);
+                clone.GetComponent<Tower>().Setup(GameManager.Instance.EnemySpawner);
             }
         }
 
@@ -179,7 +179,7 @@ public class TowerSpawn : MonoBehaviour
         GameManager.Instance.towerManager.TowerCountUp(selectedTower);
 
         GameObject clone = Instantiate(selectedTower.prefab, target, Quaternion.identity);
-        clone.GetComponent<Tower>().Setup(GameManager.Instance.enemySpawn);
+        clone.GetComponent<Tower>().Setup(GameManager.Instance.EnemySpawner);
         GameManager.Instance.towerManager.RemoveAddTowerData();
 
     }
