@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 9217949517326141899}
   - component: {fileID: 9078037959687272786}
   - component: {fileID: 6826534255961856433}
-  - component: {fileID: 4531172282740696610}
   - component: {fileID: 2024265399119233496}
+  - component: {fileID: 8147739521554744006}
   m_Layer: 0
   m_Name: GroundTile
   m_TagString: Untagged
@@ -107,19 +107,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4531172282740696610
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8631915127832278428}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23434512b4f7cec49aa058cb06e44dfb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  state: 0
 --- !u!114 &2024265399119233496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,3 +120,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Delegates: []
+--- !u!114 &8147739521554744006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8631915127832278428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd1626c2a2449724ca2f0ebb7eebeefb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
