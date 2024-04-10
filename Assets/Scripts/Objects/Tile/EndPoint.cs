@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class EndPoint : MonoBehaviour
 {
-    public EnemySpawn enemySpawn;
+    private EnemySpawn enemySpawn;
+
+    private void Start()
+    {
+        enemySpawn = GameManager.Instance.EnemySpawner;
+    }
 
     public void GoalEnemy(Enemy enemy)
     {
