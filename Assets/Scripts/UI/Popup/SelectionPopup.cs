@@ -63,8 +63,8 @@ public class SelectionPopup : MonoBehaviour
                     bool state = true;
                     while(state)
                     {
-                        int towerIndxe = Random.Range(0, GameManager.Instance.towerManager.GetTowerList().Count);
-                        List<Tower> towers = GameManager.Instance.towerManager.GetTowerList();
+                        int towerIndxe = Random.Range(0, GameManager.Instance.TowerManager.GetTowerList().Count);
+                        List<Tower> towers = GameManager.Instance.TowerManager.GetTowerList();
                         var tower = towers.Find(x => x.GetTowerCount() < 2);
 
                         if(tower != null)
@@ -119,8 +119,8 @@ public class SelectionPopup : MonoBehaviour
         {
             PopupUseButton _popupUseButton = Instantiate(popupUseButton);
             _popupUseButton.OnClickEventHander += Close;
-            int towerIndxe = Random.Range(0, GameManager.Instance.towerManager.GetTowerList().Count);
-            List<Tower> towers = GameManager.Instance.towerManager.GetTowerList();
+            int towerIndxe = Random.Range(0, GameManager.Instance.TowerManager.GetTowerList().Count);
+            List<Tower> towers = GameManager.Instance.TowerManager.GetTowerList();
             var tower = towers.Find(x => x.GetTowerCount() < 2);
             Tower towerData = towers[towerIndxe];
             _popupUseButton.SetupTowerButtonData(towerData);
@@ -135,7 +135,7 @@ public class SelectionPopup : MonoBehaviour
     }
     public void Close()
     {
-        GameManager.Instance.mapManager.towerSetState = false;
+        GameManager.Instance.MapManager.towerSetState = false;
         this.gameObject.SetActive(false);
 
     }

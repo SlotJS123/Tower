@@ -26,6 +26,11 @@ public class TowerSpawn : MonoBehaviour
 
     public Action OnFiledEventHanden;
 
+    public void SetEnemySpawn(EnemySpawn enemySpawn)
+    {
+        this.enemySpawn = enemySpawn;
+    }
+
     //게임을 시작 할 때 가장 먼저 타워에 대한 기본 데이터 json 파일을 받아옵니다 
     public void GetStartJsonData()
     {
@@ -176,11 +181,11 @@ public class TowerSpawn : MonoBehaviour
         Vector2 mPos = Input.mousePosition;
         Vector2 target = _tile.transform.position;
         Tower selectedTower = _tower;
-        GameManager.Instance.towerManager.TowerCountUp(selectedTower);
+        GameManager.Instance.TowerManager.TowerCountUp(selectedTower);
 
         GameObject clone = Instantiate(selectedTower.prefab, target, Quaternion.identity);
         clone.GetComponent<Tower>().Setup(GameManager.Instance.EnemySpawner);
-        GameManager.Instance.towerManager.RemoveAddTowerData();
+        GameManager.Instance.TowerManager.RemoveAddTowerData();
 
     }
 

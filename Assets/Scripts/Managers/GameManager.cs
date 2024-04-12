@@ -6,14 +6,18 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    public MapManager mapManager;
-    public TowerSpawn towerManager;
-    public SelectionPopupManager selectionPopupManager;
+    private MapManager mapManager;
+    private TowerSpawn towerManager;
+    private SelectionPopupManager selectionPopupManager;
 
     private PlayerStatManager playerStatus; // 차후 Player의 저장된 데이터를 PlayerStatManager에 넣어주는 기능 구현해야 함
     private EnemySpawn enemySpawn;
     private ObjectSelection objectSelection = new ObjectSelection();
 
+
+    public MapManager MapManager => mapManager;
+    public TowerSpawn TowerManager => towerManager;
+    public SelectionPopupManager SelectionPopupManager => selectionPopupManager;
     public PlayerStatManager PlayerStatus => playerStatus;
     public EnemySpawn EnemySpawner => enemySpawn;
 
@@ -23,6 +27,8 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
         }
+
+        Init();
     }
 
     void Start()
@@ -40,5 +46,16 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         objectSelection.UpdateSelection();
+    }
+
+    private void Init()
+    {
+        Transform parent = transform.parent;
+        mapManager = parent.GetComponentInChildren<MapManager>();
+        towerManager = parent.GetComponentInChildren<TowerSpawn>();
+        selectionPopupManager = parent.GetComponentInChildren<SelectionPopupManager>();
+        enemySpawn = parent.GetComponentInChildren<EnemySpawn>();
+
+        towerManager.SetEnemySpawn(enemySpawn);
     }
 }
