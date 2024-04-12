@@ -4,14 +4,7 @@ using UnityEngine;
 
 public class EndPoint : MonoBehaviour
 {
-    private EnemySpawn enemySpawn;
-
-    private void Start()
-    {
-        enemySpawn = GameManager.Instance.EnemySpawner;
-    }
-
-    public void GoalEnemy(Enemy enemy)
+    public void GoalEnemy(EnemySpawn enemySpawn, Enemy enemy)
     {
         enemySpawn.EnemyList.Remove(enemy);
         Destroy(enemy.gameObject);

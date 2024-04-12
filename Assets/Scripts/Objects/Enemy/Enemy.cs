@@ -65,7 +65,7 @@ public class Enemy : MonoBehaviour
         else
         {
             EndPoint endPoint = wayPoints[currentIndex].GetComponent<EndPoint>();
-            endPoint.GoalEnemy(this);
+            endPoint.GoalEnemy(enemySpawn, this);
         }
     }
 
