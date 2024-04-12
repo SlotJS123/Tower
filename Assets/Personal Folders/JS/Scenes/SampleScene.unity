@@ -3352,51 +3352,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &243526750
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 243526752}
-  - component: {fileID: 243526751}
-  m_Layer: 0
-  m_Name: SelectionPopupManager (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &243526751
+--- !u!114 &243526751 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 4410126949206873710, guid: 0e67fa11f33880e4d8717251beac9361, type: 3}
+  m_PrefabInstance: {fileID: 6906525860547960943}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 243526750}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cf9a8f3b5eb928743a789b2c1ccb6c6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectionPopup: {fileID: 1054030557}
---- !u!4 &243526752
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 243526750}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &245711880
 GameObject:
   m_ObjectHideFlags: 0
@@ -23105,6 +23071,67 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dcedb8bed45b56c4a8874a3ebaff7b94, type: 3}
+--- !u!1001 &6906525860547960943
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 442696274713910425, guid: 0e67fa11f33880e4d8717251beac9361, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 442696274713910425, guid: 0e67fa11f33880e4d8717251beac9361, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 442696274713910425, guid: 0e67fa11f33880e4d8717251beac9361, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 442696274713910425, guid: 0e67fa11f33880e4d8717251beac9361, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 442696274713910425, guid: 0e67fa11f33880e4d8717251beac9361, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 442696274713910425, guid: 0e67fa11f33880e4d8717251beac9361, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 442696274713910425, guid: 0e67fa11f33880e4d8717251beac9361, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 442696274713910425, guid: 0e67fa11f33880e4d8717251beac9361, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 442696274713910425, guid: 0e67fa11f33880e4d8717251beac9361, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 442696274713910425, guid: 0e67fa11f33880e4d8717251beac9361, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4410126949206873710, guid: 0e67fa11f33880e4d8717251beac9361, type: 3}
+      propertyPath: selectionPopup
+      value: 
+      objectReference: {fileID: 1054030557}
+    - target: {fileID: 6714498156616338179, guid: 0e67fa11f33880e4d8717251beac9361, type: 3}
+      propertyPath: m_Name
+      value: SelectionPopupManager (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0e67fa11f33880e4d8717251beac9361, type: 3}
 --- !u!1001 &7624202532807126633
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23218,7 +23245,7 @@ SceneRoots:
   - {fileID: 5907728803678282122}
   - {fileID: 7624202532807126633}
   - {fileID: 1855662304}
-  - {fileID: 243526752}
+  - {fileID: 6906525860547960943}
   - {fileID: 187732687}
   - {fileID: 1706149341}
   - {fileID: 1162005828}
