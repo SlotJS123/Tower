@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     private TowerSpawn towerManager;
     private SelectionPopupManager selectionPopupManager;
 
-    private PlayerStatManager playerStatus; // 차후 Player의 저장된 데이터를 PlayerStatManager에 넣어주는 기능 구현해야 함
+    private PlayerStatManager playerStatus = new PlayerStatManager(); // 차후 Player의 저장된 데이터를 PlayerStatManager에 넣어주는 기능 구현해야 함
     private EnemySpawn enemySpawn;
     private ObjectSelection objectSelection = new ObjectSelection();
 
