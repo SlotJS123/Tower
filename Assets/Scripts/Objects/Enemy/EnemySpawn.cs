@@ -21,7 +21,7 @@ public class EnemySpawn : MonoBehaviour
 
     public void StartWave(Wave wave)
     {
-        currentwave= wave;
+        currentwave = wave;
         StartCoroutine(Spawn());
     }
 
