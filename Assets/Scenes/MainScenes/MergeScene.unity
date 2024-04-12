@@ -265,7 +265,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4208856172538987348, guid: cdd0faca00259284bb9b76add910ae25, type: 3}
       propertyPath: m_Name
-      value: TowerManager (1)
+      value: TowerManager
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -419,7 +419,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5977081678284995389, guid: dcedb8bed45b56c4a8874a3ebaff7b94, type: 3}
       propertyPath: m_Name
-      value: MapManager (1)
+      value: MapManager
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -637,7 +637,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8410263540427108324, guid: 48f834d60b869b24d9fcf9b33756eb47, type: 3}
       propertyPath: m_Name
-      value: GameManager (1)
+      value: GameManager
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
