@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4322619154473012388}
   - component: {fileID: 5007988096700533986}
-  - component: {fileID: 2643421644418999591}
   m_Layer: 3
   m_Name: MapManager
   m_TagString: Untagged
@@ -46,15 +45,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   towerSetState: 0
---- !u!114 &2643421644418999591
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5977081678284995389}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23434512b4f7cec49aa058cb06e44dfb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
