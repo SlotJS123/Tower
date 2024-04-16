@@ -12,9 +12,18 @@ public class LobbyUIManager : MonoBehaviour
     private void Start()
     {
         inventoryPopupBtn.onClick.RemoveAllListeners();
-        inventoryPopupBtn.onClick.AddListener(() => playerInventoryUI.gameObject.SetActive(true));
+        inventoryPopupBtn.onClick.AddListener(() => SetInventoryUI());
+    }
 
-        playerInventoryUI = GetComponentInChildren<PlayerInventoryUI>();
-        playerInventoryUI.Init();
+    // InventoryPopupBtn 클릭 시 실행할 함수
+    private void SetInventoryUI()
+    {
+        if(playerInventoryUI == null)
+        {
+            playerInventoryUI = GetComponentInChildren<PlayerInventoryUI>(true);
+            playerInventoryUI.Init();
+        }
+
+        playerInventoryUI.gameObject.SetActive(true);
     }
 }
