@@ -2,27 +2,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-
-public class ObjectSelection : MonoBehaviour
+public class ObjectSelection
 {
     private Camera mainCamera;
+    private int pointerID; // PC와 Android 환경에서 터치와 클릭을 체크하기 위한 변수
 
-    void Start()
+    public void Init()
     {
+#if UNITY_EDITOR || UNITY_STANDALONE
+        pointerID = -1;
+// 차후 Android SDK 적용 후 아래 주석 해제할것
+// #elif UNITY_ANDROID
+//      pointerID = 0;
+#endif
         mainCamera = Camera.main;
     }
 
-    void Update()
+    public void UpdateSelection()
     {
         // 마우스 왼쪽 버튼을 클릭하면 레이캐스트 발사
         if (Input.GetMouseButtonDown(0))
         {
+            if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject(pointerID))
+            {
+                return;
+            }
 
             // 카메라의 위치와 방향 설정
             Vector3 cameraPosition = mainCamera.transform.position;
             Vector3 targetPosition = new Vector3(0f, 0f, 0f); // 원하는 기준점으로 수정할 것
-            Vector3 cameraDirection = targetPosition - cameraPosition;
+            // Vector3 cameraDirection = targetPosition - cameraPosition;
 
             // 마우스 클릭 지점에서의 스크린 좌표
             Vector3 mousePosition = Input.mousePosition;

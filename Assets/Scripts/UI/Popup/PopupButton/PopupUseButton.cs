@@ -65,7 +65,7 @@ public class PopupUseButton : MonoBehaviour
         switch (selcetionButtonType)
         {
             case SelcetionButtonType.TOWER:
-                GameManager.Instance.towerManager.SetUpTower(buttonInfo.towerData);
+                GameManager.Instance.TowerManager.SetUpTower(buttonInfo.towerData);
                 break;
             case SelcetionButtonType.TOWERLEVELUP:
                 break;
