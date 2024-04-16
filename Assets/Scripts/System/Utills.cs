@@ -18,16 +18,16 @@ public class Utills
         }
     }
 
-    public void InstantiateObject(string path, Transform parent = null)
+    public GameObject InstantiateObject(string path, Transform parent = null)
     {
         GameObject obj = Resources.Load<GameObject>(path);
 
         if (obj == null)
         {
             Debug.Log($"{path} 경로가 잘못되었습니다");
-            return;
+            return null;
         }
 
-        Object.Instantiate(obj, parent);
+        return Object.Instantiate(obj, parent);
     }
 }
