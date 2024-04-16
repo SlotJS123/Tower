@@ -2609,6 +2609,7 @@ GameObject:
   - component: {fileID: 1030949033}
   - component: {fileID: 1030949035}
   - component: {fileID: 1030949034}
+  - component: {fileID: 1030949036}
   m_Layer: 5
   m_Name: InventoryBG
   m_TagString: Untagged
@@ -2677,6 +2678,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1030949032}
   m_CullTransparentMesh: 1
+--- !u!114 &1030949036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1030949032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c823d19088850124aa5b7fe627f6cea9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1047652571
 GameObject:
   m_ObjectHideFlags: 0
@@ -5202,6 +5215,7 @@ GameObject:
   - component: {fileID: 1700143126}
   - component: {fileID: 1700143125}
   - component: {fileID: 1700143124}
+  - component: {fileID: 1700143128}
   m_Layer: 5
   m_Name: LobbyUICanvas
   m_TagString: Untagged
@@ -5295,6 +5309,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1700143128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1700143123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac162e06c22f4fc44a42e324fbaf60db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventoryPopupBtn: {fileID: 1839887851}
 --- !u!1001 &1715212171
 PrefabInstance:
   m_ObjectHideFlags: 0
