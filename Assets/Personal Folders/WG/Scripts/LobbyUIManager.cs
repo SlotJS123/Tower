@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +13,8 @@ public class LobbyUIManager : MonoBehaviour
     private Button shopPopupBtn;
     [SerializeField]
     private GameObject stageLockUI;
+    [SerializeField]
+    private GameObject stageSelectUI;
 
     private PlayerInventoryUI playerInventoryUI;
     private ShopUI shopUI;
@@ -55,27 +58,35 @@ public class LobbyUIManager : MonoBehaviour
 
     private void InitStageButtons()
     {
-        Button button;
+        Stage[] uiArray = swipeController.StageLayoutParant.GetComponentsInChildren<Stage>();
+
         for (int i = 0; i < swipeController.StageLayoutParant.childCount; i++)
         {
-            button = swipeController.StageLayoutParant.GetChild(i).GetComponent<Button>();
-            button.onClick.RemoveAllListeners();
-            button.onClick.AddListener(() => OnClickStageBtn(i));
+            int index = i;
+            uiArray[i].StageButton.onClick.RemoveAllListeners();
+            uiArray[i].StageButton.onClick.AddListener(() => OnClickStageBtn(index));
         }
     }
 
     private void OnClickStageBtn(int index)
     {
-        Stage stage = swipeController.StageLayoutParant.GetChild(index - 1).GetComponent<Stage>();
+        print(index);
+        Stage stage = swipeController.StageLayoutParant.GetChild(index).GetComponent<Stage>();
         if (stage.IsClear)
         {
             // 선택 스테이지를 현재 스테이지로 설정
+            ShowStageSelectUI();
         }
         else
         {
             // stage가 잠겨있을 경우
             StartCoroutine(ShowStageLockUI());
         }
+    }
+
+    private void ShowStageSelectUI()
+    {
+        stageSelectUI.SetActive(true);
     }
 
     private IEnumerator ShowStageLockUI()
