@@ -9,7 +9,9 @@ public class LobbyUIManager : MonoBehaviour
     private Button inventoryPopupBtn;
     [SerializeField]
     private Button shopPopupBtn;
+
     private PlayerInventoryUI playerInventoryUI;
+    private ShopUI shopUI;
 
     private void Start()
     {
@@ -23,7 +25,7 @@ public class LobbyUIManager : MonoBehaviour
     // InventoryPopupBtn 클릭 시 실행할 함수
     private void OnClickInventoryBtn()
     {
-        if(playerInventoryUI == null)
+        if (playerInventoryUI == null)
         {
             playerInventoryUI = GetComponentInChildren<PlayerInventoryUI>(true);
             playerInventoryUI.Init();
@@ -35,6 +37,12 @@ public class LobbyUIManager : MonoBehaviour
     // shopBtn 클릭 시 실행
     private void OnClickShopBtn()
     {
+        if (shopUI == null)
+        {
+            shopUI = GetComponentInChildren<ShopUI>(true);
+            shopUI.Init();
+        }
 
+        shopUI.gameObject.SetActive(true);
     }
 }
