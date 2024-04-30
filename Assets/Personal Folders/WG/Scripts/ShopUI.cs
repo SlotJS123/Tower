@@ -16,6 +16,8 @@ public class ShopUI : MonoBehaviour
 {
     [SerializeField]
     private Button exitBtn;
+    [SerializeField]
+    private GameObject paymentCheckUI;
 
     private PaymentCheckUI paymentUI;
 
@@ -34,6 +36,12 @@ public class ShopUI : MonoBehaviour
         shopItemUI = transform.GetChild(1).gameObject;
 
         SetShopTopUIButtons();
+    }
+
+    // 임시로 Scene에 연결시켜놓고 차후 자동화 예정
+    public void OpenPurchaseUI()
+    {
+        paymentCheckUI.SetActive(true);
     }
 
     private void SetShopTopUIButtons()

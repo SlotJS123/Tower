@@ -10576,6 +10576,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   exitBtn: {fileID: 1076620829}
+  paymentCheckUI: {fileID: 601032691}
 --- !u!114 &1631521289
 MonoBehaviour:
   m_ObjectHideFlags: 0
