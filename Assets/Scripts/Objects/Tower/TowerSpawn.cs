@@ -133,7 +133,7 @@ public class TowerSpawn : MonoBehaviour
 
 
     //JS 맵에서 사용 할 수 있게 수정한 코드입니다 
-    public void JS_TowerInstallation(Tile _tile, Tower _tower) // 타워설치
+    public void JS_TowerInstallation(Tile _tile) // 타워설치
     {
         //// 확률 누적 계산
         //float totalProbability = 0;
@@ -169,19 +169,19 @@ public class TowerSpawn : MonoBehaviour
         //    clone.GetComponent<Tower>().Setup(GameManager.Instance.monsterManager);
         //}
 
-        if (_tower == null)
+        if (setUpAddTowerData == null)
         {
             Debug.LogError("현재 할당 받은 타워 데이터가 없습니다!!!");
-
-
-
             return;
         }
 
         Vector2 mPos = Input.mousePosition;
-        Vector2 target = _tile.transform.position;
-        Tower selectedTower = _tower;
+        Vector3 target = _tile.transform.localPosition;
+        Tower selectedTower = setUpAddTowerData;
         GameManager.Instance.TowerManager.TowerCountUp(selectedTower);
+
+        Debug.Log("설치할려는 타겟의 위치값을 확인하기 위한 로그입니다 "+ target);
+
 
         GameObject clone = Instantiate(selectedTower.prefab, target, Quaternion.identity);
         clone.GetComponent<Tower>().Setup(GameManager.Instance.EnemySpawner);

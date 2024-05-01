@@ -27,7 +27,8 @@ public class WaveManager : MonoBehaviour
     // Start is called before the first frame update
     public void StartWave()
     {
-        StartCoroutine(WaveCoroutine());
+        StartCoroutine(WaveCoroutine
+            ());
     }
 
     public IEnumerator WaveCoroutine()
