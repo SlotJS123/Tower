@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum EnemyType { ground = 0, air = 1 } // 1.지상몬스터 2. 공중몬스터 (임시)
-
+public enum EnemyType { Floor = 1, Fly = 2 } // 1.지상몬스터 2. 공중몬스터
 public class Enemy : MonoBehaviour
 {
-    public EnemyType enemyType; // 인스펙터창에서 선택(임시)
+    public EnemyType enemyType; // enemy 이동 타입
     [SerializeField]
     private float hp = 0;// enemy체력
     [SerializeField]
@@ -19,7 +18,7 @@ public class Enemy : MonoBehaviour
     private int currentIndex = 0; // 현재 목표지점 인덱스
     private EnemySpawn enemySpawn;
 
-    public void Setup(EnemySpawn enemySpawn ,Transform[] point)
+    public void Setup(EnemySpawn enemySpawn ,Transform[] point, MonsterData monsterData)
     {
         // 적 이동 경로 waypoint 정보 설정
         wayPointCount = point.Length;
@@ -30,6 +29,10 @@ public class Enemy : MonoBehaviour
         transform.position = point[currentIndex].position;
         // 적 이동/목표지점 설정 코루틴 함수 시작
         StartCoroutine("OnMove");
+        // 적 스테이터스 초기화
+        hp = monsterData.hp;
+        moveSpeed = monsterData.speed * 10;
+        enemyType = (EnemyType)monsterData.type;
     }
 
     private IEnumerator OnMove()

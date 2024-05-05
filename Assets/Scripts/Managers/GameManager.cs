@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour
     {
         objectSelection.Init();
 
+        enemySpawn.GetStartMonsterJsonData();
         enemySpawn = GetComponentInChildren<EnemySpawn>();
         //2D라면 사용을 하지만 현재 컨셉이 3D로 변경 되어 스크라이트를 만들 필요가 없습니다 
         //mapManager.MapMaking();

@@ -1,15 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
+using Newtonsoft.Json;
+using System;
 
 public class EnemySpawn : MonoBehaviour
 {
     [SerializeField]
     private Transform[] wayPoints; // 현재 스테이지의 이동 경로
     private Wave currentwave;
-    private List<Enemy> enemyList; // 현재 맵에 존재하는 모든 적의 정보
-
+    private List<Enemy> enemyList; // 현재 맵에 존재하는 모든 적의 정보   
+    //파일 이름을에 확장자까지 포함해서 넣어주세요 
+    public string jsonFileName;
     public List<Enemy> EnemyList => enemyList;
+    public RootMonster monsterJson;
 
     private void Awake()
     {
@@ -17,6 +22,15 @@ public class EnemySpawn : MonoBehaviour
         enemyList = new List<Enemy>();
         // 적 생성 코루틴 함수 호출
         //StartCoroutine("Spawn");
+    }
+
+    public void GetStartMonsterJsonData()
+    {
+        string path = Path.Combine(Application.dataPath, jsonFileName);
+        string jsonContent = File.ReadAllText(path);
+        Debug.Log("json 데이터를 확인하기 위한 로그입니다 " + jsonContent);
+        Debug.Log("json 파일 위치를 확인하기 위한 로그입니다" + path);
+        monsterJson = JsonConvert.DeserializeObject<RootMonster>(jsonContent);
     }
 
     public void StartWave(Wave wave)
@@ -42,8 +56,9 @@ public class EnemySpawn : MonoBehaviour
                 Enemy enemy = clone.GetComponent<Enemy>();
                 // 리스트에 방금 생성된 적 정보 저장
                 enemyList.Add(enemy);
+                MonsterData monsterData = monsterJson.items.Find(x => x.monsterName.en == enemy.name.Split('(')[0]);
                 // wayPoint 정보를 매개변수로 Setup를 호출
-                enemy.Setup(this,wayPoints);
+                enemy.Setup(this,wayPoints, monsterData);
                 // 현재 웨이브 에서 생성한 적의 숫자 +1
                 enemyCount++;
                 // spawnTime 시간 동안 대기
@@ -61,4 +76,46 @@ public class EnemySpawn : MonoBehaviour
             }
         }
     }
+}
+
+[Serializable]
+public class A3
+{
+    public string kr;
+    public string en;
+    public string jp;
+}
+
+[Serializable]
+public class A4
+{
+    public string kr;
+    public string en;
+    public string jp;
+}
+
+[Serializable]
+public class MonsterData
+{
+    [JsonProperty("a1")]
+    public int index;
+    [JsonProperty("a2")]
+    public string fileName;
+    [JsonProperty("a3")]
+    public A3 monsterName;
+    [JsonProperty("a4")]
+    public A4 monsterDescription;
+    [JsonProperty("a5")]
+    public int type;
+    [JsonProperty("a6")]
+    public float speed;
+    [JsonProperty("a7")]
+    public float hp;
+}
+
+[Serializable]
+public class RootMonster
+{
+    public int version;
+    public List<MonsterData> items;
 }
