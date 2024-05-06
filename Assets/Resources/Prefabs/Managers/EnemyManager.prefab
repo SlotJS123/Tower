@@ -57,6 +57,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  enemyList: []
+  monsterDataList: []
+  jsonFileName: t_monster.json
 --- !u!114 &3282788948022105189
 MonoBehaviour:
   m_ObjectHideFlags: 0
