@@ -24,18 +24,6 @@ public class SelectionPopup : MonoBehaviour
         GameManager.Instance.MapManager.OnNextTower += StartInfo;
     }
 
-
-
-    //타워 설치 이벤트입니다 
-    public Action OnStartTowerEvent;
-
-    private void Start()
-    {
-        GameManager.Instance.MapManager.OnNextTower += StartInfo;
-    }
-
-
-
     private void Update()
     {
 
