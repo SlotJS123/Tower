@@ -6,7 +6,7 @@ public class ObjectSelection
 {
     private Camera mainCamera;
     private int pointerID; // PC와 Android 환경에서 터치와 클릭을 체크하기 위한 변수
-
+    public float rayLength = 100f; // 레이케스트 길이
     public void Init()
     {
 #if UNITY_EDITOR || UNITY_STANDALONE
@@ -59,5 +59,17 @@ public class ObjectSelection
     private void CheckInteractableObject(IInteractionable interactionableObject)
     {
         interactionableObject.InteractionObject();
+    }
+
+    void OnDrawGizmos()
+    {
+        // 기즈모 색상 설정
+        Gizmos.color = Color.red;
+
+        // 현재 마우스 위치에서 레이 생성
+        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+
+        // 레이 길이까지 기즈모 그리기
+        Gizmos.DrawRay(ray.origin, ray.direction * rayLength);
     }
 }

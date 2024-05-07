@@ -24,7 +24,7 @@ public class Tower : MonoBehaviour
     private int towerCost; // 타워 가격
 
     public int towerCount = 0;
-    private Transform attTarget = null; // 공격 대상
+
 
     //private MonsterManager enemySpawn; // 존재하는 적 정보 획득용
 
@@ -36,6 +36,10 @@ public class Tower : MonoBehaviour
     public EventTrigger clickTrigger;
     private Tile spawnTile; // 타워가 스폰된 타일 기억 (일단 임시)
 
+
+    public List<Transform> enemiesInRange = new List<Transform>(); // 타워 공격 범위 안에 있는 적의 목록
+
+    private Transform currentTarget; // 현재 타겟으로 지정된 적
     //public Image thumbnail;
     public SpriteRenderer thumbnail;
 
@@ -50,6 +54,13 @@ public class Tower : MonoBehaviour
         entry.eventID = EventTriggerType.PointerClick;
         // 아래 DestroyTower부분 차후 ObjectPull 구현시 반환하게 수정할 예정
         entry.callback.AddListener((eventData) => { UIManager.Instance.OnClickTower(this, towerCost); });
+
+        enemySpawn = GameManager.Instance.EnemySpawner;
+        //GameManager.Instance.EaveManager.wa
+
+        //StartCoroutine(EnemySecrh());
+        ChangeState(WeaponState.SearchTarget);
+
         //clickTrigger.triggers.Add(entry);
     }
 
@@ -63,6 +74,9 @@ public class Tower : MonoBehaviour
     public void Setup(EnemySpawn enemySpawn)
     {
         this.enemySpawn = enemySpawn;
+
+        //StartCoroutine(EnemySecrh());
+
         // 최초 상태를 WeaponState.SearchTarget으로 설정
         ChangeState(WeaponState.SearchTarget);
     }
@@ -83,6 +97,81 @@ public class Tower : MonoBehaviour
     {
         return towerCount;
     }
+
+
+    IEnumerator EnemySecrh()
+    {
+      
+
+        while(true)
+        {
+            if(currentTarget != null)
+            {
+                yield return new WaitForSeconds(attRate);
+
+                // 발사체 생성
+                Debug.Log("공격합니다");
+                SpawnProjectileObj();
+            }
+            else
+            {
+                Debug.Log("타겟이 없습니다");
+                yield return null;
+            }
+        }
+
+    }
+
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.CompareTag("Enemy")) // 적인 경우에만 처리
+    //    {
+    //        enemiesInRange.Add(other.transform); // 적을 리스트에 추가
+    //        SetTarget(); // 새로운 타겟 설정
+    //    }
+    //}
+
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    if (other.CompareTag("Enemy")) // 적인 경우에만 처리
+    //    {
+    //        enemiesInRange.Remove(other.transform); // 적을 리스트에서 제거
+    //        if (other.transform == currentTarget) // 벗어나는 적이 현재 타겟인 경우
+    //        {
+    //            SetTarget(); // 새로운 타겟 설정
+    //        }
+    //    }
+    //}
+
+    private void SetTarget()
+    {
+        if (enemiesInRange.Count > 0) // 공격 범위 안에 적이 있는 경우
+        {
+            float closestDistance = Mathf.Infinity; // 가장 가까운 적과의 거리
+            Transform closestEnemy = null; // 가장 가까운 적
+
+            foreach (Transform enemy in enemiesInRange) // 모든 적에 대해 반복
+            {
+                float distanceToEnemy = Vector3.Distance(transform.position, enemy.position); // 타워와 적 사이의 거리 계산
+                if (distanceToEnemy < closestDistance) // 현재 적이 가장 가까운 적보다 더 가까운 경우
+                {
+                    closestDistance = distanceToEnemy; // 거리 업데이트
+                    closestEnemy = enemy; // 가장 가까운 적 업데이트
+                }
+            }
+
+            currentTarget = closestEnemy; // 현재 타겟으로 가장 가까운 적 설정
+            Debug.Log("New target: " + currentTarget.gameObject.name);
+            // 여기에 새로운 타겟을 설정한 후의 동작을 추가할 수 있습니다.
+        }
+        else // 공격 범위 안에 적이 없는 경우
+        {
+            currentTarget = null; // 현재 타겟 없음
+            Debug.Log("No target in range.");
+            // 여기에 타겟이 없는 경우의 동작을 추가할 수 있습니다.
+        }
+    }
+
 
 
 
@@ -133,25 +222,31 @@ public class Tower : MonoBehaviour
         // 이 아래 for문으로 동작되는 부분을 수정해야합니다 수정이 필요한 부분입니다 
         while (true)
         {
-            // 제일 가까이 있는 적을 찾기 위해 최초 거리를 최대한 크게 설정
-            float minDistance = Mathf.Infinity;
-            // EnemySpawn의 EnemyList에 있는 현재 맵에 존재하는 모든 적 검사
-            for (int i = 0; i < enemySpawn.EnemyList.Count; i++)
+
+            if(enemySpawn.EnemyList.Count != 0)
             {
-                float distance = Vector3.Distance(enemySpawn.EnemyList[i].transform.position, transform.position);
-                // 현재 검사중인 적과의 거리가 공격 범위내에 있고, 현재까지 검사한 적보다 거리가 가까우면
-                if (distance <= attRange && distance <= minDistance)
+                // 제일 가까이 있는 적을 찾기 위해 최초 거리를 최대한 크게 설정
+                float minDistance = Mathf.Infinity;
+                // EnemySpawn의 EnemyList에 있는 현재 맵에 존재하는 모든 적 검사
+                for (int i = 0; i < enemySpawn.EnemyList.Count; i++)
                 {
-                    minDistance = distance;
-                    attTarget = enemySpawn.EnemyList[i].transform;
+                    float distance = Vector3.Distance(enemySpawn.EnemyList[i].transform.position, transform.position);
+                    // 현재 검사중인 적과의 거리가 공격 범위내에 있고, 현재까지 검사한 적보다 거리가 가까우면
+                    if (distance <= attRange && distance <= minDistance)
+                    {
+                        minDistance = distance;
+                        currentTarget = enemySpawn.EnemyList[i].transform;
+                    }
+                    yield return null;
                 }
-                yield return null;
+
+                if (currentTarget != null)
+                {
+                    ChangeState(WeaponState.AttToTarget);
+                }
+
             }
 
-            if (attTarget != null)
-            {
-                ChangeState(WeaponState.AttToTarget);
-            }
 
             yield return null;
 
@@ -163,16 +258,16 @@ public class Tower : MonoBehaviour
         while (true)
         {
             // target이 있는지 검사
-            if (attTarget == null)
+            if (currentTarget == null)
             {
                 ChangeState(WeaponState.SearchTarget);
                 break;
             }
             // target이 공격 범위 안에 있는지 검사
-            float distance = Vector3.Distance(attTarget.position, transform.position);
+            float distance = Vector3.Distance(currentTarget.position, transform.position);
             if (distance > attRange)
             {
-                attTarget = null;
+                currentTarget = null;
                 ChangeState(WeaponState.SearchTarget);
                 break;
             }
@@ -188,7 +283,7 @@ public class Tower : MonoBehaviour
     {
         GameObject clone = Instantiate(projectileObj, point.position, Quaternion.identity);
 
-        clone.GetComponent<Ball>().SetUp(attTarget, attDamage);
+        clone.GetComponent<Ball>().SetUp(currentTarget, attDamage);
     }
 
 
