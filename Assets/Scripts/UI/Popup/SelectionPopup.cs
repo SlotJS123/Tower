@@ -2,17 +2,29 @@ using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
+using System;
 
 public class SelectionPopup : MonoBehaviour
 {
     //버튼 프리팹입니다 
     //재활용하기 위해서 미리 할당해줍니다 
     public PopupUseButton popupUseButton;
- 
+
     public GameObject canvas;
     int count = 3;
     //웨이브가 끝났을 때 호출하는 방식으로 해야합니다 
     // 그래야 어디서든 사용 할 수 있는 상태로 쓸 수 있습니다 
+
+    //타워 설치 이벤트입니다 
+    public Action OnStartTowerEvent;
+
+    private void Start()
+    {
+        GameManager.Instance.MapManager.OnNextTower += StartInfo;
+    }
+
+
 
     private void Update()
     {
@@ -28,16 +40,6 @@ public class SelectionPopup : MonoBehaviour
     //선택지를 세팅하기 위한 함수인데 뭐라고 해야할지 잘 모르겠네 
     void Setect()
     {
-        if(canvas.transform.childCount > 0)
-        {
-            for (int i = 0; i < canvas.transform.childCount; i++)
-            {
-                //이부분은 나중에 재활용으로 쓸 수 있게 수정해야합니다 
-                Destroy(canvas.transform.GetChild(i).gameObject);
-            }
-            
-        }
-
         //여기서 타워매니저랑 함정 매니저한테 데이터를 받아 오고 랜덤으로 돌릴 때 마다 데이터를 참조하여 사용하는 방식으로 쓰면 될거 같습니다 
 
         //순서를 정하자
@@ -54,20 +56,20 @@ public class SelectionPopup : MonoBehaviour
 
             //버튼이 클릭되었다면 윈도우창도 닫아주는 기능을 이벤트로 연결시켜줍니다 
             _popupUseButton.OnClickEventHander += Close;
-            SelcetionButtonType selcetionButtonType = (SelcetionButtonType)Random.Range(0, 3);
+            SelcetionButtonType selcetionButtonType = (SelcetionButtonType)UnityEngine.Random.Range(0, 3);
 
             switch (selcetionButtonType)
             {
                 case SelcetionButtonType.TOWER:
 
                     bool state = true;
-                    while(state)
+                    while (state)
                     {
-                        int towerIndxe = Random.Range(0, GameManager.Instance.TowerManager.GetTowerList().Count);
+                        int towerIndxe = UnityEngine.Random.Range(0, GameManager.Instance.TowerManager.GetTowerList().Count);
                         List<Tower> towers = GameManager.Instance.TowerManager.GetTowerList();
                         var tower = towers.Find(x => x.GetTowerCount() < 2);
 
-                        if(tower != null)
+                        if (tower != null)
                         {
                             Tower towerData = towers[towerIndxe];
 
@@ -88,10 +90,10 @@ public class SelectionPopup : MonoBehaviour
                             state = false;
                             Debug.LogError("모든 타워가 설치가 되었다는 조건을 고려하기 위한 임시 예외처리입니다");
                         }
-                      
+
 
                     }
-                 
+
                     break;
                 case SelcetionButtonType.TOWERLEVELUP:
                     _popupUseButton.SetupTowerLevelUpButtonData();
@@ -104,7 +106,7 @@ public class SelectionPopup : MonoBehaviour
 
                     break;
             }
-            _popupUseButton.transform.SetParent(canvas.transform, false); 
+            _popupUseButton.transform.SetParent(canvas.transform, false);
         }
 
 
@@ -115,11 +117,14 @@ public class SelectionPopup : MonoBehaviour
     public void StartInfo()
     {
         Open();
+
+
+
         for (int i = 0; i < 3; i++)
         {
             PopupUseButton _popupUseButton = Instantiate(popupUseButton);
             _popupUseButton.OnClickEventHander += Close;
-            int towerIndxe = Random.Range(0, GameManager.Instance.TowerManager.GetTowerList().Count);
+            int towerIndxe = UnityEngine.Random.Range(0, GameManager.Instance.TowerManager.GetTowerList().Count);
             List<Tower> towers = GameManager.Instance.TowerManager.GetTowerList();
             var tower = towers.Find(x => x.GetTowerCount() < 2);
             Tower towerData = towers[towerIndxe];
@@ -129,9 +134,21 @@ public class SelectionPopup : MonoBehaviour
     }
 
 
+
+
+
     public void Open()
     {
         this.gameObject.SetActive(true);
+        if (canvas.transform.childCount > 0)
+        {
+            for (int i = 0; i < canvas.transform.childCount; i++)
+            {
+                //이부분은 나중에 재활용으로 쓸 수 있게 수정해야합니다 
+                Destroy(canvas.transform.GetChild(i).gameObject);
+            }
+
+        }
     }
     public void Close()
     {
