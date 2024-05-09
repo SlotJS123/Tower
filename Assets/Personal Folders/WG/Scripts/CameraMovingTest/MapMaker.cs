@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class MapMaker : MonoBehaviour
@@ -13,6 +14,7 @@ public class MapMaker : MonoBehaviour
     private TileFactory tileFactory = new TileFactory();
     private short tileSize = 10;
 
+    // 임시로 수동 연결, 차후 자동화 필요
     [SerializeField]
     private MovableCamera movableCamera;
 
@@ -43,7 +45,7 @@ public class MapMaker : MonoBehaviour
         mapArray = testArray;
         SpawnMap();
 
-        movableCamera.Init(mapRoot, tileArray);
+        movableCamera.Init(mapRoot);
     }
 
     private void SpawnMap()
@@ -86,5 +88,8 @@ public class MapMaker : MonoBehaviour
                 tile.transform.position = position;
             }
         }
+
+        BoxCollider collider = mapRoot.AddComponent<BoxCollider>();
+        collider.size = new Vector3(100, 150, 100);
     }
 }
