@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - NestedScrollManager
+  - Map
   layers:
   - Default
   - TransparentFX
