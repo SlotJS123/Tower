@@ -133,7 +133,7 @@ public class TowerSpawn : MonoBehaviour
 
 
     //JS 맵에서 사용 할 수 있게 수정한 코드입니다 
-    public void JS_TowerInstallation(Tile _tile, Tower _tower) // 타워설치
+    public void JS_TowerInstallation(Tile _tile) // 타워설치
     {
         //// 확률 누적 계산
         //float totalProbability = 0;
@@ -169,19 +169,19 @@ public class TowerSpawn : MonoBehaviour
         //    clone.GetComponent<Tower>().Setup(GameManager.Instance.monsterManager);
         //}
 
-        if (_tower == null)
+        if (setUpAddTowerData == null)
         {
             Debug.LogError("현재 할당 받은 타워 데이터가 없습니다!!!");
-
-
-
             return;
         }
 
         Vector2 mPos = Input.mousePosition;
-        Vector2 target = _tile.transform.position;
-        Tower selectedTower = _tower;
+        Vector3 target = _tile.transform.localPosition;
+        Tower selectedTower = setUpAddTowerData;
         GameManager.Instance.TowerManager.TowerCountUp(selectedTower);
+
+        Debug.Log("설치할려는 타겟의 위치값을 확인하기 위한 로그입니다 " + target);
+
 
         GameObject clone = Instantiate(selectedTower.prefab, target, Quaternion.identity);
         clone.GetComponent<Tower>().Setup(GameManager.Instance.EnemySpawner);
@@ -201,7 +201,7 @@ public class TowerSpawn : MonoBehaviour
         return towerData;
     }
 }
-        
+
 //json에 사용 될 클래스 정의입니다 
 //나중에 대한 데이터 수정이 필요합니다 
 [Serializable]
@@ -209,38 +209,14 @@ public class TowerData
 {
     [JsonProperty("a1")]
     public int towerId;
-    //[JsonProperty("a2")]
-    //public int a2;
-    //[JsonProperty("a3")]
-    //public TowerNameData towerNameList;
-    //[JsonProperty("a4")]
-    //public int a4;
-    //[JsonProperty("a5")]
-    //public TowerNameData a5;
-    //[JsonProperty("a6")]
-    //public int a6;
-    //[JsonProperty("a7")]
-    //public int a7;
-    //[JsonProperty("a8")]
-    //public int a8;
-    //[JsonProperty("a9")]
-    //public int a9;
-    //[JsonProperty("a10")]
-    //public int a10;
-    //[JsonProperty("a11")]
-    //public int a11;
-    //[JsonProperty("a1")]
-    //public int a12;
-    //public int a13;
-
-    //[JsonProperty("a2")]
+    [JsonProperty("a2")]
     public int a2;
-    //[JsonProperty("a3")]
+    [JsonProperty("a3")]
     public TowerNameData towerNameList;
-    //[JsonProperty("a4")]
+    [JsonProperty("a4")]
     public int a4;
-    //[JsonProperty("a5")]
-    public TowerNameData a5;
+    [JsonProperty("a5")]
+    public TowerNameData towerNumber;
     //[JsonProperty("a6")]
     public int a6;
     //[JsonProperty("a7")]
@@ -256,6 +232,30 @@ public class TowerData
     //[JsonProperty("a1")]
     public int a12;
     //public int a13;
+
+    ////[JsonProperty("a2")]
+    //public int a2;
+    ////[JsonProperty("a3")]
+    //public TowerNameData towerNameList;
+    ////[JsonProperty("a4")]
+    //public int a4;
+    ////[JsonProperty("a5")]
+    //public TowerNameData a5;
+    ////[JsonProperty("a6")]
+    //public int a6;
+    ////[JsonProperty("a7")]
+    //public int a7;
+    ////[JsonProperty("a8")]
+    //public int a8;
+    ////[JsonProperty("a9")]
+    //public int a9;
+    ////[JsonProperty("a10")]
+    //public int a10;
+    ////[JsonProperty("a11")]
+    //public int a11;
+    ////[JsonProperty("a1")]
+    //public int a12;
+    ////public int a13;
 }
 [Serializable]
 
@@ -286,23 +286,23 @@ public class TrapData
     public int a2;
     [JsonProperty("a3")]
     public TowerNameData towerNameList;
-    [JsonProperty("a4")]
+    //[JsonProperty("a4")]
     public int a4;
-    [JsonProperty("a5")]
+    //[JsonProperty("a5")]
     public TowerNameData a5;
-    [JsonProperty("a6")]
+    //[JsonProperty("a6")]
     public int a6;
-    [JsonProperty("a7")]
+    //[JsonProperty("a7")]
     public int a7;
-    [JsonProperty("a8")]
+    //[JsonProperty("a8")]
     public int a8;
-    [JsonProperty("a9")]
+    //[JsonProperty("a9")]
     public int a9;
-    [JsonProperty("a10")]
+    //[JsonProperty("a10")]
     public int a10;
-    [JsonProperty("a11")]
+    //[JsonProperty("a11")]
     public int a11;
-    [JsonProperty("a1")]
+    //[JsonProperty("a1")]
     public int a12;
     //public int a13;
 }
