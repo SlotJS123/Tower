@@ -16,11 +16,13 @@ public class MapManager : MonoBehaviour
 
     public int TowerInstallCounter
     {
+
         get
         {
             return towerInstallationCounter;
         }
         set { towerInstallationCounter = value; }
+
     }
 
 }

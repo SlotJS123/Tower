@@ -180,7 +180,6 @@ public class TowerSpawn : MonoBehaviour
         Tower selectedTower = setUpAddTowerData;
         GameManager.Instance.TowerManager.TowerCountUp(selectedTower);
 
-        Debug.Log("설치할려는 타겟의 위치값을 확인하기 위한 로그입니다 " + target);
 
 
         GameObject clone = Instantiate(selectedTower.prefab, target, Quaternion.identity);

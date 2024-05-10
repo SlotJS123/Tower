@@ -15,7 +15,7 @@ public class SelectionPopup : MonoBehaviour
     int count = 3;
     //웨이브가 끝났을 때 호출하는 방식으로 해야합니다 
     // 그래야 어디서든 사용 할 수 있는 상태로 쓸 수 있습니다 
-
+    
     //타워 설치 이벤트입니다 
     public Action OnStartTowerEvent;
 
@@ -23,8 +23,6 @@ public class SelectionPopup : MonoBehaviour
     {
         GameManager.Instance.MapManager.OnNextTower += StartInfo;
     }
-
-
 
     private void Update()
     {
