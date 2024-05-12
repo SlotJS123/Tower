@@ -6,7 +6,6 @@ using Newtonsoft.Json;
 using System;
 
 public class TowerSpawn : MonoBehaviour
-
 {
     [SerializeField]
     private List<Tower> towers; // 타워 목록
@@ -32,9 +31,11 @@ public class TowerSpawn : MonoBehaviour
     }
 
     //게임을 시작 할 때 가장 먼저 타워에 대한 기본 데이터 json 파일을 받아옵니다 
+    // todo js_20240510:: 이부분은 앞으로 게임 씬에서 받아오는게 아니라 로비 씬에서 미리 전달 받은 데이터로 진행하게 할 예정입니다 
     public void GetStartJsonData()
     {
 
+        //  todo js_20240510::일단 게임 진행을 위해서 유지 시키지만 로비씬 작업에 완료가 된다면 없애 예정입니다 
         string path = Path.Combine(Application.dataPath, jsonFileName);
         string jsonContent = File.ReadAllText(path);
 
