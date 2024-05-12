@@ -64,6 +64,9 @@ public class SelectionPopup : MonoBehaviour
                     while (state)
                     {
                         int towerIndxe = UnityEngine.Random.Range(0, GameManager.Instance.TowerManager.GetTowerList().Count);
+
+                        Debug.Log("towerIndxe :  " + towerIndxe);
+
                         List<Tower> towers = GameManager.Instance.TowerManager.GetTowerList();
                         var tower = towers.Find(x => x.GetTowerCount() < 2);
 

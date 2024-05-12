@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public enum WeaponState { SearchTarget = 0, AttToTarget }
 
 public class Tower : MonoBehaviour
 {
+    [SerializeField]
+    private int towerId; // 타워이름
     [SerializeField]
     private string towerName; // 타워이름
     public GameObject prefab; // 타워 프리팹
@@ -25,14 +28,8 @@ public class Tower : MonoBehaviour
 
     public int towerCount = 0;
 
-
-    //private MonsterManager enemySpawn; // 존재하는 적 정보 획득용
-
     private EnemySpawn enemySpawn; // 존재하는 적 정보 획득용
-
-    
     private WeaponState weapon = WeaponState.SearchTarget; // 타워 무기의 상태
-
     public EventTrigger clickTrigger;
     private Tile spawnTile; // 타워가 스폰된 타일 기억 (일단 임시)
 
@@ -42,7 +39,11 @@ public class Tower : MonoBehaviour
     private Transform currentTarget; // 현재 타겟으로 지정된 적
     //public Image thumbnail;
     public SpriteRenderer thumbnail;
+    //현재 타워에 대한 json 데이터를 가지고 있습니다 
+    public TowerData rootTowerData;
 
+    [SerializeField]
+    private Sprite mainImage; // 대표 이미지입니다 
     private void Start()
     {
        
@@ -71,6 +72,9 @@ public class Tower : MonoBehaviour
     //    ChangeState(WeaponState.SearchTarget);
     //}
 
+
+
+
     public void Setup(EnemySpawn enemySpawn)
     {
         this.enemySpawn = enemySpawn;
@@ -98,6 +102,16 @@ public class Tower : MonoBehaviour
         return towerCount;
     }
 
+    //대표 이미지를 전달하기 위한 함수입니다 
+    public Sprite GetMainSprite()
+    {
+        return mainImage;
+    }
+
+    public int GettowerID()
+    {
+        return towerId;
+    }
 
     IEnumerator EnemySecrh()
     {

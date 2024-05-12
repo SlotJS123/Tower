@@ -183,7 +183,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d08ca6484bfb2074cbf1f4062334a855, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  towerName: 
+  towerId: 101001
+  towerName: 101001
   prefab: {fileID: 6751470111914274223}
   projectileObj: {fileID: 2395511465979097153, guid: 071932d9c96f7d047912990956c6c65e, type: 3}
   point: {fileID: 1592135899412986328}
@@ -194,6 +195,26 @@ MonoBehaviour:
   clickTrigger: {fileID: 0}
   enemiesInRange: []
   thumbnail: {fileID: 4814873242982835273}
+  rootTowerData:
+    towerId: 0
+    a2: 0
+    towerNameList:
+      kr: 
+      en: 
+      jp: 
+    a4: 0
+    towerNumber:
+      kr: 
+      en: 
+      jp: 
+    a6: 0
+    a7: 0
+    a8: 0
+    a9: 0
+    a10: 0
+    a11: 0
+    a12: 0
+  mainImage: {fileID: 21300000, guid: 2d5a187c329e5f840b248842b9743eb7, type: 3}
 --- !u!136 &6889282189793212804
 CapsuleCollider:
   m_ObjectHideFlags: 0
