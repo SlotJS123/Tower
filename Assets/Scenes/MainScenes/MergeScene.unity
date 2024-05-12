@@ -489,6 +489,42 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3157418914765385419, guid: cdd0faca00259284bb9b76add910ae25, type: 3}
+      propertyPath: towers.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3157418914765385419, guid: cdd0faca00259284bb9b76add910ae25, type: 3}
+      propertyPath: towers.Array.data[0]
+      value: 
+      objectReference: {fileID: 4515988217655772506, guid: 26159a64a34edd94ead85c8d12ee7d3c, type: 3}
+    - target: {fileID: 3157418914765385419, guid: cdd0faca00259284bb9b76add910ae25, type: 3}
+      propertyPath: towers.Array.data[1]
+      value: 
+      objectReference: {fileID: 4515988217655772506, guid: 10b66407d0846e946a70bb9481a867d1, type: 3}
+    - target: {fileID: 3157418914765385419, guid: cdd0faca00259284bb9b76add910ae25, type: 3}
+      propertyPath: towers.Array.data[2]
+      value: 
+      objectReference: {fileID: 4515988217655772506, guid: 4db808b44b07753418c3ccd890c384e0, type: 3}
+    - target: {fileID: 3157418914765385419, guid: cdd0faca00259284bb9b76add910ae25, type: 3}
+      propertyPath: towers.Array.data[3]
+      value: 
+      objectReference: {fileID: 4515988217655772506, guid: 8ce1a367bcca725489de8a85c3be19d5, type: 3}
+    - target: {fileID: 3157418914765385419, guid: cdd0faca00259284bb9b76add910ae25, type: 3}
+      propertyPath: towers.Array.data[4]
+      value: 
+      objectReference: {fileID: 4515988217655772506, guid: c04d0edb36ab3b944b815698bb22671f, type: 3}
+    - target: {fileID: 3157418914765385419, guid: cdd0faca00259284bb9b76add910ae25, type: 3}
+      propertyPath: towers.Array.data[5]
+      value: 
+      objectReference: {fileID: 4515988217655772506, guid: 4fd8007e4c7ff15439648634e68934b5, type: 3}
+    - target: {fileID: 3157418914765385419, guid: cdd0faca00259284bb9b76add910ae25, type: 3}
+      propertyPath: towers.Array.data[6]
+      value: 
+      objectReference: {fileID: 4515988217655772506, guid: 39b5debd9ae04cf419624b4ea696b32d, type: 3}
+    - target: {fileID: 3157418914765385419, guid: cdd0faca00259284bb9b76add910ae25, type: 3}
+      propertyPath: towers.Array.data[7]
+      value: 
+      objectReference: {fileID: 4515988217655772506, guid: 42316f826dcaca849a896b9f592015fd, type: 3}
     - target: {fileID: 4208856172538987348, guid: cdd0faca00259284bb9b76add910ae25, type: 3}
       propertyPath: m_Name
       value: TowerManager
