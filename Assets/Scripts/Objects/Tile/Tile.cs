@@ -29,7 +29,7 @@ public class Tile : MonoBehaviour, IInteractionable
         {
             case TileType.GroundTile:
                 Debug.Log("click GroundTile");
-                this.gameObject.SetActive(false);
+                //this.gameObject.SetActive(false);
                 GameManager.Instance.TowerManager.JS_TowerInstallation(this);
                 //다음 타워 설치에 대한 값을 실행여부를 확인하기 위한 이벤트입니다 
                 MapManager mapManager = GameManager.Instance.MapManager;

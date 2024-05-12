@@ -13597,6 +13597,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   manager: {fileID: 1695558775}
   itemDetailUI: {fileID: 377075554}
+  prefabs: {fileID: 1264544463374101191, guid: bccde58f03ba59944bbb3441e63c5417, type: 3}
 --- !u!1 &1681902714
 GameObject:
   m_ObjectHideFlags: 0

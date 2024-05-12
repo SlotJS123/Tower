@@ -42,7 +42,7 @@ public class PopupUseButton : MonoBehaviour
         //_towerData.TowerAddCount();
         title.text = "Tower";
         buttonInfo.towerData = _towerData;
-        thumbnail.sprite = _towerData.thumbnail.sprite;
+        thumbnail.sprite = _towerData.GetMainSprite();
     }
     public void SetupTrapButtonData(TrapData _trapData = null)
     {
