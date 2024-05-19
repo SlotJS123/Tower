@@ -439,6 +439,7 @@ Transform:
   - {fileID: 1373627965}
   - {fileID: 835959393}
   - {fileID: 414537277}
+  - {fileID: 1756579473}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &835959392
@@ -837,7 +838,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3282788948022105189, guid: 7a891bfbf046174439a3d25e885d6c56, type: 3}
       propertyPath: waves.Array.data[0].enemyPrefabCount.Array.data[0]
-      value: 100
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 3410798368973365980, guid: 7a891bfbf046174439a3d25e885d6c56, type: 3}
       propertyPath: m_Name
@@ -908,6 +909,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ef76da834971684fadec184fb142c31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1756579472
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1756579473}
+  m_Layer: 0
+  m_Name: LifeManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1756579473
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1756579472}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 669223647}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1845147108 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 778858281335079275, guid: 7c354cb7a793b354685a368385e84c29, type: 3}
@@ -1181,8 +1213,8 @@ SceneRoots:
   m_Roots:
   - {fileID: 854078750}
   - {fileID: 1323399554}
-  - {fileID: 669223647}
   - {fileID: 230219599}
   - {fileID: 2118587754}
   - {fileID: 645453391}
   - {fileID: 1966706048}
+  - {fileID: 669223647}

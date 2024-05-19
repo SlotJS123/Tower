@@ -46,8 +46,9 @@ public class Tower : MonoBehaviour
     private Sprite mainImage; // 대표 이미지입니다 
     private void Start()
     {
-       
 
+        Debug.LogError("타워에 대한 기본데이터 값이 없어서 추가해줍니다 ");
+        rootTowerData = GameManager.Instance.TowerManager.towerJson.items.Find(x => x.towerId == towerId);
 
         clickTrigger = GetComponent<EventTrigger>();
 
@@ -297,7 +298,7 @@ public class Tower : MonoBehaviour
     {
         GameObject clone = Instantiate(projectileObj, point.position, Quaternion.identity);
 
-        clone.GetComponent<Ball>().SetUp(currentTarget, attDamage);
+        clone.GetComponent<Ball>().SetUp(currentTarget, rootTowerData.a7);
     }
 
 

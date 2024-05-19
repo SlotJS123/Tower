@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyType: 1
-  hp: 150
+  hp: 10
   moveSpeed: 30
   moveDir: {x: 0, y: 0, z: 0}
 --- !u!65 &8589885637283929837

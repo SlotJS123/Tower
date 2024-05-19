@@ -31,6 +31,8 @@ public class SelectionPopup : MonoBehaviour
 
     public void Info()
     {
+        Debug.Log(" 다음 웨이브 준비를 시작합니다");
+
         Open();
         Setect();
     }
@@ -54,7 +56,12 @@ public class SelectionPopup : MonoBehaviour
 
             //버튼이 클릭되었다면 윈도우창도 닫아주는 기능을 이벤트로 연결시켜줍니다 
             _popupUseButton.OnClickEventHander += Close;
-            SelcetionButtonType selcetionButtonType = (SelcetionButtonType)UnityEngine.Random.Range(0, 3);
+
+            // 일단 임시 테스트를 위해서 아래 코드는 주석처리합니다 
+            //SelcetionButtonType selcetionButtonType = (SelcetionButtonType)UnityEngine.Random.Range(0, 3);
+
+            SelcetionButtonType selcetionButtonType = SelcetionButtonType.TOWER;
+
 
             switch (selcetionButtonType)
             {
@@ -70,27 +77,32 @@ public class SelectionPopup : MonoBehaviour
                         List<Tower> towers = GameManager.Instance.TowerManager.GetTowerList();
                         var tower = towers.Find(x => x.GetTowerCount() < 2);
 
-                        if (tower != null)
+
+                        Tower towerData = towers[towerIndxe];
+
+                        if (towerData.GetTowerCount() == 2)
                         {
-                            Tower towerData = towers[towerIndxe];
-
-                            if (towerData.GetTowerCount() == 2)
-                            {
-                                Debug.LogError("기능 테스트를 위한 로그입니다");
-                            }
-                            else
-                            {
-
-                                _popupUseButton.SetupTowerButtonData(towerData);
-                                state = false;
-
-                            }
+                            Debug.LogError("기능 테스트를 위한 로그입니다");
                         }
                         else
                         {
+                            _popupUseButton.OnClickEventHander += Close;
+                            _popupUseButton.SetupTowerButtonData(towerData);
+                            _popupUseButton.transform.SetParent(canvas.transform, false);
                             state = false;
-                            Debug.LogError("모든 타워가 설치가 되었다는 조건을 고려하기 위한 임시 예외처리입니다");
+
                         }
+
+                        //  todo 20240506:: JS 아래의 조건은 이미 동일한 타워가 3개 이상 설치가 되어있다면 다른 타워데이터로 표시를 시켜주기 위한 기능이였는데 지금은 임시로 주석처리합니다 
+                        //if (tower != null)
+                        //{
+                           
+                        //}
+                        //else
+                        //{
+                        //    state = false;
+                        //    Debug.LogError("모든 타워가 설치가 되었다는 조건을 고려하기 위한 임시 예외처리입니다");
+                        //}
 
 
                     }
