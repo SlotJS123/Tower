@@ -25,4 +25,15 @@ public class MapManager : MonoBehaviour
 
     }
 
+    int count = 1;    
+
+    public int Count
+    {
+        get { return count; } 
+        set
+        {
+            count = value;
+        }
+    }
+
 }

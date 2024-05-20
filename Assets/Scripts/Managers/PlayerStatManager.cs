@@ -31,6 +31,7 @@ public class PlayerStatManager
 
     public void DecreaseHP()
     {
+        Debug.LogError("라이프 감소");
         playerHP--;
     }
 

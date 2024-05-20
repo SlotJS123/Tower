@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class GameManager : MonoBehaviour
     private EnemySpawn enemySpawn;
     private ObjectSelection objectSelection = new ObjectSelection();
     private WaveManager waveManager;
+    private LifeManager lifeManager;
 
     public MapManager MapManager => mapManager;
     public TowerSpawn TowerManager => towerManager;
@@ -22,12 +24,16 @@ public class GameManager : MonoBehaviour
     public EnemySpawn EnemySpawner => enemySpawn;
 
     public WaveManager EaveManager => waveManager;
-
+    public LifeManager LifeManager=> lifeManager;
 
     //---------------------------------테스트 코드입니다 
     public Camera camera;
     public float rayLength = 100f; // 레이케스트 길이
     public Color gizmoColor = Color.red; // 기즈모 색상
+
+
+    public Action OnNextWawveventHander;
+
 
     private void Awake()
     {
@@ -42,6 +48,8 @@ public class GameManager : MonoBehaviour
         }
 
         Init();
+
+        
     }
 
     void Start()
@@ -53,6 +61,8 @@ public class GameManager : MonoBehaviour
         towerManager.GetStartJsonData();
 
         selectionPopupManager.selectionPopup.StartInfo();
+
+        OnNextWawveventHander += selectionPopupManager.selectionPopup.Info;
     }
 
     private void Update()
@@ -68,6 +78,7 @@ public class GameManager : MonoBehaviour
         selectionPopupManager = parent.GetComponentInChildren<SelectionPopupManager>();
         enemySpawn = parent.GetComponentInChildren<EnemySpawn>();
         waveManager = parent.GetComponentInChildren<WaveManager>();
+        lifeManager = parent.GetComponentInChildren<LifeManager>();
         //enemySpawn = GetComponentInChildren<EnemySpawn>();
 
         towerManager.SetEnemySpawn(enemySpawn);

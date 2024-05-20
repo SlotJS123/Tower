@@ -5,7 +5,7 @@ using UnityEngine;
 public class Ball : MonoBehaviour
 {
     [SerializeField]
-    private float moveSpeed = 0.0f; // ÀÌµ¿¼Óµµ
+    private float moveSpeed = 0.0f; // ì´ë™ì†ë„
     [SerializeField]
     private Vector3 moveDir = Vector3.zero;
     [SerializeField]
@@ -14,9 +14,9 @@ public class Ball : MonoBehaviour
 
     public void SetUp(Transform target, float damage)
     {
-        // Å¸¿ö°¡ ¼³Á¤ÇØÁØ target
+        // íƒ€ì›Œê°€ ì„¤ì •í•´ì¤€ target
         this.target = target;
-        // Å¸¿ö°¡ ¼³Á¤ÇØÁØ °ø°İ·Â
+        // íƒ€ì›Œê°€ ì„¤ì •í•´ì¤€ ê³µê²©ë ¥
         this.damage = damage;
     }
 
@@ -24,17 +24,17 @@ public class Ball : MonoBehaviour
     void Update()
     {
         transform.position += moveDir * moveSpeed * Time.deltaTime;
-        // targetÀÌ Á¸ÀçÇÏ¸é
+        // targetì´ ì¡´ì¬í•˜ë©´
         if(target != null) 
         {
-            // ¹ß»çÃ¼¸¦ targetÀÇ À§Ä¡·Î ÀÌµ¿
+            // ë°œì‚¬ì²´ë¥¼ targetì˜ ìœ„ì¹˜ë¡œ ì´ë™
             Vector3 dir = (target.position - transform.position).normalized;
             MoveTo(dir);
         }
-        // targetÀÌ ¾øÀ¸¸é
+        // targetì´ ì—†ìœ¼ë©´
         else
         {
-            // ¹ß»çÃ¼ ¿ÀºêÁ§Æ® »èÁ¦
+            // ë°œì‚¬ì²´ ì˜¤ë¸Œì íŠ¸ ì‚­ì œ
             Destroy(gameObject);
         }
     }
@@ -46,14 +46,46 @@ public class Ball : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // ÀûÀÌ ¾Æ´Ñ ´ë»ó°ú ºÎµúÈ÷¸é
-        if (!collision.CompareTag("Enemy")) return;
-        // ÇöÀç targetÀÎ ÀûÀÌ ¾Æ´Ò ¶§
-        if (collision.transform != target) return;
-        // Àû Ã¼·ÂÀ» damage¸¸Å­ °¨¼Ò
+        Debug.Log("ì¶©ëŒì„ ê°ì§€í•©ë‹ˆë‹¤ ");
 
-        // ¹ß»çÃ¼ ¿ÀºêÁ§Æ® »èÁ¦
+        // ì ì´ ì•„ë‹Œ ëŒ€ìƒê³¼ ë¶€ë”ªíˆë©´
+        if (!collision.CompareTag("Enemy"))
+        {
+            Debug.Log("ì ì´ ì•„ë‹™ë‹ˆë‹¤");
+            return;
+        }
+        // í˜„ì¬ targetì¸ ì ì´ ì•„ë‹ ë•Œ
+        if (collision.transform != target) return;
+        // ì  ì²´ë ¥ì„ damageë§Œí¼ ê°ì†Œ
+
+        Debug.Log("ì˜¤ë¸Œì íŠ¸ë¥¼ ì‚­ì œí•©ë‹ˆë‹¤ ");
+        // ë°œì‚¬ì²´ ì˜¤ë¸Œì íŠ¸ ì‚­ì œ
         Destroy(gameObject);
 
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("ì¶©ëŒì„ ê°ì§€í•©ë‹ˆë‹¤ ");
+
+        // ì ì´ ì•„ë‹Œ ëŒ€ìƒê³¼ ë¶€ë”ªíˆë©´
+        if (!other.CompareTag("Enemy"))
+        {
+            Debug.Log("ì ì´ ì•„ë‹™ë‹ˆë‹¤");
+            return;
+        }
+        // í˜„ì¬ targetì¸ ì ì´ ì•„ë‹ ë•Œ
+        if (other.transform != target) return;
+        // ì  ì²´ë ¥ì„ damageë§Œí¼ ê°ì†Œ
+
+        Enemy enemy = other.GetComponent<Enemy>();
+        Debug.Log("ì „ë‹¬í•˜ëŠ” ë°ë¯¸ì§€ë¥¼ í™•ì¸í•©ë‹ˆë‹¤ ");
+        enemy.TakeDamage(damage);
+
+
+        Debug.Log("ì˜¤ë¸Œì íŠ¸ë¥¼ ì‚­ì œí•©ë‹ˆë‹¤ ");
+        // ë°œì‚¬ì²´ ì˜¤ë¸Œì íŠ¸ ì‚­ì œ
+        Destroy(gameObject);
+    }
+
 }

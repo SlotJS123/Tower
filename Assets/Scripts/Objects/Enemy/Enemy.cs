@@ -76,13 +76,35 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(float damage) // 자신이 공격받는 함수
     {
+        Debug.Log("피격을 확인합니다 전달 받은 데미지는   :   " + damage);
+
         hp -= damage;
         if(hp < 0)
         {
-            enemySpawn.EnemyList.Remove(this);
-            Destroy(gameObject);
+
+            DestroyGameobject();
+
+           
         }
     }
+
+    public void DestroyGameobject()
+    {
+        
+
+
+        Debug.Log("Enemy 오브젝트를 삭제합니다 ");
+        enemySpawn.EnemyList.Remove(this);
+        int count = GameManager.Instance.EnemySpawner.FieldEnemycount();
+
+        if (count == 0)
+        {
+            GameManager.Instance.OnNextWawveventHander.Invoke();
+            // 다음 웨이브 준비를 한다 
+        }
+        Destroy(gameObject);
+    }
+
 
     void FixedUpdate()
     {

@@ -35,11 +35,15 @@ public class Tile : MonoBehaviour, IInteractionable
                 MapManager mapManager = GameManager.Instance.MapManager;
 
 
+                //만약에 게임을 시작하고 타워 5개를 모두 설치를 했다면 이벤트와 카운터를 각각 수정을 해줘야합니다 
                 if(mapManager.TowerInstallCounter != 5)
-
                 {
                     mapManager.TowerInstallCounter = mapManager.TowerInstallCounter + 1;
                     mapManager.OnNextTower.Invoke();
+                }
+                else
+                {
+
                 }
 
 

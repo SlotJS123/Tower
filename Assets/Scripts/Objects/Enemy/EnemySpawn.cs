@@ -61,4 +61,11 @@ public class EnemySpawn : MonoBehaviour
             }
         }
     }
+
+
+    //이 함수는 필드에 있는 적 카운트를 반환해주는 함수입니다 
+    public int FieldEnemycount()
+    {
+        return EnemyList.Count;
+    }
 }
